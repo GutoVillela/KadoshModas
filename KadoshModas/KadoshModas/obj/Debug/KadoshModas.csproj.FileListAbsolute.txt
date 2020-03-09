@@ -1,0 +1,12 @@
+C:\Users\gusta\Source\Repos\KadoshModas\KadoshModas\KadoshModas\bin\Debug\KadoshModas.exe.config
+C:\Users\gusta\Source\Repos\KadoshModas\KadoshModas\KadoshModas\bin\Debug\KadoshModas.exe
+C:\Users\gusta\Source\Repos\KadoshModas\KadoshModas\KadoshModas\bin\Debug\KadoshModas.pdb
+C:\Users\gusta\Source\Repos\KadoshModas\KadoshModas\KadoshModas\obj\Debug\KadoshModas.csprojAssemblyReference.cache
+C:\Users\gusta\Source\Repos\KadoshModas\KadoshModas\KadoshModas\obj\Debug\KadoshModas.frmLogin.resources
+C:\Users\gusta\Source\Repos\KadoshModas\KadoshModas\KadoshModas\obj\Debug\KadoshModas.Properties.Resources.resources
+C:\Users\gusta\Source\Repos\KadoshModas\KadoshModas\KadoshModas\obj\Debug\KadoshModas.csproj.GenerateResource.cache
+C:\Users\gusta\Source\Repos\KadoshModas\KadoshModas\KadoshModas\obj\Debug\KadoshModas.csproj.CoreCompileInputs.cache
+C:\Users\gusta\Source\Repos\KadoshModas\KadoshModas\KadoshModas\obj\Debug\KadoshModas.exe
+C:\Users\gusta\Source\Repos\KadoshModas\KadoshModas\KadoshModas\obj\Debug\KadoshModas.pdb
+C:\Users\gusta\Source\Repos\KadoshModas\KadoshModas\KadoshModas\obj\Debug\KadoshModas.UI.CadCliente.resources
+C:\Users\gusta\Source\Repos\KadoshModas\KadoshModas\KadoshModas\obj\Debug\KadoshModas.UI.TelaPrincipal.resources
