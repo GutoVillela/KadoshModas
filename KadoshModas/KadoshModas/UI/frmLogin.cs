@@ -40,5 +40,10 @@ namespace KadoshModas
 
             this.Cursor = Cursors.Default;
         }
+
+        private void btnFechar_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

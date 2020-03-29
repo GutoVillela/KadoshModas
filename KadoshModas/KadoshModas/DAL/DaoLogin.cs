@@ -28,6 +28,11 @@ namespace KadoshModas.DAL
         /// Objeto de conexão utilizado no acesso à base de dados
         /// </summary>
         private Conexao conexao;
+
+        /// <summary>
+        /// Nome da tabela de login no banco de dados
+        /// </summary>
+        private const string NOME_TABELA = "TB_LOGIN";
         #endregion
 
         #region Métodos
@@ -41,7 +46,7 @@ namespace KadoshModas.DAL
         public bool ValidarLogin(string usuario, string senha)
         {
             bool loginValido = false;
-            SqlCommand cmd = new SqlCommand("SELECT * FROM TB_LOGIN WHERE USUARIO = @USUARIO AND SENHA = @SENHA", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand("SELECT * FROM " + NOME_TABELA + " WHERE USUARIO = @USUARIO AND SENHA = @SENHA", conexao.Conectar());
             cmd.Parameters.AddWithValue("@USUARIO", usuario).SqlDbType = SqlDbType.VarChar;
             cmd.Parameters.AddWithValue("@SENHA", senha).SqlDbType = SqlDbType.VarChar;
 

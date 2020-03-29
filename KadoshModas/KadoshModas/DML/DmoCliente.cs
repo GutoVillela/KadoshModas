@@ -11,29 +11,64 @@ namespace KadoshModas.DML
         #region Propriedades de Cliente
 
         /// <summary>
-        /// Id do cliente
+        /// Id do Cliente
         /// </summary>
-        public int IdCliente { get; set; }
+        public int? IdCliente { get; set; }
 
         /// <summary>
-        /// Nome do cliente
+        /// Nome do Cliente
         /// </summary>
         public string Nome { get; set; }
 
         /// <summary>
-        /// E-mail do cliente
+        /// E-mail do Cliente
         /// </summary>
         public string Email { get; set; }
 
         /// <summary>
-        /// CPF do cliente
+        /// CPF do Cliente
         /// </summary>
         public string CPF { get; set; }
 
         /// <summary>
-        /// Lista de telefones do cliente
+        /// Sexo do Cliente
+        /// </summary>
+        public Sexos Sexo { get; set; }
+
+        /// <summary>
+        /// Endereço do Cliente
+        /// </summary>
+        public DmoEndereco Endereco { get; set; }
+
+        /// <summary>
+        /// URL da Foto do cliente
+        /// </summary>
+        public string UrlFoto { get; set; }
+
+        /// <summary>
+        /// Lista de telefones do Cliente
         /// </summary>
         public List<DmoTelefone> Telefones { get; set; }
+
+        /// <summary>
+        /// Data de criação do registro na base de dados
+        /// </summary>
+        public DateTime DataDeCriacao { get; set; }
+
+        /// <summary>
+        /// Data da última atualização do registro na base de dados
+        /// </summary>
+        public DateTime DataDeAtualizacao { get; set; }
+
+        /// <summary>
+        /// Sexos
+        /// </summary>
+        public enum Sexos
+        {
+            Feminino,
+
+            Masculino
+        }
         #endregion
     }
 }

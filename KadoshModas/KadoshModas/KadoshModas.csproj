@@ -32,7 +32,13 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FontAwesome.Sharp, Version=5.12.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FontAwesome.Sharp.5.12.1\lib\net472\FontAwesome.Sharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,20 +52,60 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\BoCategoria.cs" />
+    <Compile Include="BLL\BoCidade.cs" />
     <Compile Include="BLL\BoCliente.cs" />
+    <Compile Include="BLL\BoEstado.cs" />
     <Compile Include="BLL\BoLogin.cs" />
+    <Compile Include="BLL\BoMarca.cs" />
+    <Compile Include="BLL\BoProduto.cs" />
     <Compile Include="DAL\Conexao.cs" />
+    <Compile Include="DAL\DaoCategoria.cs" />
+    <Compile Include="DAL\DaoCidade.cs" />
     <Compile Include="DAL\DaoCliente.cs" />
+    <Compile Include="DAL\DaoEndereco.cs" />
+    <Compile Include="DAL\DaoEstado.cs" />
     <Compile Include="DAL\DaoLogin.cs" />
+    <Compile Include="DAL\DaoMarca.cs" />
+    <Compile Include="DAL\DaoProduto.cs" />
     <Compile Include="DAL\DaoTelefone.cs" />
+    <Compile Include="DML\DmoCategoria.cs" />
     <Compile Include="DML\DmoCliente.cs" />
+    <Compile Include="DML\DmoEndereco.cs" />
     <Compile Include="DML\DmoLogin.cs" />
+    <Compile Include="DML\DmoMarca.cs" />
+    <Compile Include="DML\DmoProduto.cs" />
     <Compile Include="DML\DmoTelefone.cs" />
+    <Compile Include="INF\DiretoriosDoSistema.cs" />
+    <Compile Include="UI\CadCategoria.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CadCategoria.Designer.cs">
+      <DependentUpon>CadCategoria.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\CadCliente.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\CadCliente.Designer.cs">
       <DependentUpon>CadCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CadMarca.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CadMarca.Designer.cs">
+      <DependentUpon>CadMarca.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CadProduto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CadProduto.Designer.cs">
+      <DependentUpon>CadProduto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ConCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ConCliente.Designer.cs">
+      <DependentUpon>ConCliente.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\frmLogin.cs">
       <SubType>Form</SubType>
@@ -75,8 +121,20 @@
     <Compile Include="UI\TelaPrincipal.Designer.cs">
       <DependentUpon>TelaPrincipal.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UI\CadCategoria.resx">
+      <DependentUpon>CadCategoria.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\CadCliente.resx">
       <DependentUpon>CadCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CadMarca.resx">
+      <DependentUpon>CadMarca.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CadProduto.resx">
+      <DependentUpon>CadProduto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ConCliente.resx">
+      <DependentUpon>ConCliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
@@ -89,10 +147,13 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="UI\TelaPrincipal.resx">
       <DependentUpon>TelaPrincipal.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="app.manifest" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -106,6 +167,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="IMGS\CLIENTES\usuario-perfil-padrao.png" />
+    <None Include="Resources\usuario-perfil-padrao.png" />
+    <None Include="Resources\icone-valido.png" />
+    <None Include="Resources\icone-invalido.png" />
+    <None Include="Resources\transparent-loading-gif.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
