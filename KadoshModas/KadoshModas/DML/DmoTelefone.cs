@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace KadoshModas.DML
 {
-    class DmoTelefone
+    public class DmoTelefone : DmoBase
     {
         #region Propriedades de Telefone
         /// <summary>
@@ -35,18 +35,7 @@ namespace KadoshModas.DML
         /// Nome da pessoa a quem chamar quando ligar para este número
         /// </summary>
         public string FalarCom { get; set; }
-
-        /// <summary>
-        /// Data de criação do registro na base de dados
-        /// </summary>
-        public DateTime DataDeCriacao { get; set; }
-
-        /// <summary>
-        /// Data da última atualização do registro na base de dados
-        /// </summary>
-        public DateTime DataDeAtualizacao { get; set; }
         #endregion
-
         /// <summary>
         /// Tipos de telefone
         /// </summary>
@@ -69,32 +58,6 @@ namespace KadoshModas.DML
 
             [Description("Outro")]
             Outro
-        }
-
-        /// <summary>
-        /// Busca as descrições e os valores do Enum
-        /// </summary>
-        /// <returns>Retorna um dicionário de pares de valor com Descrição e Valor do Enum</returns>
-        public SortedDictionary<string, int> DescricaoEnum()
-        {
-            SortedDictionary<string, int> paresDeValor = new SortedDictionary<string, int>();
-
-            foreach (TiposDeTelefone tipo in Enum.GetValues(TiposDeTelefone.Comercial.GetType()))
-            {
-                paresDeValor.Add(DescricaoEnum(tipo), (int)tipo);
-            }
-
-            return paresDeValor;
-        }
-
-        /// <summary>
-        /// Busca o atributo Description de um item do Enum
-        /// </summary>
-        /// <param name="pTipoTelefone">Enum</param>
-        /// <returns>Retorna descrição do Enum</returns>
-        public string DescricaoEnum(TiposDeTelefone pTipoTelefone)
-        {
-            return (pTipoTelefone.GetType().GetMember(pTipoTelefone.GetType().GetEnumName((int)pTipoTelefone))[0].GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault() as DescriptionAttribute).Description;
         }
     }
 }

@@ -9,7 +9,7 @@ namespace KadoshModas.DML
     /// <summary>
     /// Classe DMO para Endereço
     /// </summary>
-    class DmoEndereco
+    public class DmoEndereco : DmoBase
     {
         #region Propriedades de Endereço
         /// <summary>
@@ -46,23 +46,13 @@ namespace KadoshModas.DML
         /// Cidade
         /// </summary>
         public DmoCidade Cidade { get; set; }
-
-        /// <summary>
-        /// Data de criação do registro na base de dados
-        /// </summary>
-        public DateTime DataDeCriacao { get; set; }
-
-        /// <summary>
-        /// Data da última atualização do registro na base de dados
-        /// </summary>
-        public DateTime DataDeAtualizacao { get; set; }
         #endregion
     }
 
     /// <summary>
     /// Classe DMO para Cidade
     /// </summary>
-    partial class DmoCidade
+    public class DmoCidade
     {
         #region Propriedades de Cidade
         /// <summary>
@@ -90,7 +80,7 @@ namespace KadoshModas.DML
     /// <summary>
     /// Classe DMO para Estado
     /// </summary>
-    partial class DmoEstado
+    public class DmoEstado
     {
         #region Propriedades de Estado
         /// <summary>
@@ -125,7 +115,7 @@ namespace KadoshModas.DML
         #endregion
     }
 
-    partial class DmoPais
+    public class DmoPais
     {
         #region Propriedades do País
         /// <summary>

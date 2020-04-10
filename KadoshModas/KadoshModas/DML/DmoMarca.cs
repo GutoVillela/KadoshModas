@@ -9,7 +9,7 @@ namespace KadoshModas.DML
     /// <summary>
     /// Classe DML para Marca
     /// </summary>
-    class DmoMarca
+    class DmoMarca : DmoBase
     {
         #region Propriedades de Marca
         /// <summary>
@@ -21,16 +21,6 @@ namespace KadoshModas.DML
         /// Nome da Marca
         /// </summary>
         public string Nome { get; set; }
-
-        /// <summary>
-        /// Data de criação do registro na base de dados
-        /// </summary>
-        public DateTime DataDeCriacao { get; set; }
-
-        /// <summary>
-        /// Data da última atualização do registro na base de dados
-        /// </summary>
-        public DateTime DataDeAtualizacao { get; set; }
         #endregion
     }
 }

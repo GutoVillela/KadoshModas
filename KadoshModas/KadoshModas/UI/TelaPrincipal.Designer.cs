@@ -53,6 +53,7 @@
             this.btnClientes = new FontAwesome.Sharp.IconButton();
             this.btnVisaoGeral = new FontAwesome.Sharp.IconButton();
             this.pnlLogo = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pnlCabecalho = new System.Windows.Forms.Panel();
             this.pnlForms = new System.Windows.Forms.Panel();
             this.pnlMenuLateral.SuspendLayout();
@@ -60,6 +61,8 @@
             this.pnlSubmenuProdutos.SuspendLayout();
             this.pnlSubmenuVendas.SuspendLayout();
             this.pnlSubmenuClientes.SuspendLayout();
+            this.pnlLogo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // pnlMenuLateral
@@ -295,6 +298,7 @@
             this.btnCategorias.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCategorias.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCategorias.UseVisualStyleBackColor = false;
+            this.btnCategorias.Click += new System.EventHandler(this.btnCategorias_Click);
             // 
             // btnConProduto
             // 
@@ -585,11 +589,22 @@
             // 
             // pnlLogo
             // 
+            this.pnlLogo.Controls.Add(this.pictureBox1);
             this.pnlLogo.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlLogo.Location = new System.Drawing.Point(0, 0);
             this.pnlLogo.Name = "pnlLogo";
             this.pnlLogo.Size = new System.Drawing.Size(233, 100);
             this.pnlLogo.TabIndex = 2;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::KadoshModas.Properties.Resources.LOGO_FUNDO_TRANSPARENTE;
+            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(218, 82);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
             // pnlCabecalho
             // 
@@ -624,11 +639,14 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TelaPrincipal";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TelaPrincipal_FormClosed);
+            this.Load += new System.EventHandler(this.TelaPrincipal_Load);
             this.pnlMenuLateral.ResumeLayout(false);
             this.pnlSubmenuOpcoesAvancadas.ResumeLayout(false);
             this.pnlSubmenuProdutos.ResumeLayout(false);
             this.pnlSubmenuVendas.ResumeLayout(false);
             this.pnlSubmenuClientes.ResumeLayout(false);
+            this.pnlLogo.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -661,5 +679,6 @@
         private FontAwesome.Sharp.IconButton iconButton2;
         private FontAwesome.Sharp.IconButton iconButton3;
         private FontAwesome.Sharp.IconButton iconButton4;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

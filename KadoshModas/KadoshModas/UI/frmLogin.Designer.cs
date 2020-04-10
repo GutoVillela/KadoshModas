@@ -31,7 +31,6 @@
             this.txtUsuario = new System.Windows.Forms.TextBox();
             this.txtSenha = new System.Windows.Forms.TextBox();
             this.btnEsqueciSenha = new System.Windows.Forms.Button();
-            this.picLogo = new FontAwesome.Sharp.IconPictureBox();
             this.picUsuario = new FontAwesome.Sharp.IconPictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.picSenha = new FontAwesome.Sharp.IconPictureBox();
@@ -39,10 +38,11 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnFechar = new FontAwesome.Sharp.IconButton();
             this.btnEntrar = new FontAwesome.Sharp.IconButton();
-            ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.picUsuario)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSenha)).BeginInit();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // txtUsuario
@@ -82,19 +82,6 @@
             this.btnEsqueciSenha.TabIndex = 5;
             this.btnEsqueciSenha.Text = "Esqueci minha senha";
             this.btnEsqueciSenha.UseVisualStyleBackColor = true;
-            // 
-            // picLogo
-            // 
-            this.picLogo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.picLogo.IconChar = FontAwesome.Sharp.IconChar.Edit;
-            this.picLogo.IconColor = System.Drawing.Color.White;
-            this.picLogo.IconSize = 150;
-            this.picLogo.ImageLocation = "";
-            this.picLogo.Location = new System.Drawing.Point(139, 51);
-            this.picLogo.Name = "picLogo";
-            this.picLogo.Size = new System.Drawing.Size(150, 150);
-            this.picLogo.TabIndex = 6;
-            this.picLogo.TabStop = false;
             // 
             // picUsuario
             // 
@@ -181,18 +168,28 @@
             this.btnEntrar.UseVisualStyleBackColor = false;
             this.btnEntrar.Click += new System.EventHandler(this.btnEntrar_Click);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::KadoshModas.Properties.Resources.LOGO_FUNDO_TRANSPARENTE;
+            this.pictureBox1.Location = new System.Drawing.Point(75, 66);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(247, 116);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 13;
+            this.pictureBox1.TabStop = false;
+            // 
             // frmLogin
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(400, 450);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btnEntrar);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.picSenha);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.picUsuario);
-            this.Controls.Add(this.picLogo);
             this.Controls.Add(this.btnEsqueciSenha);
             this.Controls.Add(this.txtSenha);
             this.Controls.Add(this.txtUsuario);
@@ -203,10 +200,11 @@
             this.Name = "frmLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Kadosh Modas";
-            ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
+            this.Load += new System.EventHandler(this.frmLogin_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picUsuario)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSenha)).EndInit();
             this.panel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -216,7 +214,6 @@
         private System.Windows.Forms.TextBox txtUsuario;
         private System.Windows.Forms.TextBox txtSenha;
         private System.Windows.Forms.Button btnEsqueciSenha;
-        private FontAwesome.Sharp.IconPictureBox picLogo;
         private FontAwesome.Sharp.IconPictureBox picUsuario;
         private System.Windows.Forms.Panel panel1;
         private FontAwesome.Sharp.IconPictureBox picSenha;
@@ -224,6 +221,7 @@
         private System.Windows.Forms.Panel panel3;
         private FontAwesome.Sharp.IconButton btnFechar;
         private FontAwesome.Sharp.IconButton btnEntrar;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

@@ -18,7 +18,8 @@ namespace KadoshModas.UI
             InitializeComponent();
         }
 
-        private void btnCadCategoria_Click(object sender, EventArgs e)
+        #region Eventos
+        private void btnCadMarca_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtMarca.Text.Trim()))
             {
@@ -44,5 +45,6 @@ namespace KadoshModas.UI
 
             }
         }
+        #endregion
     }
 }

@@ -83,6 +83,16 @@ namespace KadoshModas.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap LOGO_FUNDO_TRANSPARENTE {
+            get {
+                object obj = ResourceManager.GetObject("LOGO_FUNDO_TRANSPARENTE", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap transparent_loading_gif {
             get {
                 object obj = ResourceManager.GetObject("transparent-loading-gif", resourceCulture);

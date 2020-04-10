@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KadoshModas.DML
 {
-    class DmoCliente
+    public class DmoCliente : DmoBase
     {
         #region Propriedades de Cliente
 
@@ -49,16 +49,6 @@ namespace KadoshModas.DML
         /// Lista de telefones do Cliente
         /// </summary>
         public List<DmoTelefone> Telefones { get; set; }
-
-        /// <summary>
-        /// Data de criação do registro na base de dados
-        /// </summary>
-        public DateTime DataDeCriacao { get; set; }
-
-        /// <summary>
-        /// Data da última atualização do registro na base de dados
-        /// </summary>
-        public DateTime DataDeAtualizacao { get; set; }
 
         /// <summary>
         /// Sexos

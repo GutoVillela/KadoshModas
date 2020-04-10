@@ -8,10 +8,11 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>KadoshModas</RootNamespace>
     <AssemblyName>KadoshModas</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -35,6 +36,9 @@
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icone_kadosh.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="FontAwesome.Sharp, Version=5.12.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FontAwesome.Sharp.5.12.1\lib\net472\FontAwesome.Sharp.dll</HintPath>
@@ -52,14 +56,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\BoAtributo.cs" />
+    <Compile Include="BLL\BoAtributosDoProduto.cs" />
+    <Compile Include="BLL\BoBase.cs" />
     <Compile Include="BLL\BoCategoria.cs" />
     <Compile Include="BLL\BoCidade.cs" />
     <Compile Include="BLL\BoCliente.cs" />
+    <Compile Include="BLL\BoEndereco.cs" />
     <Compile Include="BLL\BoEstado.cs" />
     <Compile Include="BLL\BoLogin.cs" />
     <Compile Include="BLL\BoMarca.cs" />
     <Compile Include="BLL\BoProduto.cs" />
     <Compile Include="DAL\Conexao.cs" />
+    <Compile Include="DAL\DaoAtributosDoProduto.cs" />
+    <Compile Include="DAL\DaoBase.cs" />
     <Compile Include="DAL\DaoCategoria.cs" />
     <Compile Include="DAL\DaoCidade.cs" />
     <Compile Include="DAL\DaoCliente.cs" />
@@ -69,6 +79,8 @@
     <Compile Include="DAL\DaoMarca.cs" />
     <Compile Include="DAL\DaoProduto.cs" />
     <Compile Include="DAL\DaoTelefone.cs" />
+    <Compile Include="DML\DmoAtributo.cs" />
+    <Compile Include="DML\DmoBase.cs" />
     <Compile Include="DML\DmoCategoria.cs" />
     <Compile Include="DML\DmoCliente.cs" />
     <Compile Include="DML\DmoEndereco.cs" />
@@ -77,6 +89,7 @@
     <Compile Include="DML\DmoProduto.cs" />
     <Compile Include="DML\DmoTelefone.cs" />
     <Compile Include="INF\DiretoriosDoSistema.cs" />
+    <Compile Include="INF\ParametrosDoSistema.cs" />
     <Compile Include="UI\CadCategoria.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,6 +120,12 @@
     <Compile Include="UI\ConCliente.Designer.cs">
       <DependentUpon>ConCliente.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\FichaCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FichaCliente.Designer.cs">
+      <DependentUpon>FichaCliente.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -136,6 +155,9 @@
     <EmbeddedResource Include="UI\ConCliente.resx">
       <DependentUpon>ConCliente.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\FichaCliente.resx">
+      <DependentUpon>FichaCliente.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </EmbeddedResource>
@@ -154,6 +176,7 @@
     </EmbeddedResource>
     <None Include="app.manifest" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\KadoshModas.DML.DmoCliente.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -168,7 +191,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="IMGS\CLIENTES\usuario-perfil-padrao.png" />
+    <Content Include="icone_kadosh.ico" />
+    <None Include="Resources\LOGO_FUNDO_TRANSPARENTE.png" />
     <None Include="Resources\usuario-perfil-padrao.png" />
     <None Include="Resources\icone-valido.png" />
     <None Include="Resources\icone-invalido.png" />

@@ -66,6 +66,11 @@ namespace KadoshModas.UI
         #endregion
 
         #region Eventos
+        private void TelaPrincipal_Load(object sender, EventArgs e)
+        {
+
+        }
+
         private void TelaPrincipal_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
@@ -113,6 +118,12 @@ namespace KadoshModas.UI
         {
             EsconderSubmenus();
             AbrirFormulario(new CadCliente());
+        }
+
+        private void btnCategorias_Click(object sender, EventArgs e)
+        {
+            EsconderSubmenus();
+            AbrirFormulario(new CadCategoria());
         }
         #endregion
     }

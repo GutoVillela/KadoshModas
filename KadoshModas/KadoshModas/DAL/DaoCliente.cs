@@ -28,7 +28,7 @@ namespace KadoshModas.DAL
         /// <summary>
         /// Nome da tabela de Clientes no banco de dados
         /// </summary>
-        private const string NOME_TABELA = "TB_CLIENTES";
+        const string NOME_TABELA = "TB_CLIENTES";
         #endregion
 
         #region Métodos
@@ -98,6 +98,9 @@ namespace KadoshModas.DAL
                     cliente.Nome = dataReader["NOME"].ToString();
                     cliente.Email = dataReader["EMAIL"].ToString();
                     cliente.CPF = dataReader["CPF"].ToString();
+                    cliente.Sexo = (DmoCliente.Sexos) int.Parse(dataReader["SEXO"].ToString());
+                    cliente.Endereco = string.IsNullOrEmpty(dataReader["ENDERECO"].ToString()) ? null : new DmoEndereco { IdEndereco = int.Parse(dataReader["ENDERECO"].ToString()) };
+                    cliente.UrlFoto = dataReader["URL_FOTO"].ToString();
                     cliente.DataDeCriacao = DateTime.Parse(dataReader["DT_CRIACAO"].ToString());
                     cliente.DataDeAtualizacao = DateTime.Parse(dataReader["DT_ATUALIZACAO"].ToString());
 
@@ -123,7 +126,7 @@ namespace KadoshModas.DAL
         {
             try
             {
-                SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA + " C JOIN TB_TELEFONES T ON C.ID_CLIENTE = T.CLIENTE WHERE C.NOME LIKE @NOME;", conexao.Conectar());
+                SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA + " C WHERE C.NOME LIKE @NOME;", conexao.Conectar());
                 cmd.Parameters.AddWithValue("@NOME", pNome + "%").SqlDbType = SqlDbType.VarChar;
                 SqlDataReader dataReader = cmd.ExecuteReader();
 
@@ -136,6 +139,9 @@ namespace KadoshModas.DAL
                     cliente.Nome = dataReader["NOME"].ToString();
                     cliente.Email = dataReader["EMAIL"].ToString();
                     cliente.CPF = dataReader["CPF"].ToString();
+                    cliente.Sexo = (DmoCliente.Sexos)int.Parse(dataReader["SEXO"].ToString());
+                    cliente.Endereco = string.IsNullOrEmpty(dataReader["ENDERECO"].ToString()) ? null : new DmoEndereco { IdEndereco = int.Parse(dataReader["ENDERECO"].ToString()) };
+                    cliente.UrlFoto = dataReader["URL_FOTO"].ToString();
                     cliente.DataDeCriacao = DateTime.Parse(dataReader["DT_CRIACAO"].ToString());
                     cliente.DataDeAtualizacao = DateTime.Parse(dataReader["DT_ATUALIZACAO"].ToString());
 
@@ -147,6 +153,83 @@ namespace KadoshModas.DAL
                 return listaDeClientes;
             }
             catch (Exception erro)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Busca o Endereço de um determinado Cliente
+        /// </summary>
+        /// <param name="pIdCliente">ID do Cliente</param>
+        /// <returns>Retorna um objeto DmoEndereco preenchido. Caso o Cliente especificado não possua Endereço cadastrado o valor null é retornado.</returns>
+        public DmoEndereco ConsultarEnderecoDoCliente(int pIdCliente)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + DaoEndereco.NOME_TABELA + " E JOIN " + NOME_TABELA + " C ON C.ENDERECO = E.ID_ENDERECO WHERE ID_CLIENTE = @ID_CLIENTE;", conexao.Conectar());
+                cmd.Parameters.AddWithValue("@ID_CLIENTE", pIdCliente).SqlDbType = SqlDbType.Int;
+
+                SqlDataReader dataReader = cmd.ExecuteReader();
+
+                dataReader.Read();
+
+                DmoEndereco endereco = new DmoEndereco
+                {
+                    IdEndereco = int.Parse(dataReader["ID_ENDERECO"].ToString()),
+                    Rua = dataReader["RUA"].ToString(),
+                    Bairro = dataReader["BAIRRO"].ToString(),
+                    Numero = dataReader["NUMERO"].ToString(),
+                    Complemento = dataReader["COMPLEMENTO"].ToString(),
+                    CEP = dataReader["CEP"].ToString(),
+                    Cidade = string.IsNullOrEmpty(dataReader["CIDADE"].ToString()) ? null : new DmoCidade { IdCidade = int.Parse(dataReader["CIDADE"].ToString()) },
+                    DataDeCriacao = DateTime.Parse(""),
+                    DataDeAtualizacao = DateTime.Parse("")
+                };
+
+                return endereco;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Busca os Telefones de um determinado Cliente
+        /// </summary>
+        /// <param name="pIdCliente">Id co Cliente</param>
+        /// <returns>Retorna uma lista de Telefones do Cliente. Retorna null em caso de erro.</returns>
+        public List<DmoTelefone> ConsultarTelefonesDoCliente(int pIdCliente)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + DaoTelefone.NOME_TABELA + " T JOIN " + NOME_TABELA + " C ON C.ID_CLIENTE = T.CLIENTE WHERE ID_CLIENTE = @ID_CLIENTE;", conexao.Conectar());
+                cmd.Parameters.AddWithValue("@ID_CLIENTE", pIdCliente).SqlDbType = SqlDbType.Int;
+
+                SqlDataReader dataReader = cmd.ExecuteReader();
+
+                List<DmoTelefone> listaDeTelefones = new List<DmoTelefone>();
+
+                while (dataReader.Read())
+                {
+                    DmoTelefone telefone = new DmoTelefone
+                    {
+                        Cliente = new DmoCliente { IdCliente = pIdCliente },
+                        DDD = dataReader["DDD"].ToString(),
+                        Numero = dataReader["NUMERO"].ToString(),
+                        TipoDeTelefone = (DmoTelefone.TiposDeTelefone)int.Parse(dataReader["TIPO_TELEFONE"].ToString()),
+                        FalarCom = dataReader["FALAR_COM"].ToString(),
+                        DataDeCriacao = DateTime.Parse(dataReader["DT_CRIACAO"].ToString()),
+                        DataDeAtualizacao = DateTime.Parse(dataReader["DT_ATUALIZACAO"].ToString())
+                    };
+
+                    listaDeTelefones.Add(telefone);
+                }
+
+                return listaDeTelefones;
+            }
+            catch
             {
                 return null;
             }
@@ -173,6 +256,34 @@ namespace KadoshModas.DAL
             {
                 return 0;
             }
+        }
+
+        /// <summary>
+        /// Atualiza a Url da Foto do Cliente na base de dados
+        /// </summary>
+        /// <param name="pNovaUrlFoto">URL da novo foto</param>
+        /// <param name="pIdCliente">Id do Cliente</param>
+        /// <returns>Retorna true em caso de sucesso ou false em caso de erro</returns>
+        public bool AtualizarFoto(string pNovaUrlFoto, int? pIdCliente)
+        {
+            if (string.IsNullOrEmpty(pNovaUrlFoto) || pIdCliente == null)
+                throw new ArgumentException("Os parâmetros pNovaUrlFoto e pIdCliente não podem ser nulos");
+            try
+            {
+                SqlCommand cmd = new SqlCommand(@"UPDATE " + NOME_TABELA + " SET URL_FOTO = @URL_FOTO WHERE ID_CLIENTE = @ID_CLIENTE", conexao.Conectar());
+                cmd.Parameters.AddWithValue("@URL_FOTO", pNovaUrlFoto).SqlDbType = SqlDbType.VarChar;
+                cmd.Parameters.AddWithValue("@ID_CLIENTE", pIdCliente).SqlDbType = SqlDbType.Int;
+
+                cmd.ExecuteNonQuery();
+                conexao.Desconectar();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            
         }
         #endregion
     }

@@ -128,7 +128,7 @@ namespace KadoshModas.DAL
         {
             try
             {
-                SqlCommand cmd = new SqlCommand("SELECT MAX(ID_MARCA) AS ID FROM " + NOME_TABELA, conexao.Conectar());
+                SqlCommand cmd = new SqlCommand("SELECT MAX(ID_PRODUTO) AS ID FROM " + NOME_TABELA, conexao.Conectar());
 
                 SqlDataReader dr = cmd.ExecuteReader();
 
@@ -143,6 +143,33 @@ namespace KadoshModas.DAL
             }
         }
 
+        //// <summary>
+        /// Atualiza a Url da Foto do Produto na base de dados
+        /// </summary>
+        /// <param name="pNovaUrlFoto">URL da novo foto</param>
+        /// <param name="pIdProduto">Id do Produto</param>
+        /// <returns>Retorna true em caso de sucesso ou false em caso de erro</returns>
+        public bool AtualizarFoto(string pNovaUrlFoto, int? pIdProduto)
+        {
+            if (string.IsNullOrEmpty(pNovaUrlFoto) || pIdProduto == null)
+                throw new ArgumentException("Os parâmetros pNovaUrlFoto e pIdProduto não podem ser nulos");
+            try
+            {
+                SqlCommand cmd = new SqlCommand(@"UPDATE " + NOME_TABELA + " SET URL_FOTO = @URL_FOTO WHERE ID_PRODUTO = @ID_PRODUTO", conexao.Conectar());
+                cmd.Parameters.AddWithValue("@URL_FOTO", pNovaUrlFoto).SqlDbType = SqlDbType.VarChar;
+                cmd.Parameters.AddWithValue("@ID_PRODUTO", pIdProduto).SqlDbType = SqlDbType.Int;
+
+                cmd.ExecuteNonQuery();
+                conexao.Desconectar();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
         #endregion
     }
 }

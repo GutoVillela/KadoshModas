@@ -28,7 +28,7 @@ namespace KadoshModas.DAL
         /// <summary>
         /// Nome da tabela de Telefones no banco de dados
         /// </summary>
-        private const string NOME_TABELA = "TB_TELEFONES";
+        public static readonly string NOME_TABELA = "TB_TELEFONES";
         #endregion
 
         #region Métodos

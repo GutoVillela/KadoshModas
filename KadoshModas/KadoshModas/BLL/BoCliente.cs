@@ -35,9 +35,7 @@ namespace KadoshModas.BLL
             {
                 //Copiar imagem para pasta e recuperar nova URL
                 if (!string.IsNullOrEmpty(dmoCliente.UrlFoto))
-                {
-                    dmoCliente.UrlFoto = SalvarFotoERecuperarUrl(dmoCliente.UrlFoto, "FC_" + idClienteCadastrado + ".jpg");
-                }
+                    AtualizarFoto(SalvarFotoERecuperarUrl(dmoCliente.UrlFoto, "FC_" + idClienteCadastrado + ".jpg"), idClienteCadastrado);
 
                 //Cadastro de telefones
                 if (dmoCliente.Telefones != null && dmoCliente.Telefones.Count > 0)
@@ -63,7 +61,19 @@ namespace KadoshModas.BLL
         /// <returns>Retorna uma lista de objetos DmoCliente com todos os clientes da base</returns>
         public List<DmoCliente> Consultar()
         {
-            return new DaoCliente().Consultar();
+            List <DmoCliente> listaDeClientes = new DaoCliente().Consultar();
+
+            for(int i = 0; i < listaDeClientes.Count; i++)
+            {
+                //Buscar Endereço do Cliente
+                if (listaDeClientes[i].Endereco != null)
+                    listaDeClientes[i].Endereco = new BoEndereco().ConsultarEnderecoPorId(int.Parse(listaDeClientes[i].Endereco.IdEndereco.ToString()));
+
+                //Buscar Lista de Telefones do Cliente
+                listaDeClientes[i].Telefones = new DaoCliente().ConsultarTelefonesDoCliente(int.Parse(listaDeClientes[i].IdCliente.ToString()));
+            }
+
+            return listaDeClientes;
         }
 
         /// <summary>
@@ -89,6 +99,17 @@ namespace KadoshModas.BLL
             File.Copy(pUrlFoto, diretorioImagem, true);
 
             return diretorioImagem;
+        }
+
+        /// <summary>
+        /// Atualiza a Url da Foto do Cliente na base de dados
+        /// </summary>
+        /// <param name="pNovaUrlFoto">URL da novo foto</param>
+        /// <param name="pIdCliente">Id do Cliente</param>
+        /// <returns>Retorna true em caso de sucesso ou false em caso de erro</returns>
+        public bool AtualizarFoto(string pNovaUrlFoto, int? pIdCliente)
+        {
+            return new DaoCliente().AtualizarFoto(pNovaUrlFoto, pIdCliente);
         }
 
         /// <summary>

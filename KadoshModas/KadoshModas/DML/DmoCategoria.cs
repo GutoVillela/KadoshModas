@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KadoshModas.DML
 {
-    class DmoCategoria
+    class DmoCategoria : DmoBase
     {
         #region Propriedades de Categoria
         /// <summary>
@@ -18,16 +18,6 @@ namespace KadoshModas.DML
         /// Nome da Categoria
         /// </summary>
         public string Nome { get; set; }
-
-        /// <summary>
-        /// Data de criação do registro na base de dados
-        /// </summary>
-        public DateTime DataDeCriacao { get; set; }
-
-        /// <summary>
-        /// Data da última atualização do registro na base de dados
-        /// </summary>
-        public DateTime DataDeAtualizacao { get; set; }
         #endregion
     }
 }

@@ -14,11 +14,19 @@ namespace KadoshModas.INF
     class DiretoriosDoSistema
     {
         /// <summary>
-        /// Diretório aonde serão salvas as fotos dos clientes (caso não exista, será criado e seu caminho retornado em uma string)
+        /// Diretório aonde serão salvas as fotos dos Clientes (caso não exista, será criado e seu caminho retornado em uma string)
         /// </summary>
         public static string DIR_FOTOS_CLIENTES
         {
             get { return Directory.CreateDirectory(Path.GetDirectoryName(Application.ExecutablePath) + "\\FotosClientes").FullName; }
+        }
+
+        /// <summary>
+        /// Diretório aonde serão salvas as fotos dos Produtos (caso não exista, será criado e seu caminho retornado em uma string)
+        /// </summary>
+        public static string DIR_FOTOS_PRODUTOS
+        {
+            get { return Directory.CreateDirectory(Path.GetDirectoryName(Application.ExecutablePath) + "\\FotosProdutos").FullName; }
         }
     }
 }

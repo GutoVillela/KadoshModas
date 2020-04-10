@@ -48,11 +48,13 @@ namespace KadoshModas.UI
                 if(value == 3)
                 {
                     btnCadastrarCliente.IconChar = FontAwesome.Sharp.IconChar.CheckCircle;
+                    btnCadastrarCliente.BackColor = Color.Green;
                     btnCadastrarCliente.Text = "Cadastrar Cliente";
                 }
                 else
                 {
                     btnCadastrarCliente.IconChar = FontAwesome.Sharp.IconChar.ArrowCircleRight;
+                    btnCadastrarCliente.BackColor = Color.Black;
                     btnCadastrarCliente.Text = "Próxima Etapa";
                 }
 
@@ -71,12 +73,11 @@ namespace KadoshModas.UI
         }
         #endregion
 
-
         #region Métodos
         private void MontarAmbienteInicial()
         {
             //Formulário
-            this.Size = new CadMarca().Size;
+            this.Size = INF.ParametrosDoSistema.TAMANHO_FORMULARIOS;
 
             //Panels das etapas e de conteúdo
             pnlConteudo.Location = new Point { X = 0, Y = 0 };
@@ -96,7 +97,7 @@ namespace KadoshModas.UI
             cboEstado.SelectedItem = estados.Find(estado => estado.Nome == "São Paulo");
 
             //ComboBox de Tipo de Telefone
-            cboTipoTelefone.DataSource = new BindingSource(new DmoTelefone().DescricaoEnum().OrderBy(key => key.Value), null);
+            cboTipoTelefone.DataSource = new BindingSource(new DmoTelefone().DescricoesEnum<DmoTelefone.TiposDeTelefone>().OrderBy(key => key.Value), null);
             cboTipoTelefone.DisplayMember = "Key";
 
             MudarParaEtapa(1);
@@ -183,8 +184,15 @@ namespace KadoshModas.UI
                 if (this.cliente.Telefones == null)
                     this.cliente.Telefones = new List<DmoTelefone>();
 
+                //Verificar se telefone já foi adicionado na lista
+                if (cliente.Telefones.Any(t => t.DDD == telefone.DDD && t.Numero == telefone.Numero))
+                {
+                    MessageBox.Show("Este número já foi adicionado na lista de telefones. Se você deseja CORRIGI-LO, exclua-o da lista de telefones e depois tente novamente.", "Telefone já adicionado na lista", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return true;
+                }
+
                 cliente.Telefones.Add(telefone);
-                lstTelefones.Items.Add("(" + telefone.DDD + ")" + telefone.Numero + " - " + telefone.DescricaoEnum(telefone.TipoDeTelefone) + " - Falar com: " + (string.IsNullOrEmpty(telefone.FalarCom) ? " O próprio cliente" : telefone.FalarCom));
+                lstTelefones.Items.Add("(" + telefone.DDD + ")" + telefone.Numero + " - " + telefone.DescricaoEnum<DmoTelefone.TiposDeTelefone>(telefone.TipoDeTelefone) + " - Falar com: " + (string.IsNullOrEmpty(telefone.FalarCom) ? " O próprio cliente" : telefone.FalarCom));
                 
                 return true;
 
@@ -274,7 +282,7 @@ namespace KadoshModas.UI
             }
 
             //Cadastro de telefone
-            if(!string.IsNullOrEmpty(txtTelefone.Text.Replace("(", "").Replace(")", "").Replace("-", "").Replace(" ", "").Trim()))
+            if(!string.IsNullOrEmpty(txtTelefone.Text.Replace("(", "").Replace(")", "").Replace("-", "").Replace(" ", "").Trim()) && !chkMaisNumeros.Checked)
             {
                 if (!AdicionarTelefone())
                 {
@@ -288,10 +296,6 @@ namespace KadoshModas.UI
                 return true;
         }
 
-        private void EscolherFotoDoCliente()
-        {
-            
-        }
         /// <summary>
         /// Cadastra o Cliente com as informações preenchidas nas etapas de cadastro
         /// </summary>
@@ -307,6 +311,19 @@ namespace KadoshModas.UI
                 MessageBox.Show("Aconteceu um erro ao cadastrar o novo cliente", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             
         }
+
+        /// <summary>
+        /// Define o comportamento da Masked TextBox
+        /// </summary>
+        /// <param name="pMaskedTextBox">MaskedTextBox alvo</param>
+        private void ComportamentoMaskedTextBox(MaskedTextBox pMaskedTextBox)
+        {
+            this.BeginInvoke((MethodInvoker)delegate ()
+            {
+                int ultimoCaractereNumerico = pMaskedTextBox.Text.LastIndexOfAny(new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
+                pMaskedTextBox.Select(ultimoCaractereNumerico < 0 ? 0 : ultimoCaractereNumerico + 1, 0);
+            });
+        }
         #endregion
 
         #region Eventos
@@ -321,7 +338,7 @@ namespace KadoshModas.UI
             if(EtapaAtual == 3)
                 CadastrarCliente();
             else
-                MudarParaEtapa(++EtapaAtual);
+                MudarParaEtapa(EtapaAtual + 1);
             
         }
 
@@ -429,8 +446,37 @@ namespace KadoshModas.UI
             UsuarioEscolheuFotoCliente = false;
         }
 
-        #endregion
+        private void txtCpf_Enter(object sender, EventArgs e)
+        {
+            ComportamentoMaskedTextBox((MaskedTextBox)sender);
+        }
 
+        private void txtCpf_Click(object sender, EventArgs e)
+        {
+            ComportamentoMaskedTextBox((MaskedTextBox)sender);
+        }
+
+        private void txtCep_Enter(object sender, EventArgs e)
+        {
+            ComportamentoMaskedTextBox((MaskedTextBox)sender);
+        }
+
+        private void txtCep_Click(object sender, EventArgs e)
+        {
+            ComportamentoMaskedTextBox((MaskedTextBox)sender);
+        }
+
+
+        private void txtTelefone_Enter(object sender, EventArgs e)
+        {
+            ComportamentoMaskedTextBox((MaskedTextBox)sender);
+        }
+
+        private void txtTelefone_Click(object sender, EventArgs e)
+        {
+            ComportamentoMaskedTextBox((MaskedTextBox)sender);
+        }
+        #endregion
 
     }
 }

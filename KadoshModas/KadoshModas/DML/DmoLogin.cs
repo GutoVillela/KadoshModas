@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace KadoshModas.DML
 {
-    class DmoLogin
+    class DmoLogin : DmoBase
     {
         #region Propriedades
         /// <summary>
@@ -20,14 +21,17 @@ namespace KadoshModas.DML
         public string Senha { get; set; }
 
         /// <summary>
-        /// Data de criação do registro na base de dados
+        /// Nível de acesso
         /// </summary>
-        public DateTime DataDeCriacao { get; set; }
-
-        /// <summary>
-        /// Data da última atualização do registro na base de dados
-        /// </summary>
-        public DateTime DataDeAtualizacao { get; set; }
+        public NiveisAcesso NivelDeAcesso { get; set; }
         #endregion
+
+        public enum NiveisAcesso
+        {
+            Administrador,
+
+            [Description("Usuário")]
+            Usuario
+        }
     }
 }

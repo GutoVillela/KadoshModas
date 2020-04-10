@@ -31,7 +31,7 @@ namespace KadoshModas.DAL
         /// <summary>
         /// Nome da tabela de Endereços no banco de dados
         /// </summary>
-        private const string NOME_TABELA = "TB_ENDERECOS";
+        public static readonly string NOME_TABELA = "TB_ENDERECOS";
         #endregion
 
         #region Métodos
@@ -82,6 +82,43 @@ namespace KadoshModas.DAL
                 return ConsultarUltimoId();
             }
             catch (Exception erro)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Busca o Endereço por ID
+        /// </summary>
+        /// <param name="pIdEndereco">ID do Endereço</param>
+        /// <returns>Retorna um objeto DmoEndereco preenchido. Retorna null em caso de erro.</returns>
+        public DmoEndereco ConsultarEnderecoPorId(int pIdEndereco)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA + " WHERE ID_ENDERECO = @ID_ENDERECO;", conexao.Conectar());
+                cmd.Parameters.AddWithValue("@ID_ENDERECO", pIdEndereco).SqlDbType = SqlDbType.Int;
+
+                SqlDataReader dataReader = cmd.ExecuteReader();
+
+                dataReader.Read();
+
+                DmoEndereco endereco = new DmoEndereco
+                {
+                    IdEndereco = int.Parse(dataReader["ID_ENDERECO"].ToString()),
+                    Rua = dataReader["RUA"].ToString(),
+                    Bairro = dataReader["BAIRRO"].ToString(),
+                    Numero = dataReader["NUMERO"].ToString(),
+                    Complemento = dataReader["COMPLEMENTO"].ToString(),
+                    CEP = dataReader["CEP"].ToString(),
+                    Cidade = string.IsNullOrEmpty(dataReader["CIDADE"].ToString()) ? null : new DmoCidade { IdCidade = int.Parse(dataReader["CIDADE"].ToString()) },
+                    DataDeCriacao = DateTime.Parse(dataReader["DT_CRIACAO"].ToString()),
+                    DataDeAtualizacao = DateTime.Parse(dataReader["DT_ATUALIZACAO"].ToString())
+                };
+
+                return endereco;
+            }
+            catch(Exception erro)
             {
                 return null;
             }

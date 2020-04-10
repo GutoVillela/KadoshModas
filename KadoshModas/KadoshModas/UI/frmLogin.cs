@@ -20,6 +20,12 @@ namespace KadoshModas
             InitializeComponent();
         }
 
+        #region Eventos
+        private void frmLogin_Load(object sender, EventArgs e)
+        {
+            DmoBase dmoBase = new DmoBase();
+            var v = dmoBase.DescricoesEnum<DmoTelefone.TiposDeTelefone>();
+        }
         private void btnEntrar_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
@@ -45,5 +51,6 @@ namespace KadoshModas
         {
             Application.Exit();
         }
+        #endregion
     }
 }

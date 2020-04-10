@@ -75,9 +75,9 @@
             this.picEtapa2 = new FontAwesome.Sharp.IconPictureBox();
             this.picEtapa1 = new FontAwesome.Sharp.IconPictureBox();
             this.pnlCadCliEtapa3 = new System.Windows.Forms.Panel();
+            this.pnlConteudo = new System.Windows.Forms.Panel();
             this.btnCadastrarCliente = new FontAwesome.Sharp.IconButton();
             this.btnCancelar = new FontAwesome.Sharp.IconButton();
-            this.pnlConteudo = new System.Windows.Forms.Panel();
             this.openFileDialogFoto = new System.Windows.Forms.OpenFileDialog();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pcbLoaderCPF)).BeginInit();
@@ -107,6 +107,8 @@
             // 
             // txtNomeCliente
             // 
+            this.txtNomeCliente.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtNomeCliente.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtNomeCliente.Location = new System.Drawing.Point(128, 37);
             this.txtNomeCliente.Name = "txtNomeCliente";
@@ -124,6 +126,8 @@
             // 
             // txtEmail
             // 
+            this.txtEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtEmail.Location = new System.Drawing.Point(119, 25);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(450, 28);
@@ -141,13 +145,17 @@
             // 
             // txtCpf
             // 
+            this.txtCpf.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtCpf.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCpf.Location = new System.Drawing.Point(128, 75);
             this.txtCpf.Mask = "000,000,000-00";
             this.txtCpf.Name = "txtCpf";
             this.txtCpf.Size = new System.Drawing.Size(151, 28);
             this.txtCpf.TabIndex = 5;
+            this.txtCpf.Click += new System.EventHandler(this.txtCpf_Click);
             this.txtCpf.TextChanged += new System.EventHandler(this.txtCpf_TextChanged);
+            this.txtCpf.Enter += new System.EventHandler(this.txtCpf_Enter);
             // 
             // label4
             // 
@@ -165,6 +173,8 @@
             this.txtTelefone.Name = "txtTelefone";
             this.txtTelefone.Size = new System.Drawing.Size(149, 28);
             this.txtTelefone.TabIndex = 7;
+            this.txtTelefone.Click += new System.EventHandler(this.txtTelefone_Click);
+            this.txtTelefone.Enter += new System.EventHandler(this.txtTelefone_Enter);
             // 
             // chkMaisNumeros
             // 
@@ -179,7 +189,8 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.rdbSexoFeminino);
             this.groupBox1.Controls.Add(this.rdbSexoMasculino);
             this.groupBox1.Controls.Add(this.label12);
@@ -198,6 +209,7 @@
             // 
             // rdbSexoFeminino
             // 
+            this.rdbSexoFeminino.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.rdbSexoFeminino.AutoSize = true;
             this.rdbSexoFeminino.Checked = true;
             this.rdbSexoFeminino.Location = new System.Drawing.Point(382, 76);
@@ -210,6 +222,7 @@
             // 
             // rdbSexoMasculino
             // 
+            this.rdbSexoMasculino.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.rdbSexoMasculino.AutoSize = true;
             this.rdbSexoMasculino.Location = new System.Drawing.Point(481, 76);
             this.rdbSexoMasculino.Name = "rdbSexoMasculino";
@@ -220,6 +233,7 @@
             // 
             // label12
             // 
+            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.Location = new System.Drawing.Point(330, 78);
@@ -230,6 +244,7 @@
             // 
             // pcbLoaderCPF
             // 
+            this.pcbLoaderCPF.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pcbLoaderCPF.Image = global::KadoshModas.Properties.Resources.transparent_loading_gif;
             this.pcbLoaderCPF.Location = new System.Drawing.Point(287, 75);
             this.pcbLoaderCPF.Name = "pcbLoaderCPF";
@@ -241,7 +256,9 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.lstTelefones);
             this.groupBox2.Controls.Add(this.btnAddNumero);
             this.groupBox2.Controls.Add(this.txtFalarCom);
@@ -262,6 +279,9 @@
             // 
             // lstTelefones
             // 
+            this.lstTelefones.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lstTelefones.FormattingEnabled = true;
             this.lstTelefones.ItemHeight = 21;
             this.lstTelefones.Location = new System.Drawing.Point(119, 196);
@@ -272,7 +292,9 @@
             // 
             // btnAddNumero
             // 
+            this.btnAddNumero.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddNumero.BackColor = System.Drawing.Color.Transparent;
+            this.btnAddNumero.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAddNumero.FlatAppearance.BorderSize = 0;
             this.btnAddNumero.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddNumero.Flip = FontAwesome.Sharp.FlipOrientation.Normal;
@@ -291,6 +313,8 @@
             // 
             // txtFalarCom
             // 
+            this.txtFalarCom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtFalarCom.Location = new System.Drawing.Point(119, 148);
             this.txtFalarCom.Name = "txtFalarCom";
             this.txtFalarCom.Size = new System.Drawing.Size(450, 28);
@@ -307,17 +331,21 @@
             // 
             // cboTipoTelefone
             // 
+            this.cboTipoTelefone.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cboTipoTelefone.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboTipoTelefone.FormattingEnabled = true;
-            this.cboTipoTelefone.Location = new System.Drawing.Point(304, 63);
+            this.cboTipoTelefone.Location = new System.Drawing.Point(274, 63);
             this.cboTipoTelefone.Name = "cboTipoTelefone";
-            this.cboTipoTelefone.Size = new System.Drawing.Size(265, 29);
+            this.cboTipoTelefone.Size = new System.Drawing.Size(295, 29);
             this.cboTipoTelefone.TabIndex = 12;
             this.cboTipoTelefone.SelectedIndexChanged += new System.EventHandler(this.cboTipoTelefone_SelectedIndexChanged);
             // 
             // groupBox3
             // 
-            this.groupBox3.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.txtBairro);
             this.groupBox3.Controls.Add(this.label13);
             this.groupBox3.Controls.Add(this.txtComplemento);
@@ -342,6 +370,8 @@
             // 
             // txtBairro
             // 
+            this.txtBairro.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBairro.Font = new System.Drawing.Font("Microsoft Tai Le", 12F);
             this.txtBairro.Location = new System.Drawing.Point(128, 64);
             this.txtBairro.Name = "txtBairro";
@@ -360,6 +390,8 @@
             // 
             // txtComplemento
             // 
+            this.txtComplemento.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtComplemento.Font = new System.Drawing.Font("Microsoft Tai Le", 12F);
             this.txtComplemento.Location = new System.Drawing.Point(128, 176);
             this.txtComplemento.Name = "txtComplemento";
@@ -378,15 +410,19 @@
             // 
             // txtCep
             // 
+            this.txtCep.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtCep.Font = new System.Drawing.Font("Microsoft Tai Le", 12F);
             this.txtCep.Location = new System.Drawing.Point(436, 67);
             this.txtCep.Mask = "00000-000";
             this.txtCep.Name = "txtCep";
             this.txtCep.Size = new System.Drawing.Size(142, 28);
             this.txtCep.TabIndex = 11;
+            this.txtCep.Click += new System.EventHandler(this.txtCep_Click);
+            this.txtCep.Enter += new System.EventHandler(this.txtCep_Enter);
             // 
             // label9
             // 
+            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Tai Le", 12F);
             this.label9.Location = new System.Drawing.Point(378, 70);
@@ -397,6 +433,8 @@
             // 
             // cboCidade
             // 
+            this.cboCidade.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cboCidade.Font = new System.Drawing.Font("Microsoft Tai Le", 12F);
             this.cboCidade.FormattingEnabled = true;
             this.cboCidade.Location = new System.Drawing.Point(128, 140);
@@ -416,6 +454,8 @@
             // 
             // cboEstado
             // 
+            this.cboEstado.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cboEstado.Font = new System.Drawing.Font("Microsoft Tai Le", 12F);
             this.cboEstado.FormattingEnabled = true;
             this.cboEstado.Location = new System.Drawing.Point(354, 102);
@@ -454,6 +494,8 @@
             // 
             // txtRua
             // 
+            this.txtRua.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtRua.Font = new System.Drawing.Font("Microsoft Tai Le", 12F);
             this.txtRua.Location = new System.Drawing.Point(128, 26);
             this.txtRua.Name = "txtRua";
@@ -484,6 +526,7 @@
             // 
             // btnRemoverFoto
             // 
+            this.btnRemoverFoto.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRemoverFoto.FlatAppearance.BorderSize = 0;
             this.btnRemoverFoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRemoverFoto.Flip = FontAwesome.Sharp.FlipOrientation.Normal;
@@ -501,10 +544,13 @@
             // 
             // btnEscolherFotoDoPc
             // 
+            this.btnEscolherFotoDoPc.BackColor = System.Drawing.Color.DimGray;
+            this.btnEscolherFotoDoPc.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnEscolherFotoDoPc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEscolherFotoDoPc.Flip = FontAwesome.Sharp.FlipOrientation.Normal;
+            this.btnEscolherFotoDoPc.ForeColor = System.Drawing.Color.White;
             this.btnEscolherFotoDoPc.IconChar = FontAwesome.Sharp.IconChar.Laptop;
-            this.btnEscolherFotoDoPc.IconColor = System.Drawing.Color.Black;
+            this.btnEscolherFotoDoPc.IconColor = System.Drawing.Color.White;
             this.btnEscolherFotoDoPc.IconSize = 30;
             this.btnEscolherFotoDoPc.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnEscolherFotoDoPc.Location = new System.Drawing.Point(25, 298);
@@ -513,15 +559,19 @@
             this.btnEscolherFotoDoPc.Size = new System.Drawing.Size(250, 30);
             this.btnEscolherFotoDoPc.TabIndex = 3;
             this.btnEscolherFotoDoPc.Text = "Escolher do computador";
-            this.btnEscolherFotoDoPc.UseVisualStyleBackColor = true;
+            this.btnEscolherFotoDoPc.UseVisualStyleBackColor = false;
             this.btnEscolherFotoDoPc.Click += new System.EventHandler(this.btnEscolherFotoDoPc_Click);
             // 
             // btnTirarFoto
             // 
+            this.btnTirarFoto.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnTirarFoto.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnTirarFoto.FlatAppearance.BorderSize = 0;
             this.btnTirarFoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTirarFoto.Flip = FontAwesome.Sharp.FlipOrientation.Normal;
+            this.btnTirarFoto.ForeColor = System.Drawing.Color.White;
             this.btnTirarFoto.IconChar = FontAwesome.Sharp.IconChar.Camera;
-            this.btnTirarFoto.IconColor = System.Drawing.Color.Black;
+            this.btnTirarFoto.IconColor = System.Drawing.Color.White;
             this.btnTirarFoto.IconSize = 30;
             this.btnTirarFoto.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnTirarFoto.Location = new System.Drawing.Point(25, 262);
@@ -530,7 +580,7 @@
             this.btnTirarFoto.Size = new System.Drawing.Size(250, 30);
             this.btnTirarFoto.TabIndex = 2;
             this.btnTirarFoto.Text = "Tirar foto";
-            this.btnTirarFoto.UseVisualStyleBackColor = true;
+            this.btnTirarFoto.UseVisualStyleBackColor = false;
             this.btnTirarFoto.Click += new System.EventHandler(this.btnTirarFoto_Click);
             // 
             // picFotoCliente
@@ -564,7 +614,8 @@
             // 
             // panel1
             // 
-            this.panel1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.Controls.Add(this.picEtapa3);
             this.panel1.Controls.Add(this.picEtapa2);
             this.panel1.Controls.Add(this.picEtapa1);
@@ -575,11 +626,12 @@
             // 
             // picEtapa3
             // 
-            this.picEtapa3.BackColor = System.Drawing.Color.White;
+            this.picEtapa3.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.picEtapa3.BackColor = System.Drawing.Color.Transparent;
             this.picEtapa3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picEtapa3.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.picEtapa3.ForeColor = System.Drawing.Color.Black;
             this.picEtapa3.IconChar = FontAwesome.Sharp.IconChar.Circle;
-            this.picEtapa3.IconColor = System.Drawing.SystemColors.ControlText;
+            this.picEtapa3.IconColor = System.Drawing.Color.Black;
             this.picEtapa3.IconSize = 20;
             this.picEtapa3.Location = new System.Drawing.Point(338, 3);
             this.picEtapa3.Name = "picEtapa3";
@@ -590,11 +642,12 @@
             // 
             // picEtapa2
             // 
-            this.picEtapa2.BackColor = System.Drawing.Color.White;
+            this.picEtapa2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.picEtapa2.BackColor = System.Drawing.Color.Transparent;
             this.picEtapa2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picEtapa2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.picEtapa2.ForeColor = System.Drawing.Color.Black;
             this.picEtapa2.IconChar = FontAwesome.Sharp.IconChar.Circle;
-            this.picEtapa2.IconColor = System.Drawing.SystemColors.ControlText;
+            this.picEtapa2.IconColor = System.Drawing.Color.Black;
             this.picEtapa2.IconSize = 20;
             this.picEtapa2.Location = new System.Drawing.Point(312, 3);
             this.picEtapa2.Name = "picEtapa2";
@@ -605,11 +658,12 @@
             // 
             // picEtapa1
             // 
-            this.picEtapa1.BackColor = System.Drawing.Color.White;
+            this.picEtapa1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.picEtapa1.BackColor = System.Drawing.Color.Transparent;
             this.picEtapa1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picEtapa1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.picEtapa1.ForeColor = System.Drawing.Color.Black;
             this.picEtapa1.IconChar = FontAwesome.Sharp.IconChar.DotCircle;
-            this.picEtapa1.IconColor = System.Drawing.SystemColors.ControlText;
+            this.picEtapa1.IconColor = System.Drawing.Color.Black;
             this.picEtapa1.IconSize = 20;
             this.picEtapa1.Location = new System.Drawing.Point(286, 3);
             this.picEtapa1.Name = "picEtapa1";
@@ -627,31 +681,50 @@
             this.pnlCadCliEtapa3.Size = new System.Drawing.Size(634, 400);
             this.pnlCadCliEtapa3.TabIndex = 21;
             // 
+            // pnlConteudo
+            // 
+            this.pnlConteudo.Controls.Add(this.panel1);
+            this.pnlConteudo.Controls.Add(this.btnCadastrarCliente);
+            this.pnlConteudo.Controls.Add(this.btnCancelar);
+            this.pnlConteudo.Location = new System.Drawing.Point(12, 12);
+            this.pnlConteudo.Name = "pnlConteudo";
+            this.pnlConteudo.Size = new System.Drawing.Size(634, 511);
+            this.pnlConteudo.TabIndex = 24;
+            // 
             // btnCadastrarCliente
             // 
-            this.btnCadastrarCliente.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnCadastrarCliente.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCadastrarCliente.BackColor = System.Drawing.Color.Black;
+            this.btnCadastrarCliente.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCadastrarCliente.FlatAppearance.BorderSize = 0;
             this.btnCadastrarCliente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCadastrarCliente.Flip = FontAwesome.Sharp.FlipOrientation.Normal;
+            this.btnCadastrarCliente.ForeColor = System.Drawing.Color.White;
             this.btnCadastrarCliente.IconChar = FontAwesome.Sharp.IconChar.ArrowCircleRight;
-            this.btnCadastrarCliente.IconColor = System.Drawing.Color.Black;
+            this.btnCadastrarCliente.IconColor = System.Drawing.Color.White;
             this.btnCadastrarCliente.IconSize = 24;
-            this.btnCadastrarCliente.Location = new System.Drawing.Point(476, 448);
+            this.btnCadastrarCliente.Location = new System.Drawing.Point(467, 448);
             this.btnCadastrarCliente.Name = "btnCadastrarCliente";
             this.btnCadastrarCliente.Rotation = 0D;
-            this.btnCadastrarCliente.Size = new System.Drawing.Size(155, 60);
+            this.btnCadastrarCliente.Size = new System.Drawing.Size(164, 60);
             this.btnCadastrarCliente.TabIndex = 22;
             this.btnCadastrarCliente.Text = "Próxima Etapa";
             this.btnCadastrarCliente.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.btnCadastrarCliente.UseVisualStyleBackColor = true;
+            this.btnCadastrarCliente.UseVisualStyleBackColor = false;
             this.btnCadastrarCliente.Click += new System.EventHandler(this.btnCadastrarCliente_Click);
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnCancelar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnCancelar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCancelar.FlatAppearance.BorderSize = 0;
             this.btnCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancelar.Flip = FontAwesome.Sharp.FlipOrientation.Normal;
+            this.btnCancelar.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelar.ForeColor = System.Drawing.Color.White;
             this.btnCancelar.IconChar = FontAwesome.Sharp.IconChar.Times;
-            this.btnCancelar.IconColor = System.Drawing.Color.Black;
+            this.btnCancelar.IconColor = System.Drawing.Color.DarkRed;
             this.btnCancelar.IconSize = 24;
             this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCancelar.Location = new System.Drawing.Point(3, 448);
@@ -661,18 +734,8 @@
             this.btnCancelar.TabIndex = 23;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.UseVisualStyleBackColor = false;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
-            // 
-            // pnlConteudo
-            // 
-            this.pnlConteudo.Controls.Add(this.btnCadastrarCliente);
-            this.pnlConteudo.Controls.Add(this.btnCancelar);
-            this.pnlConteudo.Controls.Add(this.panel1);
-            this.pnlConteudo.Location = new System.Drawing.Point(12, 12);
-            this.pnlConteudo.Name = "pnlConteudo";
-            this.pnlConteudo.Size = new System.Drawing.Size(634, 511);
-            this.pnlConteudo.TabIndex = 24;
             // 
             // openFileDialogFoto
             // 
@@ -690,6 +753,7 @@
             this.Controls.Add(this.pnlCadCliEtapa2);
             this.Controls.Add(this.pnlCadCliEtapa1);
             this.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForeColor = System.Drawing.Color.Black;
             this.Name = "CadCliente";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Cadastrar novo cliente";
