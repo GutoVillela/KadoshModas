@@ -18,6 +18,10 @@ namespace KadoshModas.UI
         }
 
         #region Métodos
+        /// <summary>
+        /// Carrega DataGridView com dados fornecidos
+        /// </summary>
+        /// <param name="pDataSource">Lista de Clientes a serem carregados na tela</param>
         private void CarregarGrid(List<DML.DmoCliente> pDataSource)
         {
             //Limpar DataGridView

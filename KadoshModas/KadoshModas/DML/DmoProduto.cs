@@ -9,7 +9,7 @@ namespace KadoshModas.DML
     /// <summary>
     /// Classe DML para Produto
     /// </summary>
-    class DmoProduto : DmoBase
+    public class DmoProduto : DmoBase
     {
         #region Propriedades de Produto
         /// <summary>
@@ -46,6 +46,11 @@ namespace KadoshModas.DML
         /// Atributos do Produto
         /// </summary>
         public List<DmoAtributosDoProduto> Atributos { get; set; }
+
+        /// <summary>
+        /// Lista de Fornecedores que fornecem o Produto
+        /// </summary>
+        public List<DmoFornecedor> Fornecedores { get; set; }
         #endregion
     }
 }

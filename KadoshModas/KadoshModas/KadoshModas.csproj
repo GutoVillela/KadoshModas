@@ -64,6 +64,7 @@
     <Compile Include="BLL\BoCliente.cs" />
     <Compile Include="BLL\BoEndereco.cs" />
     <Compile Include="BLL\BoEstado.cs" />
+    <Compile Include="BLL\BoFornecedor.cs" />
     <Compile Include="BLL\BoLogin.cs" />
     <Compile Include="BLL\BoMarca.cs" />
     <Compile Include="BLL\BoProduto.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="DAL\DaoCliente.cs" />
     <Compile Include="DAL\DaoEndereco.cs" />
     <Compile Include="DAL\DaoEstado.cs" />
+    <Compile Include="DAL\DaoFornecedor.cs" />
     <Compile Include="DAL\DaoLogin.cs" />
     <Compile Include="DAL\DaoMarca.cs" />
     <Compile Include="DAL\DaoProduto.cs" />
@@ -86,6 +88,7 @@
     <Compile Include="DML\DmoCategoria.cs" />
     <Compile Include="DML\DmoCliente.cs" />
     <Compile Include="DML\DmoEndereco.cs" />
+    <Compile Include="DML\DmoEstoque.cs" />
     <Compile Include="DML\DmoFornecedor.cs" />
     <Compile Include="DML\DmoLogin.cs" />
     <Compile Include="DML\DmoMarca.cs" />
@@ -118,6 +121,12 @@
     </Compile>
     <Compile Include="UI\CadProduto.Designer.cs">
       <DependentUpon>CadProduto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CadProdutoUtil\DefinirFornecedores.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CadProdutoUtil\DefinirFornecedores.Designer.cs">
+      <DependentUpon>DefinirFornecedores.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\ConCliente.cs">
       <SubType>Form</SubType>
@@ -156,6 +165,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\CadProduto.resx">
       <DependentUpon>CadProduto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CadProdutoUtil\DefinirFornecedores.resx">
+      <DependentUpon>DefinirFornecedores.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ConCliente.resx">
       <DependentUpon>ConCliente.cs</DependentUpon>
@@ -197,6 +209,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icone_kadosh.ico" />
+    <None Include="Resources\icone-produto.jpg" />
     <None Include="Resources\LOGO_FUNDO_TRANSPARENTE.png" />
     <None Include="Resources\usuario-perfil-padrao.png" />
     <None Include="Resources\icone-valido.png" />

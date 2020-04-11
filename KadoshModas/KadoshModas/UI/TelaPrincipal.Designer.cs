@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.pnlMenuLateral = new System.Windows.Forms.Panel();
+            this.btnFornecedores = new FontAwesome.Sharp.IconButton();
             this.pnlSubmenuOpcoesAvancadas = new System.Windows.Forms.Panel();
             this.iconButton1 = new FontAwesome.Sharp.IconButton();
             this.iconButton2 = new FontAwesome.Sharp.IconButton();
@@ -56,6 +57,9 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pnlCabecalho = new System.Windows.Forms.Panel();
             this.pnlForms = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.btnConFornecedor = new FontAwesome.Sharp.IconButton();
+            this.btnCadFornecedor = new FontAwesome.Sharp.IconButton();
             this.pnlMenuLateral.SuspendLayout();
             this.pnlSubmenuOpcoesAvancadas.SuspendLayout();
             this.pnlSubmenuProdutos.SuspendLayout();
@@ -63,12 +67,15 @@
             this.pnlSubmenuClientes.SuspendLayout();
             this.pnlLogo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlMenuLateral
             // 
             this.pnlMenuLateral.AutoScroll = true;
             this.pnlMenuLateral.BackColor = System.Drawing.Color.Black;
+            this.pnlMenuLateral.Controls.Add(this.panel1);
+            this.pnlMenuLateral.Controls.Add(this.btnFornecedores);
             this.pnlMenuLateral.Controls.Add(this.pnlSubmenuOpcoesAvancadas);
             this.pnlMenuLateral.Controls.Add(this.btnOpcoesAvancadas);
             this.pnlMenuLateral.Controls.Add(this.btnEstoque);
@@ -85,6 +92,30 @@
             this.pnlMenuLateral.Name = "pnlMenuLateral";
             this.pnlMenuLateral.Size = new System.Drawing.Size(250, 561);
             this.pnlMenuLateral.TabIndex = 1;
+            // 
+            // btnFornecedores
+            // 
+            this.btnFornecedores.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnFornecedores.FlatAppearance.BorderSize = 0;
+            this.btnFornecedores.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnFornecedores.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFornecedores.Flip = FontAwesome.Sharp.FlipOrientation.Normal;
+            this.btnFornecedores.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFornecedores.ForeColor = System.Drawing.Color.White;
+            this.btnFornecedores.IconChar = FontAwesome.Sharp.IconChar.Truck;
+            this.btnFornecedores.IconColor = System.Drawing.Color.White;
+            this.btnFornecedores.IconSize = 24;
+            this.btnFornecedores.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnFornecedores.Location = new System.Drawing.Point(0, 1007);
+            this.btnFornecedores.Name = "btnFornecedores";
+            this.btnFornecedores.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnFornecedores.Rotation = 0D;
+            this.btnFornecedores.Size = new System.Drawing.Size(233, 50);
+            this.btnFornecedores.TabIndex = 10;
+            this.btnFornecedores.Text = "Fornecedores";
+            this.btnFornecedores.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnFornecedores.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnFornecedores.UseVisualStyleBackColor = true;
             // 
             // pnlSubmenuOpcoesAvancadas
             // 
@@ -624,6 +655,63 @@
             this.pnlForms.Size = new System.Drawing.Size(634, 511);
             this.pnlForms.TabIndex = 3;
             // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.DimGray;
+            this.panel1.Controls.Add(this.btnConFornecedor);
+            this.panel1.Controls.Add(this.btnCadFornecedor);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 1057);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(233, 98);
+            this.panel1.TabIndex = 11;
+            // 
+            // btnConFornecedor
+            // 
+            this.btnConFornecedor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnConFornecedor.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnConFornecedor.FlatAppearance.BorderSize = 0;
+            this.btnConFornecedor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnConFornecedor.Flip = FontAwesome.Sharp.FlipOrientation.Normal;
+            this.btnConFornecedor.ForeColor = System.Drawing.Color.Gainsboro;
+            this.btnConFornecedor.IconChar = FontAwesome.Sharp.IconChar.Search;
+            this.btnConFornecedor.IconColor = System.Drawing.Color.Gainsboro;
+            this.btnConFornecedor.IconSize = 20;
+            this.btnConFornecedor.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnConFornecedor.Location = new System.Drawing.Point(0, 45);
+            this.btnConFornecedor.Name = "btnConFornecedor";
+            this.btnConFornecedor.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.btnConFornecedor.Rotation = 0D;
+            this.btnConFornecedor.Size = new System.Drawing.Size(233, 45);
+            this.btnConFornecedor.TabIndex = 4;
+            this.btnConFornecedor.Text = "Consultar fornecedor";
+            this.btnConFornecedor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnConFornecedor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnConFornecedor.UseVisualStyleBackColor = false;
+            // 
+            // btnCadFornecedor
+            // 
+            this.btnCadFornecedor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnCadFornecedor.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnCadFornecedor.FlatAppearance.BorderSize = 0;
+            this.btnCadFornecedor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCadFornecedor.Flip = FontAwesome.Sharp.FlipOrientation.Normal;
+            this.btnCadFornecedor.ForeColor = System.Drawing.Color.Gainsboro;
+            this.btnCadFornecedor.IconChar = FontAwesome.Sharp.IconChar.Plus;
+            this.btnCadFornecedor.IconColor = System.Drawing.Color.Gainsboro;
+            this.btnCadFornecedor.IconSize = 20;
+            this.btnCadFornecedor.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCadFornecedor.Location = new System.Drawing.Point(0, 0);
+            this.btnCadFornecedor.Name = "btnCadFornecedor";
+            this.btnCadFornecedor.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.btnCadFornecedor.Rotation = 0D;
+            this.btnCadFornecedor.Size = new System.Drawing.Size(233, 45);
+            this.btnCadFornecedor.TabIndex = 3;
+            this.btnCadFornecedor.Text = "Novo fornecedor";
+            this.btnCadFornecedor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCadFornecedor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnCadFornecedor.UseVisualStyleBackColor = false;
+            // 
             // TelaPrincipal
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -647,6 +735,7 @@
             this.pnlSubmenuClientes.ResumeLayout(false);
             this.pnlLogo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -680,5 +769,9 @@
         private FontAwesome.Sharp.IconButton iconButton3;
         private FontAwesome.Sharp.IconButton iconButton4;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private FontAwesome.Sharp.IconButton btnFornecedores;
+        private System.Windows.Forms.Panel panel1;
+        private FontAwesome.Sharp.IconButton btnConFornecedor;
+        private FontAwesome.Sharp.IconButton btnCadFornecedor;
     }
 }

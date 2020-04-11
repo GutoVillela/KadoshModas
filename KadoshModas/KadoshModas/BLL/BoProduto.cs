@@ -46,6 +46,16 @@ namespace KadoshModas.BLL
                 }
             }
 
+            //Cadastro dos Fornecedores do Produto
+            if(pDmoProduto.Fornecedores != null && pDmoProduto.Fornecedores.Any())
+            {
+                foreach(DmoFornecedor fornecedor in pDmoProduto.Fornecedores)
+                {
+                    new DaoProduto().CadastrarFornecedorDoProduto(Convert.ToInt32(fornecedor.IdFornecedor), Convert.ToInt32(idProduto));
+                }
+            }
+            
+
             return true;
         }
 

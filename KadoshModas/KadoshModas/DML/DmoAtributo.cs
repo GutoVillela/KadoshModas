@@ -10,7 +10,7 @@ namespace KadoshModas.DML
     /// <summary>
     /// Classe DML para atributos
     /// </summary>
-    class DmoAtributo : DmoBase
+    public class DmoAtributo : DmoBase
     {
         #region Propriedades de Atributo
         /// <summary>
@@ -53,7 +53,7 @@ namespace KadoshModas.DML
     /// <summary>
     /// Classe DML para Valores do Atributo
     /// </summary>
-    class DmoValoresAtributos : DmoBase
+    public class DmoValoresAtributos : DmoBase
     {
         #region Propriedades de Valores do Atributo
         /// <summary>
@@ -71,7 +71,7 @@ namespace KadoshModas.DML
     /// <summary>
     /// Classe DML para Atributos do Produto
     /// </summary>
-    class DmoAtributosDoProduto : DmoBase
+    public class DmoAtributosDoProduto : DmoBase
     {
         #region Propriedades de Atributos do Produto
         /// <summary>

@@ -170,6 +170,31 @@ namespace KadoshModas.DAL
             }
 
         }
+
+        /// <summary>
+        /// Cadastra um Fornecedor para o Produto
+        /// </summary>
+        /// <param name="pIdFornecedor">ID do Fornecedor</param>
+        /// <param name="IdProduto">ID do Produto</param>
+        /// <returns>Retorna true em caso de sucesso ou false em caso de erro</returns>
+        public bool CadastrarFornecedorDoProduto(int pIdFornecedor, int pIdProduto)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand(@"INSERT INTO TB_FORNECEDORES_DO_PRODUTO (FORNECEDOR, PRODUTO) VALUES (@FORNECEDOR, @PRODUTO);", conexao.Conectar());
+                cmd.Parameters.AddWithValue("@FORNECEDOR", pIdFornecedor).SqlDbType = SqlDbType.Int;
+                cmd.Parameters.AddWithValue("@PRODUTO", pIdProduto).SqlDbType = SqlDbType.Int;
+
+                cmd.ExecuteNonQuery();
+                conexao.Desconectar();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
         #endregion
     }
 }

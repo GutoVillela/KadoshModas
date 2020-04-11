@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KadoshModas.DML
 {
-    class DmoCategoria : DmoBase
+    public class DmoCategoria : DmoBase
     {
         #region Propriedades de Categoria
         /// <summary>

@@ -73,6 +73,16 @@ namespace KadoshModas.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icone_produto {
+            get {
+                object obj = ResourceManager.GetObject("icone-produto", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icone_valido {
             get {
                 object obj = ResourceManager.GetObject("icone-valido", resourceCulture);

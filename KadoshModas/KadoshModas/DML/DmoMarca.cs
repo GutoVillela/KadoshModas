@@ -9,7 +9,7 @@ namespace KadoshModas.DML
     /// <summary>
     /// Classe DML para Marca
     /// </summary>
-    class DmoMarca : DmoBase
+    public class DmoMarca : DmoBase
     {
         #region Propriedades de Marca
         /// <summary>

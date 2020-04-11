@@ -14,16 +14,36 @@ namespace KadoshModas.UI
 {
     public partial class CadProduto : Form
     {
+        #region Construtor
         public CadProduto()
         {
             InitializeComponent();
+            produto = new DmoProduto();
         }
+        #endregion
 
         #region Atributos
+        /// <summary>
+        /// Produto utilizado para cadastro
+        /// </summary>
+        private DmoProduto produto;
+
+        /// <summary>
+        /// Verifica se usuário já definiu foto do produto (utilize a propriedade UsuarioEscolheuFotoProduto para acessar este dado)
+        /// </summary>
         private bool _usuarioEscolheuFotoProduto;
+
+        /// <summary>
+        /// Verifica se usuário já definiu os fornecedores para o produto (utilize a propriedade FornecedoresDefinidos para acessar este dado)
+        /// </summary>
+        private bool _fornecedoresDefinidos;
         #endregion
 
         #region Propriedades
+
+        /// <summary>
+        /// Define se usuário já escolheu uma foto para o produto
+        /// </summary>
         private bool UsuarioEscolheuFotoProduto
         {
             get { return _usuarioEscolheuFotoProduto; }
@@ -31,6 +51,32 @@ namespace KadoshModas.UI
             {
                 _usuarioEscolheuFotoProduto = value;
                 btnRemoverFoto.Visible = btnRemoverFoto.Enabled = value;
+            }
+        }
+
+        /// <summary>
+        /// Verifica se usuário já definiu os Fornecedores para o Produto
+        /// </summary>
+        private bool FornecedoresDefinidos
+        {
+            get { return _fornecedoresDefinidos; }
+            set
+            {
+                if (value)
+                {
+                    btnDefinirFornecedores.BackColor = Color.Green;
+                    btnDefinirFornecedores.IconChar = FontAwesome.Sharp.IconChar.Check;
+                    btnDefinirFornecedores.IconColor = Color.LightGreen;
+                    btnDefinirFornecedores.Text = "Definido";
+                }
+                else
+                {
+                    btnDefinirFornecedores.BackColor = Color.DarkRed;
+                    btnDefinirFornecedores.IconChar = FontAwesome.Sharp.IconChar.Times;
+                    btnDefinirFornecedores.IconColor = Color.LightPink;
+                    btnDefinirFornecedores.Text = "Não Definido";
+                }
+                _fornecedoresDefinidos = value;
             }
         }
         #endregion
@@ -53,13 +99,10 @@ namespace KadoshModas.UI
 
         private void btnCadastrar_Click(object sender, EventArgs e)
         {
-            DmoProduto produto = new DmoProduto
-            {
-                Nome = txtNomeProduto.Text.Trim(),
-                Preco = float.Parse(txtPrecoUnidade.Text.Trim()),
-                Categoria = new DmoCategoria { IdCategoria = int.Parse(cboCategoria.SelectedValue.ToString()) },
-                Marca = new DmoMarca { IdMarca = int.Parse(cboMarca.SelectedValue.ToString()) }
-            };
+            produto.Nome = txtNomeProduto.Text.Trim();
+            produto.Preco = float.Parse(txtPrecoUnidade.Text.Trim());
+            produto.Categoria = new DmoCategoria { IdCategoria = int.Parse(cboCategoria.SelectedValue.ToString()) };
+            produto.Marca = new DmoMarca { IdMarca = int.Parse(cboMarca.SelectedValue.ToString()) };
 
             if (_usuarioEscolheuFotoProduto)
                 produto.UrlFoto = openFileDialogFoto.FileName;
@@ -87,7 +130,6 @@ namespace KadoshModas.UI
             else
                 MessageBox.Show("Erro ao cadastrar produto!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
-        #endregion
 
         private void btnEscolherFoto_Click(object sender, EventArgs e)
         {
@@ -103,5 +145,19 @@ namespace KadoshModas.UI
             picFotoProduto.Image = Properties.Resources.usuario_perfil_padrao;
             UsuarioEscolheuFotoProduto = false;
         }
+
+        private void btnDefinirFornecedores_Click(object sender, EventArgs e)
+        {
+            new DefinirFornecedores().ShowDialog();
+            produto.Fornecedores = DefinirFornecedores.listaDeFornecedoresDefinidos;
+
+            if(produto.Fornecedores == null || !produto.Fornecedores.Any())
+                FornecedoresDefinidos = false;
+            else
+                FornecedoresDefinidos = true;
+        }
+        #endregion
+
+
     }
 }

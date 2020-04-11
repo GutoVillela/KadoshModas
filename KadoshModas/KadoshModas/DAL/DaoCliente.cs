@@ -11,6 +11,7 @@ namespace KadoshModas.DAL
 {
     class DaoCliente
     {
+        #region Construtor
         /// <summary>
         /// Inicializa um objeto de conexão com o banco de dados
         /// </summary>
@@ -18,6 +19,7 @@ namespace KadoshModas.DAL
         {
             this.conexao = new Conexao();
         }
+        #endregion
 
         #region Atributos
         /// <summary>

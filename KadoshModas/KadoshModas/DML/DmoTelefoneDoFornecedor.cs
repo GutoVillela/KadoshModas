@@ -9,7 +9,7 @@ namespace KadoshModas.DML
     /// <summary>
     /// Classe DML para Telefone do Fornecedor
     /// </summary>
-    class DmoTelefoneDoFornecedor : DmoTelefone
+    public class DmoTelefoneDoFornecedor : DmoTelefone
     {
         #region Propriedades
         /// <summary>
