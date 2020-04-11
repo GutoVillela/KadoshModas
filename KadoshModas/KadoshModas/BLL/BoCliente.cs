@@ -40,10 +40,10 @@ namespace KadoshModas.BLL
                 //Cadastro de telefones
                 if (dmoCliente.Telefones != null && dmoCliente.Telefones.Count > 0)
                 {
-                    foreach (DmoTelefone telefone in dmoCliente.Telefones)
+                    foreach (DmoTelefoneDoCliente telefone in dmoCliente.Telefones)
                     {
                         telefone.Cliente = new DmoCliente { IdCliente = idClienteCadastrado };
-                        new DaoTelefone().Cadastrar(telefone);
+                        new BoTelefoneDoCliente().Cadastrar(telefone);
                     }
                 }
 

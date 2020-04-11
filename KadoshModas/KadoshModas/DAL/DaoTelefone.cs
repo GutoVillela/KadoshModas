@@ -11,6 +11,7 @@ namespace KadoshModas.DAL
 {
     class DaoTelefone
     {
+        #region Construtor
         /// <summary>
         /// Inicializa um objeto de conexão com o banco de dados
         /// </summary>
@@ -18,6 +19,7 @@ namespace KadoshModas.DAL
         {
             this.conexao = new Conexao();
         }
+        #endregion
 
         #region Atributos
         /// <summary>
@@ -38,12 +40,11 @@ namespace KadoshModas.DAL
         /// <param name="idCliente">Id do cliente</param>
         /// <param name="telefone">Número de telefone</param>
         /// <returns></returns>
-        public bool Cadastrar(DmoTelefone dmoTelefone)
+        public int? Cadastrar(DmoTelefone dmoTelefone)
         {
             try
             {
-                SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (CLIENTE, DDD, NUMERO, TIPO_TELEFONE, FALAR_COM) VALUES (@CLIENTE, @DDD, @NUMERO, @TIPO_TELEFONE, @FALAR_COM)", conexao.Conectar());
-                cmd.Parameters.AddWithValue("@CLIENTE", dmoTelefone.Cliente.IdCliente).SqlDbType = SqlDbType.Int;
+                SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (DDD, NUMERO, TIPO_TELEFONE, FALAR_COM) VALUES (@DDD, @NUMERO, @TIPO_TELEFONE, @FALAR_COM)", conexao.Conectar());
                 cmd.Parameters.AddWithValue("@DDD", dmoTelefone.DDD).SqlDbType = SqlDbType.Char;
                 cmd.Parameters.AddWithValue("@NUMERO", dmoTelefone.Numero).SqlDbType = SqlDbType.Char;
                 cmd.Parameters.AddWithValue("@TIPO_TELEFONE", (int) dmoTelefone.TipoDeTelefone).SqlDbType = SqlDbType.Int;
@@ -55,11 +56,35 @@ namespace KadoshModas.DAL
 
                 cmd.ExecuteNonQuery();
                 conexao.Desconectar();
-                return true;
+
+                return ConsultarUltimoId();
             }
             catch (Exception erro)
             {
-                return false;
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Consulta o último Id de Telefone cadastrado na base
+        /// </summary>
+        /// <returns>Retorno último Id de cliente cadastrado na base. Em caso de erro retorna null</returns>
+        private int? ConsultarUltimoId()
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand("SELECT MAX(ID_TELEFONE) AS ID FROM " + NOME_TABELA, conexao.Conectar());
+
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                dr.Read();
+
+                return int.Parse(dr[0].ToString());
+
+            }
+            catch
+            {
+                return 0;
             }
         }
         #endregion

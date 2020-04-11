@@ -171,7 +171,7 @@ namespace KadoshModas.UI
             string numTelefone = txtTelefone.Text.Replace("(", "").Replace(")", "").Replace("-", "").Replace(" ", "").Trim();
             if (!string.IsNullOrEmpty(numTelefone) && numTelefone.Length >= 10)
             {
-                DmoTelefone telefone = new DmoTelefone
+                DmoTelefoneDoCliente telefone = new DmoTelefoneDoCliente
                 {
                     DDD = numTelefone.Substring(0, 2),
                     Numero = numTelefone.Substring(2, numTelefone.Length == 11 ? 9 : 8),
@@ -182,7 +182,7 @@ namespace KadoshModas.UI
                     telefone.FalarCom = txtFalarCom.Text.Trim();
 
                 if (this.cliente.Telefones == null)
-                    this.cliente.Telefones = new List<DmoTelefone>();
+                    this.cliente.Telefones = new List<DmoTelefoneDoCliente>();
 
                 //Verificar se telefone já foi adicionado na lista
                 if (cliente.Telefones.Any(t => t.DDD == telefone.DDD && t.Numero == telefone.Numero))

@@ -46,9 +46,9 @@ namespace KadoshModas.DML
         public string UrlFoto { get; set; }
 
         /// <summary>
-        /// Lista de telefones do Cliente
+        /// Lista de Telefones do Cliente
         /// </summary>
-        public List<DmoTelefone> Telefones { get; set; }
+        public List<DmoTelefoneDoCliente> Telefones { get; set; }
 
         /// <summary>
         /// Sexos

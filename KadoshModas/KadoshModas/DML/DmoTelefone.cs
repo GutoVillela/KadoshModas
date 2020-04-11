@@ -12,9 +12,9 @@ namespace KadoshModas.DML
     {
         #region Propriedades de Telefone
         /// <summary>
-        /// Cliente dono do número de telefone
+        /// ID do Telefone
         /// </summary>
-        public DmoCliente Cliente { get; set; }
+        public int? IdTelefone { get; set; }
 
         /// <summary>
         /// DDD

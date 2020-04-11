@@ -67,6 +67,7 @@
     <Compile Include="BLL\BoLogin.cs" />
     <Compile Include="BLL\BoMarca.cs" />
     <Compile Include="BLL\BoProduto.cs" />
+    <Compile Include="BLL\BoTelefoneDoCliente.cs" />
     <Compile Include="DAL\Conexao.cs" />
     <Compile Include="DAL\DaoAtributosDoProduto.cs" />
     <Compile Include="DAL\DaoBase.cs" />
@@ -79,15 +80,19 @@
     <Compile Include="DAL\DaoMarca.cs" />
     <Compile Include="DAL\DaoProduto.cs" />
     <Compile Include="DAL\DaoTelefone.cs" />
+    <Compile Include="DAL\DaoTelefoneDoCliente.cs" />
     <Compile Include="DML\DmoAtributo.cs" />
     <Compile Include="DML\DmoBase.cs" />
     <Compile Include="DML\DmoCategoria.cs" />
     <Compile Include="DML\DmoCliente.cs" />
     <Compile Include="DML\DmoEndereco.cs" />
+    <Compile Include="DML\DmoFornecedor.cs" />
     <Compile Include="DML\DmoLogin.cs" />
     <Compile Include="DML\DmoMarca.cs" />
     <Compile Include="DML\DmoProduto.cs" />
     <Compile Include="DML\DmoTelefone.cs" />
+    <Compile Include="DML\DmoTelefoneDoCliente.cs" />
+    <Compile Include="DML\DmoTelefoneDoFornecedor.cs" />
     <Compile Include="INF\DiretoriosDoSistema.cs" />
     <Compile Include="INF\ParametrosDoSistema.cs" />
     <Compile Include="UI\CadCategoria.cs">

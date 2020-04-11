@@ -200,20 +200,20 @@ namespace KadoshModas.DAL
         /// </summary>
         /// <param name="pIdCliente">Id co Cliente</param>
         /// <returns>Retorna uma lista de Telefones do Cliente. Retorna null em caso de erro.</returns>
-        public List<DmoTelefone> ConsultarTelefonesDoCliente(int pIdCliente)
+        public List<DmoTelefoneDoCliente> ConsultarTelefonesDoCliente(int pIdCliente)
         {
             try
             {
-                SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + DaoTelefone.NOME_TABELA + " T JOIN " + NOME_TABELA + " C ON C.ID_CLIENTE = T.CLIENTE WHERE ID_CLIENTE = @ID_CLIENTE;", conexao.Conectar());
+                SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + DaoTelefoneDoCliente.NOME_TABELA + " T JOIN " + NOME_TABELA + " C ON C.ID_CLIENTE = T.CLIENTE WHERE ID_CLIENTE = @ID_CLIENTE;", conexao.Conectar());
                 cmd.Parameters.AddWithValue("@ID_CLIENTE", pIdCliente).SqlDbType = SqlDbType.Int;
 
                 SqlDataReader dataReader = cmd.ExecuteReader();
 
-                List<DmoTelefone> listaDeTelefones = new List<DmoTelefone>();
+                List<DmoTelefoneDoCliente> listaDeTelefones = new List<DmoTelefoneDoCliente>();
 
                 while (dataReader.Read())
                 {
-                    DmoTelefone telefone = new DmoTelefone
+                    DmoTelefoneDoCliente telefone = new DmoTelefoneDoCliente
                     {
                         Cliente = new DmoCliente { IdCliente = pIdCliente },
                         DDD = dataReader["DDD"].ToString(),
