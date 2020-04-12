@@ -324,6 +324,11 @@ namespace KadoshModas.UI
                 pMaskedTextBox.Select(ultimoCaractereNumerico < 0 ? 0 : ultimoCaractereNumerico + 1, 0);
             });
         }
+
+        private async Task<bool> VerificaCPFExistenteAsync(string pCPF)
+        {
+            return true;
+        }
         #endregion
 
         #region Eventos
@@ -390,17 +395,24 @@ namespace KadoshModas.UI
                 MessageBox.Show("Preencha corretamente o número de telefone", "Erro telefone", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        private void txtCpf_TextChanged(object sender, EventArgs e)
+        private async void txtCpf_TextChanged(object sender, EventArgs e)
         {
-            if (txtCpf.Text.Replace(".", "").Replace("-", "").Trim().Length == 1 || txtCpf.Text.Replace(".", "").Replace("-", "").Trim().Length == 10)
+            string cpfInformado = txtCpf.Text.Replace(".", "").Replace("-", "").Trim();
+
+            if (cpfInformado.Length == 1 || cpfInformado.Length == 10)
             {
                 pcbLoaderCPF.Image = Properties.Resources.transparent_loading_gif;
             }
 
-            if (txtCpf.Text.Replace(".", "").Replace("-", "").Trim().Length == 11)
+            if (cpfInformado.Length == 11)
             {
-                if (new BoCliente().ValidarCPF(txtCpf.Text.Replace(".", "").Replace("-", "").Trim()))
-                    pcbLoaderCPF.Image = Properties.Resources.icone_valido;
+                if (new BoCliente().ValidarCPF(cpfInformado))
+                {
+                    if(!await new BoCliente().VerificaCPFExistenteAsync(cpfInformado))
+                        pcbLoaderCPF.Image = Properties.Resources.icone_valido;
+                    else
+                        pcbLoaderCPF.Image = Properties.Resources.icone_invalido;
+                }
                 else
                     pcbLoaderCPF.Image = Properties.Resources.icone_invalido;
 

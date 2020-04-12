@@ -20,7 +20,7 @@ namespace KadoshModas.BLL
         /// </summary>
         /// <param name="pDmoProduto">Objeto DmoProduto preenchido com pelo menos o Nome e Preço do Produto</param>
         /// <returns>Retorna true em caso de sucesso ou false em caso de erro</returns>
-        public bool Cadastrar(DmoProduto pDmoProduto)
+        public int? Cadastrar(DmoProduto pDmoProduto)
         {
             //Críticas
             if (string.IsNullOrEmpty(pDmoProduto.Nome) || pDmoProduto.Preco < 0)
@@ -30,7 +30,7 @@ namespace KadoshModas.BLL
             int? idProduto = new DaoProduto().Cadastrar(pDmoProduto);
 
             if (idProduto == null)
-                return false;
+                return null;
 
             //Copiar imagem para pasta e recuperar nova URL
             if (!string.IsNullOrEmpty(pDmoProduto.UrlFoto))
@@ -56,7 +56,7 @@ namespace KadoshModas.BLL
             }
             
 
-            return true;
+            return new DaoProduto().ConsultarUltimoId();
         }
 
         /// <summary>

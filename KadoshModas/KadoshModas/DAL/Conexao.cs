@@ -57,6 +57,25 @@ namespace KadoshModas.DAL
         }
 
         /// <summary>
+        /// Abre a conexão com o Banco de Dados de forma assícrona
+        /// </summary>
+        /// <returns>Retorna conexão aberta. Retorna null em caso de erro</returns>
+        public async Task<SqlConnection> ConectarAsync()
+        {
+            try
+            {
+                if (this.conexao.State != ConnectionState.Open)
+                    await this.conexao.OpenAsync();
+
+                return this.conexao;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Fecha a conexão com o Banco de Dados
         /// </summary>
         /// <returns>Retorna uma conexão fechada. Retorna null em caso de erro</returns>

@@ -125,8 +125,29 @@ namespace KadoshModas.UI
 
             produto.Atributos = atributosDoProduto;
 
-            if (new BoProduto().Cadastrar(produto))
+            //Efetuar cadastro do produto
+            produto.IdProduto = new BoProduto().Cadastrar(produto);
+
+            if (produto.IdProduto != null)
+            {
                 MessageBox.Show("Produto cadastrado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                //Estoque
+                DmoEstoque estoque = new DmoEstoque
+                {
+                    Produto = produto,
+                    Quantidade = string.IsNullOrEmpty(txtEstoque.Text.Trim()) ? 0 : int.Parse(txtEstoque.Text.Trim()),
+                    Minimo = 0
+                };
+
+                if(new BoEstoque().Cadastrar(estoque) != null)
+                {
+                    MessageBox.Show("Estoque cadastrado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                    MessageBox.Show("Erro ao cadastrar um estoque para o produto!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
             else
                 MessageBox.Show("Erro ao cadastrar produto!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }

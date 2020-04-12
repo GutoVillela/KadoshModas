@@ -124,7 +124,7 @@ namespace KadoshModas.DAL
         /// Consulta o último Id de Produto cadastrado na base
         /// </summary>
         /// <returns>Retorno último Id de Produto cadastrado na base. Em caso de erro retorna null</returns>
-        private int? ConsultarUltimoId()
+        public int? ConsultarUltimoId()
         {
             try
             {

@@ -64,6 +64,7 @@
     <Compile Include="BLL\BoCliente.cs" />
     <Compile Include="BLL\BoEndereco.cs" />
     <Compile Include="BLL\BoEstado.cs" />
+    <Compile Include="BLL\BoEstoque.cs" />
     <Compile Include="BLL\BoFornecedor.cs" />
     <Compile Include="BLL\BoLogin.cs" />
     <Compile Include="BLL\BoMarca.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="DAL\DaoCliente.cs" />
     <Compile Include="DAL\DaoEndereco.cs" />
     <Compile Include="DAL\DaoEstado.cs" />
+    <Compile Include="DAL\DaoEstoque.cs" />
     <Compile Include="DAL\DaoFornecedor.cs" />
     <Compile Include="DAL\DaoLogin.cs" />
     <Compile Include="DAL\DaoMarca.cs" />

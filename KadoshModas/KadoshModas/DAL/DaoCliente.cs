@@ -287,6 +287,21 @@ namespace KadoshModas.DAL
             }
             
         }
+
+        /// <summary>
+        /// Verifica se o CPF informado existe na base de dados
+        /// </summary>
+        /// <param name="pCPF">CPF do Cliente</param>
+        /// <returns>Retorna true caso CPF já exista na base de dados e false caso não exista</returns>
+        public async Task<bool> VerificaCPFExistenteAsync(string pCPF)
+        {
+            SqlCommand cmd = new SqlCommand("SELECT CPF FROM " + NOME_TABELA + " WHERE CPF = @CPF", await conexao.ConectarAsync());
+            cmd.Parameters.AddWithValue("@CPF", pCPF).SqlDbType = SqlDbType.Char;
+
+            SqlDataReader dr = await cmd.ExecuteReaderAsync();
+
+            return dr.HasRows;
+        }
         #endregion
     }
 }

@@ -173,5 +173,10 @@ namespace KadoshModas.BLL
                 return false;
             }
         }
+
+        public async Task<bool> VerificaCPFExistenteAsync(string pCPF)
+        {
+            return await new DaoCliente().VerificaCPFExistenteAsync(pCPF);
+        }
     }
 }

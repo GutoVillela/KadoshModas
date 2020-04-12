@@ -218,6 +218,7 @@
             this.btnRemoverFoto.Name = "btnRemoverFoto";
             this.btnRemoverFoto.Size = new System.Drawing.Size(75, 28);
             this.btnRemoverFoto.TabIndex = 1;
+            this.btnRemoverFoto.Text = "X";
             this.btnRemoverFoto.UseVisualStyleBackColor = true;
             this.btnRemoverFoto.Visible = false;
             this.btnRemoverFoto.Click += new System.EventHandler(this.btnRemoverFoto_Click);
