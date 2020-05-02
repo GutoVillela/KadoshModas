@@ -43,37 +43,30 @@ namespace KadoshModas.DAL
         /// <returns>Retorna uma lista de DmoCidade com todas as Cidades do Estado especificado</returns>
         public List<DmoCidade> ConsultarDoEstado(int pIdEstado)
         {
-            try
+            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA + " C WHERE C.UF = @ESTADO", conexao.Conectar());
+            cmd.Parameters.AddWithValue("@ESTADO", pIdEstado).SqlDbType = SqlDbType.Int;
+
+            SqlDataReader dataReader = cmd.ExecuteReader();
+
+            List<DmoCidade> listaDeCidades = new List<DmoCidade>();
+
+            while (dataReader.Read())
             {
-                SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA + " C WHERE C.UF = @ESTADO", conexao.Conectar());
-                cmd.Parameters.AddWithValue("@ESTADO", pIdEstado).SqlDbType = SqlDbType.Int;
-
-                SqlDataReader dataReader = cmd.ExecuteReader();
-
-                List<DmoCidade> listaDeCidades = new List<DmoCidade>();
-
-                while (dataReader.Read())
+                DmoCidade cidade = new DmoCidade
                 {
-                    DmoCidade cidade = new DmoCidade
-                    {
-                        IdCidade = int.Parse(dataReader["ID_CIDADE"].ToString()),
-                        Nome = dataReader["NOME"].ToString(),
-                        Estado = new DmoEstado { IdEstado = int.Parse(dataReader["UF"].ToString()) },
-                        IBGE = int.Parse(dataReader["IBGE"].ToString())
-                    };
+                    IdCidade = int.Parse(dataReader["ID_CIDADE"].ToString()),
+                    Nome = dataReader["NOME"].ToString(),
+                    Estado = new DmoEstado { IdEstado = int.Parse(dataReader["UF"].ToString()) },
+                    IBGE = int.Parse(dataReader["IBGE"].ToString())
+                };
 
-                    listaDeCidades.Add(cidade);
-                }
-
-                dataReader.Close();
-                conexao.Desconectar();
-
-                return listaDeCidades;
+                listaDeCidades.Add(cidade);
             }
-            catch (Exception erro)
-            {
-                return null;
-            }
+
+            dataReader.Close();
+            conexao.Desconectar();
+
+            return listaDeCidades;
         }
         #endregion
     }

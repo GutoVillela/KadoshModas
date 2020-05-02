@@ -42,27 +42,20 @@ namespace KadoshModas.DAL
         /// <returns></returns>
         public int? Cadastrar(DmoTelefone dmoTelefone)
         {
-            try
-            {
-                SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (DDD, NUMERO, TIPO_TELEFONE, FALAR_COM) VALUES (@DDD, @NUMERO, @TIPO_TELEFONE, @FALAR_COM)", conexao.Conectar());
-                cmd.Parameters.AddWithValue("@DDD", dmoTelefone.DDD).SqlDbType = SqlDbType.Char;
-                cmd.Parameters.AddWithValue("@NUMERO", dmoTelefone.Numero).SqlDbType = SqlDbType.Char;
-                cmd.Parameters.AddWithValue("@TIPO_TELEFONE", (int) dmoTelefone.TipoDeTelefone).SqlDbType = SqlDbType.Int;
+            SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (DDD, NUMERO, TIPO_TELEFONE, FALAR_COM) VALUES (@DDD, @NUMERO, @TIPO_TELEFONE, @FALAR_COM)", conexao.Conectar());
+            cmd.Parameters.AddWithValue("@DDD", dmoTelefone.DDD).SqlDbType = SqlDbType.Char;
+            cmd.Parameters.AddWithValue("@NUMERO", dmoTelefone.Numero).SqlDbType = SqlDbType.Char;
+            cmd.Parameters.AddWithValue("@TIPO_TELEFONE", (int) dmoTelefone.TipoDeTelefone).SqlDbType = SqlDbType.Int;
                 
-                if(dmoTelefone.FalarCom == null)
-                    cmd.Parameters.AddWithValue("@FALAR_COM", DBNull.Value).SqlDbType = SqlDbType.VarChar;
-                else
-                    cmd.Parameters.AddWithValue("@FALAR_COM", dmoTelefone.FalarCom).SqlDbType = SqlDbType.VarChar;
+            if(dmoTelefone.FalarCom == null)
+                cmd.Parameters.AddWithValue("@FALAR_COM", DBNull.Value).SqlDbType = SqlDbType.VarChar;
+            else
+                cmd.Parameters.AddWithValue("@FALAR_COM", dmoTelefone.FalarCom).SqlDbType = SqlDbType.VarChar;
 
-                cmd.ExecuteNonQuery();
-                conexao.Desconectar();
+            cmd.ExecuteNonQuery();
+            conexao.Desconectar();
 
-                return ConsultarUltimoId();
-            }
-            catch (Exception erro)
-            {
-                return null;
-            }
+            return ConsultarUltimoId();
         }
 
         /// <summary>

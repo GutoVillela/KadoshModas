@@ -64,7 +64,10 @@ namespace KadoshModas.DML
             {
                 try
                 {
-                    return (pEnum.GetType().GetMember(pEnum.GetType().GetEnumName(pEnum))[0].GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault() as DescriptionAttribute).Description;
+                    if(pEnum.GetType().GetMember(pEnum.GetType().GetEnumName(pEnum))[0].GetCustomAttributes(typeof(DescriptionAttribute), false).Any())
+                        return (pEnum.GetType().GetMember(pEnum.GetType().GetEnumName(pEnum))[0].GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault() as DescriptionAttribute).Description;
+                    else
+                        return pEnum.ToString();
                 }
                 catch
                 {

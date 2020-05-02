@@ -41,23 +41,16 @@ namespace KadoshModas.DAL
         /// Cadastra uma nova Categoria
         /// </summary>
         /// <param name="pDmoCategoria">Objeto DmoCategoria preenchido</param>
-        /// <returns>Retorna o Id da Categoria cadastrada. Em caso de erro retorna null</returns>
+        /// <returns>Retorna o Id da Categoria cadastrada.</returns>
         public int? Cadastrar(DmoCategoria pDmoCategoria)
         {
-            try
-            {
-                SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (NOME) VALUES (@NOME);", conexao.Conectar());
-                cmd.Parameters.AddWithValue("@NOME", pDmoCategoria.Nome).SqlDbType = SqlDbType.VarChar;
+            SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (NOME) VALUES (@NOME);", conexao.Conectar());
+            cmd.Parameters.AddWithValue("@NOME", pDmoCategoria.Nome).SqlDbType = SqlDbType.VarChar;
 
-                cmd.ExecuteNonQuery();
-                conexao.Desconectar();
+            cmd.ExecuteNonQuery();
+            conexao.Desconectar();
 
-                return ConsultarUltimoId();
-            }
-            catch (Exception erro)
-            {
-                return null;
-            }
+            return ConsultarUltimoId();
         }
 
         /// <summary>
@@ -66,34 +59,27 @@ namespace KadoshModas.DAL
         /// <returns>Retorna uma lista de DmoCategoria com todas os Categorias cadastradas na base de dados</returns>
         public List<DmoCategoria> Consultar()
         {
-            try
+            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA, conexao.Conectar());
+            SqlDataReader dataReader = cmd.ExecuteReader();
+
+            List<DmoCategoria> listaDeCategorias = new List<DmoCategoria>();
+
+            while (dataReader.Read())
             {
-                SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA, conexao.Conectar());
-                SqlDataReader dataReader = cmd.ExecuteReader();
-
-                List<DmoCategoria> listaDeCategorias = new List<DmoCategoria>();
-
-                while (dataReader.Read())
+                DmoCategoria categoria = new DmoCategoria
                 {
-                    DmoCategoria categoria = new DmoCategoria
-                    {
-                        IdCategoria = int.Parse(dataReader["ID_CATEGORIA"].ToString()),
-                        Nome = dataReader["NOME"].ToString(),
-                        DataDeCriacao = DateTime.Parse(dataReader["DT_CRIACAO"].ToString()),
-                        DataDeAtualizacao = DateTime.Parse(dataReader["DT_ATUALIZACAO"].ToString())
-                    };
+                    IdCategoria = int.Parse(dataReader["ID_CATEGORIA"].ToString()),
+                    Nome = dataReader["NOME"].ToString(),
+                    DataDeCriacao = DateTime.Parse(dataReader["DT_CRIACAO"].ToString()),
+                    DataDeAtualizacao = DateTime.Parse(dataReader["DT_ATUALIZACAO"].ToString())
+                };
 
-                    listaDeCategorias.Add(categoria);
-                }
-
-                conexao.Desconectar();
-
-                return listaDeCategorias;
+                listaDeCategorias.Add(categoria);
             }
-            catch (Exception erro)
-            {
-                return null;
-            }
+
+            conexao.Desconectar();
+
+            return listaDeCategorias;
         }
 
         /// <summary>

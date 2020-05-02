@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using KadoshModas.UI.UserControls;
 
 namespace KadoshModas.UI
 {
@@ -38,54 +39,11 @@ namespace KadoshModas.UI
             {
                 foreach(DmoTelefone telefone in pCliente.Telefones)
                 {
-                    Panel pnlTelefone = GerarPanelDeTelefone(telefone);
-                    pnlTelefones.Controls.Add(pnlTelefone);
-                    pnlTelefones.Height += pnlTelefone.Height;
+                    ucTelefone ucTelefone = new ucTelefone();
+                    ucTelefone.Telefone = telefone;
+                    pnlTelefones.Controls.Add(ucTelefone);
                 }
             }
-        }
-
-        /// <summary>
-        /// Gera um Panel contendo os controles necessários para exibição do Telefone na tela
-        /// </summary>
-        /// <returns>Retona um Panel com Controles necessários para exibição do Telefone</returns>
-        private Panel GerarPanelDeTelefone(DmoTelefone pTelefone)
-        {
-            Panel pnlTelefone = new Panel
-            {
-                Dock = DockStyle.Top
-            };
-
-            Label lblDDD = new Label
-            {
-                Text = "DDD: ",
-                Dock = DockStyle.Left
-            };
-
-            TextBox txtDDD = new TextBox
-            {
-                Text = pTelefone.DDD,
-                Dock = DockStyle.Left
-            };
-
-            Label lblTelefone = new Label
-            {
-                Text = "Telefone:",
-                Dock = DockStyle.Left
-            };
-
-            TextBox txtTelefone = new TextBox
-            {
-                Text = pTelefone.Numero,
-                Dock = DockStyle.Left
-            };
-
-            pnlTelefone.Controls.Add(txtTelefone);
-            pnlTelefone.Controls.Add(lblTelefone);
-            pnlTelefone.Controls.Add(txtDDD);
-            pnlTelefone.Controls.Add(lblDDD);
-
-            return pnlTelefone;
         }
         #endregion
 

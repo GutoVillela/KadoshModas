@@ -50,7 +50,7 @@ namespace KadoshModas.DAL
 
                 return true;
             }
-            catch (Exception erro)
+            catch
             {
                 return false;
             }

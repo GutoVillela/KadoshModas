@@ -226,7 +226,7 @@ namespace KadoshModas.UI
                     return false;
                 }
 
-                cliente.CPF = txtCpf.Text.Replace(".", "").Replace("-", "").Trim();
+                cliente.CPF = txtCpf.Text.Trim();
             }
 
             if (rdbSexoFeminino.Checked)
@@ -397,14 +397,14 @@ namespace KadoshModas.UI
 
         private async void txtCpf_TextChanged(object sender, EventArgs e)
         {
-            string cpfInformado = txtCpf.Text.Replace(".", "").Replace("-", "").Trim();
+            string cpfInformado = txtCpf.Text.Trim();
 
             if (cpfInformado.Length == 1 || cpfInformado.Length == 10)
             {
                 pcbLoaderCPF.Image = Properties.Resources.transparent_loading_gif;
             }
 
-            if (cpfInformado.Length == 11)
+            if (cpfInformado.Length == 14)
             {
                 if (new BoCliente().ValidarCPF(cpfInformado))
                 {

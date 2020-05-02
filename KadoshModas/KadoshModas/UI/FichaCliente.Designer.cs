@@ -46,14 +46,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.picFotoCliente = new System.Windows.Forms.PictureBox();
-            this.pnlTelefones = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.label9 = new System.Windows.Forms.Label();
+            this.pnlTelefones = new System.Windows.Forms.FlowLayoutPanel();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picFotoCliente)).BeginInit();
-            this.pnlTelefones.SuspendLayout();
-            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -76,7 +72,8 @@
             this.panel1.Controls.Add(this.txtCPF);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.panel2);
-            this.panel1.Location = new System.Drawing.Point(12, 12);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.MaximumSize = new System.Drawing.Size(634, 511);
             this.panel1.MinimumSize = new System.Drawing.Size(634, 511);
             this.panel1.Name = "panel1";
@@ -195,7 +192,7 @@
             this.cbSexo.FormattingEnabled = true;
             this.cbSexo.Location = new System.Drawing.Point(435, 38);
             this.cbSexo.Name = "cbSexo";
-            this.cbSexo.Size = new System.Drawing.Size(196, 21);
+            this.cbSexo.Size = new System.Drawing.Size(175, 21);
             this.cbSexo.TabIndex = 6;
             this.cbSexo.Text = "Feminino";
             // 
@@ -263,36 +260,18 @@
             // 
             // pnlTelefones
             // 
-            this.pnlTelefones.Controls.Add(this.panel3);
-            this.pnlTelefones.Location = new System.Drawing.Point(210, 209);
+            this.pnlTelefones.AutoScroll = true;
+            this.pnlTelefones.Location = new System.Drawing.Point(206, 228);
             this.pnlTelefones.Name = "pnlTelefones";
-            this.pnlTelefones.Size = new System.Drawing.Size(412, 60);
+            this.pnlTelefones.Size = new System.Drawing.Size(420, 174);
             this.pnlTelefones.TabIndex = 18;
-            // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.label9);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel3.Location = new System.Drawing.Point(0, 0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(412, 40);
-            this.panel3.TabIndex = 0;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(3, 9);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(76, 21);
-            this.label9.TabIndex = 0;
-            this.label9.Text = "Telefones";
             // 
             // FichaCliente
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(656, 554);
+            this.ClientSize = new System.Drawing.Size(634, 511);
             this.Controls.Add(this.panel1);
-            this.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "FichaCliente";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FichaCliente";
@@ -301,9 +280,6 @@
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picFotoCliente)).EndInit();
-            this.pnlTelefones.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -328,8 +304,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtBairro;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Panel pnlTelefones;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.FlowLayoutPanel pnlTelefones;
     }
 }

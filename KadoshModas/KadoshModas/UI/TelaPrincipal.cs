@@ -125,6 +125,12 @@ namespace KadoshModas.UI
             EsconderSubmenus();
             AbrirFormulario(new CadCategoria());
         }
+
+        private void btnNovaVenda_Click(object sender, EventArgs e)
+        {
+            EsconderSubmenus();
+            AbrirFormulario(new CadVenda());
+        }
         #endregion
     }
 }

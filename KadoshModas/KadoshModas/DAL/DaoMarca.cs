@@ -41,23 +41,16 @@ namespace KadoshModas.DAL
         /// Cadastra uma nova Marca
         /// </summary>
         /// <param name="pDmoMarca">Objeto DmoMarca preenchido</param>
-        /// <returns>Retorna o Id da Marca cadastrada. Em caso de erro retorna null</returns>
+        /// <returns>Retorna o Id da Marca cadastrada.</returns>
         public int? Cadastrar(DmoMarca pDmoMarca)
         {
-            try
-            {
-                SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (NOME) VALUES (@NOME);", conexao.Conectar());
-                cmd.Parameters.AddWithValue("@NOME", pDmoMarca.Nome).SqlDbType = SqlDbType.VarChar;
+            SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (NOME) VALUES (@NOME);", conexao.Conectar());
+            cmd.Parameters.AddWithValue("@NOME", pDmoMarca.Nome).SqlDbType = SqlDbType.VarChar;
 
-                cmd.ExecuteNonQuery();
-                conexao.Desconectar();
+            cmd.ExecuteNonQuery();
+            conexao.Desconectar();
 
-                return ConsultarUltimoId();
-            }
-            catch (Exception erro)
-            {
-                return null;
-            }
+            return ConsultarUltimoId();
         }
 
         /// <summary>
@@ -66,34 +59,27 @@ namespace KadoshModas.DAL
         /// <returns>Retorna uma lista de DmoMarca com todas os Marcas cadastradas na base de dados</returns>
         public List<DmoMarca> Consultar()
         {
-            try
+            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA, conexao.Conectar());
+            SqlDataReader dataReader = cmd.ExecuteReader();
+
+            List<DmoMarca> listaDeMarcas = new List<DmoMarca>();
+
+            while (dataReader.Read())
             {
-                SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA, conexao.Conectar());
-                SqlDataReader dataReader = cmd.ExecuteReader();
-
-                List<DmoMarca> listaDeMarcas = new List<DmoMarca>();
-
-                while (dataReader.Read())
+                DmoMarca marca = new DmoMarca
                 {
-                    DmoMarca marca = new DmoMarca
-                    {
-                        IdMarca = int.Parse(dataReader["ID_MARCA"].ToString()),
-                        Nome = dataReader["NOME"].ToString(),
-                        DataDeCriacao = DateTime.Parse(dataReader["DT_CRIACAO"].ToString()),
-                        DataDeAtualizacao = DateTime.Parse(dataReader["DT_ATUALIZACAO"].ToString())
-                    };
+                    IdMarca = int.Parse(dataReader["ID_MARCA"].ToString()),
+                    Nome = dataReader["NOME"].ToString(),
+                    DataDeCriacao = DateTime.Parse(dataReader["DT_CRIACAO"].ToString()),
+                    DataDeAtualizacao = DateTime.Parse(dataReader["DT_ATUALIZACAO"].ToString())
+                };
 
-                    listaDeMarcas.Add(marca);
-                }
-
-                conexao.Desconectar();
-
-                return listaDeMarcas;
+                listaDeMarcas.Add(marca);
             }
-            catch (Exception erro)
-            {
-                return null;
-            }
+
+            conexao.Desconectar();
+
+            return listaDeMarcas;
         }
 
         /// <summary>

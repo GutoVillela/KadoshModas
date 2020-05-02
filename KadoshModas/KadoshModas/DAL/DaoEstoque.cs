@@ -41,33 +41,26 @@ namespace KadoshModas.DAL
         /// <returns>Retorna o Id do Estoque cadastrado. Em caso de erro retorna null</returns>
         public int? Cadastrar(DmoEstoque pDmoEstoque)
         {
-            try
-            {
-                if(pDmoEstoque.Produto == null || pDmoEstoque.Produto.IdProduto == null)
-                    throw new ArgumentException("A propriedade Produto de pDmoEstoque deve estar preenchida com um ID de Produto");
+            if(pDmoEstoque.Produto == null || pDmoEstoque.Produto.IdProduto == null)
+                throw new ArgumentException("A propriedade Produto de pDmoEstoque deve estar preenchida com um ID de Produto");
 
-                SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (PRODUTO, QUANTIDADE, MINIMO) VALUES (@PRODUTO, @QUANTIDADE, @MINIMO);", conexao.Conectar());
-                cmd.Parameters.AddWithValue("@PRODUTO", pDmoEstoque.Produto.IdProduto).SqlDbType = SqlDbType.Int;
+            SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (PRODUTO, QUANTIDADE, MINIMO) VALUES (@PRODUTO, @QUANTIDADE, @MINIMO);", conexao.Conectar());
+            cmd.Parameters.AddWithValue("@PRODUTO", pDmoEstoque.Produto.IdProduto).SqlDbType = SqlDbType.Int;
 
-                if (pDmoEstoque.Quantidade <= 0)
-                    cmd.Parameters.AddWithValue("@QUANTIDADE", 0).SqlDbType = SqlDbType.Int;
-                else
-                    cmd.Parameters.AddWithValue("@QUANTIDADE", pDmoEstoque.Quantidade).SqlDbType = SqlDbType.Int;
+            if (pDmoEstoque.Quantidade <= 0)
+                cmd.Parameters.AddWithValue("@QUANTIDADE", 0).SqlDbType = SqlDbType.Int;
+            else
+                cmd.Parameters.AddWithValue("@QUANTIDADE", pDmoEstoque.Quantidade).SqlDbType = SqlDbType.Int;
 
-                if (pDmoEstoque.Minimo <= 0)
-                    cmd.Parameters.AddWithValue("@MINIMO", 0).SqlDbType = SqlDbType.Int;
-                else
-                    cmd.Parameters.AddWithValue("@MINIMO", pDmoEstoque.Minimo).SqlDbType = SqlDbType.Int;
+            if (pDmoEstoque.Minimo <= 0)
+                cmd.Parameters.AddWithValue("@MINIMO", 0).SqlDbType = SqlDbType.Int;
+            else
+                cmd.Parameters.AddWithValue("@MINIMO", pDmoEstoque.Minimo).SqlDbType = SqlDbType.Int;
 
-                cmd.ExecuteNonQuery();
-                conexao.Desconectar();
+            cmd.ExecuteNonQuery();
+            conexao.Desconectar();
 
-                return ConsultarUltimoId();
-            }
-            catch (Exception erro)
-            {
-                return null;
-            }
+            return ConsultarUltimoId();
         }
 
         

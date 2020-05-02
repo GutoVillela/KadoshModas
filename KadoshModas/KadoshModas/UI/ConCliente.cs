@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using KadoshModas.UI.UserControls;
 
 namespace KadoshModas.UI
 {
@@ -24,24 +25,19 @@ namespace KadoshModas.UI
         /// <param name="pDataSource">Lista de Clientes a serem carregados na tela</param>
         private void CarregarGrid(List<DML.DmoCliente> pDataSource)
         {
-            //Limpar DataGridView
-            dgvClientes.Rows.Clear();
+            //Limpar Panel da Consulta
+            pnlConCliente.Controls.Clear();
 
             foreach (DML.DmoCliente cliente in pDataSource)
             {
-                dgvClientes.Rows.Add(
-                    cliente.IdCliente.ToString(),
-                    string.IsNullOrEmpty(cliente.UrlFoto) ? Properties.Resources.usuario_perfil_padrao : Image.FromFile(cliente.UrlFoto),
-                    cliente.Nome,
-                    cliente.Sexo.ToString(),
-                    cliente.CPF
-                    );
-
-                dgvClientes.Rows[dgvClientes.Rows.GetLastRow(DataGridViewElementStates.None)].Tag = cliente;
+                ucClienteListItem clienteListItem = new UserControls.ucClienteListItem();
+                clienteListItem.Cliente = cliente;
+                pnlConCliente.Controls.Add(clienteListItem);
             }
         }
         #endregion
 
+        #region Eventos
         private void ConCliente_Load(object sender, EventArgs e)
         {
             CarregarGrid(new BLL.BoCliente().Consultar());
@@ -61,15 +57,16 @@ namespace KadoshModas.UI
                 }
             }
         }
+        #endregion
 
-        private void dgvClientes_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void rbtNome_CheckedChanged(object sender, EventArgs e)
         {
-            if(dgvClientes.Columns[e.ColumnIndex].Name == "VerFicha")
-            {
-                int idCliente = int.Parse(dgvClientes.Rows[e.RowIndex].Cells[0].Value.ToString());
-                new FichaCliente((DML.DmoCliente)dgvClientes.Rows[e.RowIndex].Tag).ShowDialog();
-            }
-            
+
+        }
+
+        private void rbtCPF_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

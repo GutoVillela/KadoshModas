@@ -41,10 +41,8 @@
             this.rdbSexoFeminino = new System.Windows.Forms.RadioButton();
             this.rdbSexoMasculino = new System.Windows.Forms.RadioButton();
             this.label12 = new System.Windows.Forms.Label();
-            this.pcbLoaderCPF = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lstTelefones = new System.Windows.Forms.ListBox();
-            this.btnAddNumero = new FontAwesome.Sharp.IconButton();
             this.txtFalarCom = new System.Windows.Forms.TextBox();
             this.lblFalarCom = new System.Windows.Forms.Label();
             this.cboTipoTelefone = new System.Windows.Forms.ComboBox();
@@ -64,35 +62,37 @@
             this.txtRua = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.pnlCadCliEtapa1 = new System.Windows.Forms.Panel();
+            this.pnlCadCliEtapa2 = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.pnlCadCliEtapa3 = new System.Windows.Forms.Panel();
+            this.pnlConteudo = new System.Windows.Forms.Panel();
+            this.openFileDialogFoto = new System.Windows.Forms.OpenFileDialog();
+            this.picEtapa3 = new FontAwesome.Sharp.IconPictureBox();
+            this.picEtapa2 = new FontAwesome.Sharp.IconPictureBox();
+            this.picEtapa1 = new FontAwesome.Sharp.IconPictureBox();
+            this.btnCadastrarCliente = new FontAwesome.Sharp.IconButton();
+            this.btnCancelar = new FontAwesome.Sharp.IconButton();
             this.btnRemoverFoto = new FontAwesome.Sharp.IconButton();
             this.btnEscolherFotoDoPc = new FontAwesome.Sharp.IconButton();
             this.btnTirarFoto = new FontAwesome.Sharp.IconButton();
             this.picFotoCliente = new System.Windows.Forms.PictureBox();
-            this.pnlCadCliEtapa1 = new System.Windows.Forms.Panel();
-            this.pnlCadCliEtapa2 = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.picEtapa3 = new FontAwesome.Sharp.IconPictureBox();
-            this.picEtapa2 = new FontAwesome.Sharp.IconPictureBox();
-            this.picEtapa1 = new FontAwesome.Sharp.IconPictureBox();
-            this.pnlCadCliEtapa3 = new System.Windows.Forms.Panel();
-            this.pnlConteudo = new System.Windows.Forms.Panel();
-            this.btnCadastrarCliente = new FontAwesome.Sharp.IconButton();
-            this.btnCancelar = new FontAwesome.Sharp.IconButton();
-            this.openFileDialogFoto = new System.Windows.Forms.OpenFileDialog();
+            this.btnAddNumero = new FontAwesome.Sharp.IconButton();
+            this.pcbLoaderCPF = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pcbLoaderCPF)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picFotoCliente)).BeginInit();
             this.pnlCadCliEtapa1.SuspendLayout();
             this.pnlCadCliEtapa2.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.pnlCadCliEtapa3.SuspendLayout();
+            this.pnlConteudo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picEtapa3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picEtapa2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picEtapa1)).BeginInit();
-            this.pnlCadCliEtapa3.SuspendLayout();
-            this.pnlConteudo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picFotoCliente)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pcbLoaderCPF)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -152,7 +152,7 @@
             this.txtCpf.Mask = "000,000,000-00";
             this.txtCpf.Name = "txtCpf";
             this.txtCpf.Size = new System.Drawing.Size(151, 28);
-            this.txtCpf.TabIndex = 5;
+            this.txtCpf.TabIndex = 2;
             this.txtCpf.Click += new System.EventHandler(this.txtCpf_Click);
             this.txtCpf.TextChanged += new System.EventHandler(this.txtCpf_TextChanged);
             this.txtCpf.Enter += new System.EventHandler(this.txtCpf_Enter);
@@ -215,7 +215,7 @@
             this.rdbSexoFeminino.Location = new System.Drawing.Point(382, 76);
             this.rdbSexoFeminino.Name = "rdbSexoFeminino";
             this.rdbSexoFeminino.Size = new System.Drawing.Size(93, 25);
-            this.rdbSexoFeminino.TabIndex = 9;
+            this.rdbSexoFeminino.TabIndex = 3;
             this.rdbSexoFeminino.TabStop = true;
             this.rdbSexoFeminino.Text = "Feminino";
             this.rdbSexoFeminino.UseVisualStyleBackColor = true;
@@ -227,7 +227,7 @@
             this.rdbSexoMasculino.Location = new System.Drawing.Point(481, 76);
             this.rdbSexoMasculino.Name = "rdbSexoMasculino";
             this.rdbSexoMasculino.Size = new System.Drawing.Size(99, 25);
-            this.rdbSexoMasculino.TabIndex = 8;
+            this.rdbSexoMasculino.TabIndex = 4;
             this.rdbSexoMasculino.Text = "Masculino";
             this.rdbSexoMasculino.UseVisualStyleBackColor = true;
             // 
@@ -241,18 +241,6 @@
             this.label12.Size = new System.Drawing.Size(46, 21);
             this.label12.TabIndex = 7;
             this.label12.Text = "Sexo:";
-            // 
-            // pcbLoaderCPF
-            // 
-            this.pcbLoaderCPF.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pcbLoaderCPF.Image = global::KadoshModas.Properties.Resources.transparent_loading_gif;
-            this.pcbLoaderCPF.Location = new System.Drawing.Point(287, 75);
-            this.pcbLoaderCPF.Name = "pcbLoaderCPF";
-            this.pcbLoaderCPF.Size = new System.Drawing.Size(30, 32);
-            this.pcbLoaderCPF.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pcbLoaderCPF.TabIndex = 6;
-            this.pcbLoaderCPF.TabStop = false;
-            this.pcbLoaderCPF.Visible = false;
             // 
             // groupBox2
             // 
@@ -289,27 +277,6 @@
             this.lstTelefones.Size = new System.Drawing.Size(450, 172);
             this.lstTelefones.TabIndex = 18;
             this.lstTelefones.Visible = false;
-            // 
-            // btnAddNumero
-            // 
-            this.btnAddNumero.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddNumero.BackColor = System.Drawing.Color.Transparent;
-            this.btnAddNumero.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnAddNumero.FlatAppearance.BorderSize = 0;
-            this.btnAddNumero.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddNumero.Flip = FontAwesome.Sharp.FlipOrientation.Normal;
-            this.btnAddNumero.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btnAddNumero.IconChar = FontAwesome.Sharp.IconChar.PlusCircle;
-            this.btnAddNumero.IconColor = System.Drawing.Color.LimeGreen;
-            this.btnAddNumero.IconSize = 40;
-            this.btnAddNumero.Location = new System.Drawing.Point(532, 98);
-            this.btnAddNumero.Name = "btnAddNumero";
-            this.btnAddNumero.Rotation = 0D;
-            this.btnAddNumero.Size = new System.Drawing.Size(37, 39);
-            this.btnAddNumero.TabIndex = 17;
-            this.btnAddNumero.UseVisualStyleBackColor = false;
-            this.btnAddNumero.Visible = false;
-            this.btnAddNumero.Click += new System.EventHandler(this.btnAddNumero_Click);
             // 
             // txtFalarCom
             // 
@@ -376,7 +343,7 @@
             this.txtBairro.Location = new System.Drawing.Point(128, 64);
             this.txtBairro.Name = "txtBairro";
             this.txtBairro.Size = new System.Drawing.Size(244, 28);
-            this.txtBairro.TabIndex = 15;
+            this.txtBairro.TabIndex = 6;
             // 
             // label13
             // 
@@ -396,7 +363,7 @@
             this.txtComplemento.Location = new System.Drawing.Point(128, 176);
             this.txtComplemento.Name = "txtComplemento";
             this.txtComplemento.Size = new System.Drawing.Size(450, 28);
-            this.txtComplemento.TabIndex = 13;
+            this.txtComplemento.TabIndex = 11;
             // 
             // label10
             // 
@@ -416,7 +383,7 @@
             this.txtCep.Mask = "00000-000";
             this.txtCep.Name = "txtCep";
             this.txtCep.Size = new System.Drawing.Size(142, 28);
-            this.txtCep.TabIndex = 11;
+            this.txtCep.TabIndex = 7;
             this.txtCep.Click += new System.EventHandler(this.txtCep_Click);
             this.txtCep.Enter += new System.EventHandler(this.txtCep_Enter);
             // 
@@ -440,7 +407,7 @@
             this.cboCidade.Location = new System.Drawing.Point(128, 140);
             this.cboCidade.Name = "cboCidade";
             this.cboCidade.Size = new System.Drawing.Size(450, 29);
-            this.cboCidade.TabIndex = 9;
+            this.cboCidade.TabIndex = 10;
             // 
             // label8
             // 
@@ -461,7 +428,7 @@
             this.cboEstado.Location = new System.Drawing.Point(354, 102);
             this.cboEstado.Name = "cboEstado";
             this.cboEstado.Size = new System.Drawing.Size(224, 29);
-            this.cboEstado.TabIndex = 7;
+            this.cboEstado.TabIndex = 9;
             this.cboEstado.SelectedIndexChanged += new System.EventHandler(this.cboEstado_SelectedIndexChanged);
             // 
             // label7
@@ -480,7 +447,7 @@
             this.txtNumero.Location = new System.Drawing.Point(128, 101);
             this.txtNumero.Name = "txtNumero";
             this.txtNumero.Size = new System.Drawing.Size(151, 28);
-            this.txtNumero.TabIndex = 5;
+            this.txtNumero.TabIndex = 8;
             // 
             // label6
             // 
@@ -500,7 +467,7 @@
             this.txtRua.Location = new System.Drawing.Point(128, 26);
             this.txtRua.Name = "txtRua";
             this.txtRua.Size = new System.Drawing.Size(450, 28);
-            this.txtRua.TabIndex = 3;
+            this.txtRua.TabIndex = 5;
             // 
             // label5
             // 
@@ -523,6 +490,156 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(300, 381);
             this.panel2.TabIndex = 17;
+            // 
+            // pnlCadCliEtapa1
+            // 
+            this.pnlCadCliEtapa1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.pnlCadCliEtapa1.Controls.Add(this.groupBox1);
+            this.pnlCadCliEtapa1.Controls.Add(this.groupBox3);
+            this.pnlCadCliEtapa1.Location = new System.Drawing.Point(652, 12);
+            this.pnlCadCliEtapa1.Name = "pnlCadCliEtapa1";
+            this.pnlCadCliEtapa1.Size = new System.Drawing.Size(634, 400);
+            this.pnlCadCliEtapa1.TabIndex = 18;
+            // 
+            // pnlCadCliEtapa2
+            // 
+            this.pnlCadCliEtapa2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.pnlCadCliEtapa2.Controls.Add(this.groupBox2);
+            this.pnlCadCliEtapa2.Location = new System.Drawing.Point(1316, 12);
+            this.pnlCadCliEtapa2.Name = "pnlCadCliEtapa2";
+            this.pnlCadCliEtapa2.Size = new System.Drawing.Size(634, 400);
+            this.pnlCadCliEtapa2.TabIndex = 19;
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.picEtapa3);
+            this.panel1.Controls.Add(this.picEtapa2);
+            this.panel1.Controls.Add(this.picEtapa1);
+            this.panel1.Location = new System.Drawing.Point(3, 412);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(628, 30);
+            this.panel1.TabIndex = 20;
+            // 
+            // pnlCadCliEtapa3
+            // 
+            this.pnlCadCliEtapa3.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.pnlCadCliEtapa3.Controls.Add(this.panel2);
+            this.pnlCadCliEtapa3.Location = new System.Drawing.Point(1972, 12);
+            this.pnlCadCliEtapa3.Name = "pnlCadCliEtapa3";
+            this.pnlCadCliEtapa3.Size = new System.Drawing.Size(634, 400);
+            this.pnlCadCliEtapa3.TabIndex = 21;
+            // 
+            // pnlConteudo
+            // 
+            this.pnlConteudo.Controls.Add(this.panel1);
+            this.pnlConteudo.Controls.Add(this.btnCadastrarCliente);
+            this.pnlConteudo.Controls.Add(this.btnCancelar);
+            this.pnlConteudo.Location = new System.Drawing.Point(12, 12);
+            this.pnlConteudo.Name = "pnlConteudo";
+            this.pnlConteudo.Size = new System.Drawing.Size(634, 511);
+            this.pnlConteudo.TabIndex = 24;
+            // 
+            // openFileDialogFoto
+            // 
+            this.openFileDialogFoto.FileName = "openFileDialog1";
+            this.openFileDialogFoto.Filter = "Arquivos de Imagem(*.jpg; *.jpeg; *.png; *.gif; *.bmp)|*.jpg; *.jpeg; *.png; *.gi" +
+    "f; *.bmp";
+            // 
+            // picEtapa3
+            // 
+            this.picEtapa3.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.picEtapa3.BackColor = System.Drawing.Color.Transparent;
+            this.picEtapa3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picEtapa3.ForeColor = System.Drawing.Color.Black;
+            this.picEtapa3.IconChar = FontAwesome.Sharp.IconChar.Circle;
+            this.picEtapa3.IconColor = System.Drawing.Color.Black;
+            this.picEtapa3.IconSize = 20;
+            this.picEtapa3.Location = new System.Drawing.Point(338, 3);
+            this.picEtapa3.Name = "picEtapa3";
+            this.picEtapa3.Size = new System.Drawing.Size(20, 20);
+            this.picEtapa3.TabIndex = 2;
+            this.picEtapa3.TabStop = false;
+            this.picEtapa3.Click += new System.EventHandler(this.picEtapa3_Click);
+            // 
+            // picEtapa2
+            // 
+            this.picEtapa2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.picEtapa2.BackColor = System.Drawing.Color.Transparent;
+            this.picEtapa2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picEtapa2.ForeColor = System.Drawing.Color.Black;
+            this.picEtapa2.IconChar = FontAwesome.Sharp.IconChar.Circle;
+            this.picEtapa2.IconColor = System.Drawing.Color.Black;
+            this.picEtapa2.IconSize = 20;
+            this.picEtapa2.Location = new System.Drawing.Point(312, 3);
+            this.picEtapa2.Name = "picEtapa2";
+            this.picEtapa2.Size = new System.Drawing.Size(20, 20);
+            this.picEtapa2.TabIndex = 1;
+            this.picEtapa2.TabStop = false;
+            this.picEtapa2.Click += new System.EventHandler(this.picEtapa2_Click);
+            // 
+            // picEtapa1
+            // 
+            this.picEtapa1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.picEtapa1.BackColor = System.Drawing.Color.Transparent;
+            this.picEtapa1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picEtapa1.ForeColor = System.Drawing.Color.Black;
+            this.picEtapa1.IconChar = FontAwesome.Sharp.IconChar.DotCircle;
+            this.picEtapa1.IconColor = System.Drawing.Color.Black;
+            this.picEtapa1.IconSize = 20;
+            this.picEtapa1.Location = new System.Drawing.Point(286, 3);
+            this.picEtapa1.Name = "picEtapa1";
+            this.picEtapa1.Size = new System.Drawing.Size(20, 20);
+            this.picEtapa1.TabIndex = 0;
+            this.picEtapa1.TabStop = false;
+            this.picEtapa1.Click += new System.EventHandler(this.picEtapa1_Click);
+            // 
+            // btnCadastrarCliente
+            // 
+            this.btnCadastrarCliente.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCadastrarCliente.BackColor = System.Drawing.Color.Black;
+            this.btnCadastrarCliente.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCadastrarCliente.FlatAppearance.BorderSize = 0;
+            this.btnCadastrarCliente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCadastrarCliente.Flip = FontAwesome.Sharp.FlipOrientation.Normal;
+            this.btnCadastrarCliente.ForeColor = System.Drawing.Color.White;
+            this.btnCadastrarCliente.IconChar = FontAwesome.Sharp.IconChar.ArrowCircleRight;
+            this.btnCadastrarCliente.IconColor = System.Drawing.Color.White;
+            this.btnCadastrarCliente.IconSize = 24;
+            this.btnCadastrarCliente.Location = new System.Drawing.Point(467, 448);
+            this.btnCadastrarCliente.Name = "btnCadastrarCliente";
+            this.btnCadastrarCliente.Rotation = 0D;
+            this.btnCadastrarCliente.Size = new System.Drawing.Size(164, 60);
+            this.btnCadastrarCliente.TabIndex = 12;
+            this.btnCadastrarCliente.Text = "Próxima Etapa";
+            this.btnCadastrarCliente.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.btnCadastrarCliente.UseVisualStyleBackColor = false;
+            this.btnCadastrarCliente.Click += new System.EventHandler(this.btnCadastrarCliente_Click);
+            // 
+            // btnCancelar
+            // 
+            this.btnCancelar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnCancelar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCancelar.FlatAppearance.BorderSize = 0;
+            this.btnCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancelar.Flip = FontAwesome.Sharp.FlipOrientation.Normal;
+            this.btnCancelar.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelar.ForeColor = System.Drawing.Color.White;
+            this.btnCancelar.IconChar = FontAwesome.Sharp.IconChar.Times;
+            this.btnCancelar.IconColor = System.Drawing.Color.DarkRed;
+            this.btnCancelar.IconSize = 24;
+            this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCancelar.Location = new System.Drawing.Point(3, 448);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Rotation = 0D;
+            this.btnCancelar.Size = new System.Drawing.Size(152, 60);
+            this.btnCancelar.TabIndex = 23;
+            this.btnCancelar.Text = "Cancelar";
+            this.btnCancelar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnCancelar.UseVisualStyleBackColor = false;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // btnRemoverFoto
             // 
@@ -593,161 +710,44 @@
             this.picFotoCliente.TabIndex = 0;
             this.picFotoCliente.TabStop = false;
             // 
-            // pnlCadCliEtapa1
+            // btnAddNumero
             // 
-            this.pnlCadCliEtapa1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.pnlCadCliEtapa1.Controls.Add(this.groupBox1);
-            this.pnlCadCliEtapa1.Controls.Add(this.groupBox3);
-            this.pnlCadCliEtapa1.Location = new System.Drawing.Point(652, 12);
-            this.pnlCadCliEtapa1.Name = "pnlCadCliEtapa1";
-            this.pnlCadCliEtapa1.Size = new System.Drawing.Size(634, 400);
-            this.pnlCadCliEtapa1.TabIndex = 18;
+            this.btnAddNumero.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddNumero.BackColor = System.Drawing.Color.Transparent;
+            this.btnAddNumero.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAddNumero.FlatAppearance.BorderSize = 0;
+            this.btnAddNumero.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddNumero.Flip = FontAwesome.Sharp.FlipOrientation.Normal;
+            this.btnAddNumero.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btnAddNumero.IconChar = FontAwesome.Sharp.IconChar.PlusCircle;
+            this.btnAddNumero.IconColor = System.Drawing.Color.LimeGreen;
+            this.btnAddNumero.IconSize = 40;
+            this.btnAddNumero.Location = new System.Drawing.Point(532, 98);
+            this.btnAddNumero.Name = "btnAddNumero";
+            this.btnAddNumero.Rotation = 0D;
+            this.btnAddNumero.Size = new System.Drawing.Size(37, 39);
+            this.btnAddNumero.TabIndex = 17;
+            this.btnAddNumero.UseVisualStyleBackColor = false;
+            this.btnAddNumero.Visible = false;
+            this.btnAddNumero.Click += new System.EventHandler(this.btnAddNumero_Click);
             // 
-            // pnlCadCliEtapa2
+            // pcbLoaderCPF
             // 
-            this.pnlCadCliEtapa2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.pnlCadCliEtapa2.Controls.Add(this.groupBox2);
-            this.pnlCadCliEtapa2.Location = new System.Drawing.Point(1316, 12);
-            this.pnlCadCliEtapa2.Name = "pnlCadCliEtapa2";
-            this.pnlCadCliEtapa2.Size = new System.Drawing.Size(634, 400);
-            this.pnlCadCliEtapa2.TabIndex = 19;
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Controls.Add(this.picEtapa3);
-            this.panel1.Controls.Add(this.picEtapa2);
-            this.panel1.Controls.Add(this.picEtapa1);
-            this.panel1.Location = new System.Drawing.Point(3, 412);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(628, 30);
-            this.panel1.TabIndex = 20;
-            // 
-            // picEtapa3
-            // 
-            this.picEtapa3.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.picEtapa3.BackColor = System.Drawing.Color.Transparent;
-            this.picEtapa3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picEtapa3.ForeColor = System.Drawing.Color.Black;
-            this.picEtapa3.IconChar = FontAwesome.Sharp.IconChar.Circle;
-            this.picEtapa3.IconColor = System.Drawing.Color.Black;
-            this.picEtapa3.IconSize = 20;
-            this.picEtapa3.Location = new System.Drawing.Point(338, 3);
-            this.picEtapa3.Name = "picEtapa3";
-            this.picEtapa3.Size = new System.Drawing.Size(20, 20);
-            this.picEtapa3.TabIndex = 2;
-            this.picEtapa3.TabStop = false;
-            this.picEtapa3.Click += new System.EventHandler(this.picEtapa3_Click);
-            // 
-            // picEtapa2
-            // 
-            this.picEtapa2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.picEtapa2.BackColor = System.Drawing.Color.Transparent;
-            this.picEtapa2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picEtapa2.ForeColor = System.Drawing.Color.Black;
-            this.picEtapa2.IconChar = FontAwesome.Sharp.IconChar.Circle;
-            this.picEtapa2.IconColor = System.Drawing.Color.Black;
-            this.picEtapa2.IconSize = 20;
-            this.picEtapa2.Location = new System.Drawing.Point(312, 3);
-            this.picEtapa2.Name = "picEtapa2";
-            this.picEtapa2.Size = new System.Drawing.Size(20, 20);
-            this.picEtapa2.TabIndex = 1;
-            this.picEtapa2.TabStop = false;
-            this.picEtapa2.Click += new System.EventHandler(this.picEtapa2_Click);
-            // 
-            // picEtapa1
-            // 
-            this.picEtapa1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.picEtapa1.BackColor = System.Drawing.Color.Transparent;
-            this.picEtapa1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picEtapa1.ForeColor = System.Drawing.Color.Black;
-            this.picEtapa1.IconChar = FontAwesome.Sharp.IconChar.DotCircle;
-            this.picEtapa1.IconColor = System.Drawing.Color.Black;
-            this.picEtapa1.IconSize = 20;
-            this.picEtapa1.Location = new System.Drawing.Point(286, 3);
-            this.picEtapa1.Name = "picEtapa1";
-            this.picEtapa1.Size = new System.Drawing.Size(20, 20);
-            this.picEtapa1.TabIndex = 0;
-            this.picEtapa1.TabStop = false;
-            this.picEtapa1.Click += new System.EventHandler(this.picEtapa1_Click);
-            // 
-            // pnlCadCliEtapa3
-            // 
-            this.pnlCadCliEtapa3.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.pnlCadCliEtapa3.Controls.Add(this.panel2);
-            this.pnlCadCliEtapa3.Location = new System.Drawing.Point(1972, 12);
-            this.pnlCadCliEtapa3.Name = "pnlCadCliEtapa3";
-            this.pnlCadCliEtapa3.Size = new System.Drawing.Size(634, 400);
-            this.pnlCadCliEtapa3.TabIndex = 21;
-            // 
-            // pnlConteudo
-            // 
-            this.pnlConteudo.Controls.Add(this.panel1);
-            this.pnlConteudo.Controls.Add(this.btnCadastrarCliente);
-            this.pnlConteudo.Controls.Add(this.btnCancelar);
-            this.pnlConteudo.Location = new System.Drawing.Point(12, 12);
-            this.pnlConteudo.Name = "pnlConteudo";
-            this.pnlConteudo.Size = new System.Drawing.Size(634, 511);
-            this.pnlConteudo.TabIndex = 24;
-            // 
-            // btnCadastrarCliente
-            // 
-            this.btnCadastrarCliente.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCadastrarCliente.BackColor = System.Drawing.Color.Black;
-            this.btnCadastrarCliente.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCadastrarCliente.FlatAppearance.BorderSize = 0;
-            this.btnCadastrarCliente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCadastrarCliente.Flip = FontAwesome.Sharp.FlipOrientation.Normal;
-            this.btnCadastrarCliente.ForeColor = System.Drawing.Color.White;
-            this.btnCadastrarCliente.IconChar = FontAwesome.Sharp.IconChar.ArrowCircleRight;
-            this.btnCadastrarCliente.IconColor = System.Drawing.Color.White;
-            this.btnCadastrarCliente.IconSize = 24;
-            this.btnCadastrarCliente.Location = new System.Drawing.Point(467, 448);
-            this.btnCadastrarCliente.Name = "btnCadastrarCliente";
-            this.btnCadastrarCliente.Rotation = 0D;
-            this.btnCadastrarCliente.Size = new System.Drawing.Size(164, 60);
-            this.btnCadastrarCliente.TabIndex = 22;
-            this.btnCadastrarCliente.Text = "Próxima Etapa";
-            this.btnCadastrarCliente.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.btnCadastrarCliente.UseVisualStyleBackColor = false;
-            this.btnCadastrarCliente.Click += new System.EventHandler(this.btnCadastrarCliente_Click);
-            // 
-            // btnCancelar
-            // 
-            this.btnCancelar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCancelar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCancelar.FlatAppearance.BorderSize = 0;
-            this.btnCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancelar.Flip = FontAwesome.Sharp.FlipOrientation.Normal;
-            this.btnCancelar.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelar.ForeColor = System.Drawing.Color.White;
-            this.btnCancelar.IconChar = FontAwesome.Sharp.IconChar.Times;
-            this.btnCancelar.IconColor = System.Drawing.Color.DarkRed;
-            this.btnCancelar.IconSize = 24;
-            this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancelar.Location = new System.Drawing.Point(3, 448);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Rotation = 0D;
-            this.btnCancelar.Size = new System.Drawing.Size(152, 60);
-            this.btnCancelar.TabIndex = 23;
-            this.btnCancelar.Text = "Cancelar";
-            this.btnCancelar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnCancelar.UseVisualStyleBackColor = false;
-            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
-            // 
-            // openFileDialogFoto
-            // 
-            this.openFileDialogFoto.FileName = "openFileDialog1";
-            this.openFileDialogFoto.Filter = "Arquivos de Imagem(*.jpg; *.jpeg; *.png; *.gif; *.bmp)|*.jpg; *.jpeg; *.png; *.gi" +
-    "f; *.bmp";
+            this.pcbLoaderCPF.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pcbLoaderCPF.Image = global::KadoshModas.Properties.Resources.transparent_loading_gif;
+            this.pcbLoaderCPF.Location = new System.Drawing.Point(287, 75);
+            this.pcbLoaderCPF.Name = "pcbLoaderCPF";
+            this.pcbLoaderCPF.Size = new System.Drawing.Size(30, 32);
+            this.pcbLoaderCPF.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pcbLoaderCPF.TabIndex = 6;
+            this.pcbLoaderCPF.TabStop = false;
+            this.pcbLoaderCPF.Visible = false;
             // 
             // CadCliente
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(2651, 749);
+            this.ClientSize = new System.Drawing.Size(1924, 749);
             this.Controls.Add(this.pnlConteudo);
             this.Controls.Add(this.pnlCadCliEtapa3);
             this.Controls.Add(this.pnlCadCliEtapa2);
@@ -761,21 +761,21 @@
             this.Load += new System.EventHandler(this.CadCliente_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pcbLoaderCPF)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picFotoCliente)).EndInit();
             this.pnlCadCliEtapa1.ResumeLayout(false);
             this.pnlCadCliEtapa2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.pnlCadCliEtapa3.ResumeLayout(false);
+            this.pnlConteudo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picEtapa3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picEtapa2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picEtapa1)).EndInit();
-            this.pnlCadCliEtapa3.ResumeLayout(false);
-            this.pnlConteudo.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picFotoCliente)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pcbLoaderCPF)).EndInit();
             this.ResumeLayout(false);
 
         }

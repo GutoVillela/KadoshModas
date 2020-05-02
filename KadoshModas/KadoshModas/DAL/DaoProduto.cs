@@ -44,36 +44,29 @@ namespace KadoshModas.DAL
         /// <returns>Retorna o Id do Produto cadastrado. Em caso de erro retorna null</returns>
         public int? Cadastrar(DmoProduto pDmoProduto)
         {
-            try
-            {
-                SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (NOME, PRECO, URL_FOTO, CATEGORIA, MARCA) VALUES (@NOME, @PRECO, @URL_FOTO, @CATEGORIA, @MARCA);", conexao.Conectar());
-                cmd.Parameters.AddWithValue("@NOME", pDmoProduto.Nome).SqlDbType = SqlDbType.VarChar;
-                cmd.Parameters.AddWithValue("@PRECO", pDmoProduto.Preco).SqlDbType = SqlDbType.SmallMoney;
+            SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (NOME, PRECO, URL_FOTO, CATEGORIA, MARCA) VALUES (@NOME, @PRECO, @URL_FOTO, @CATEGORIA, @MARCA);", conexao.Conectar());
+            cmd.Parameters.AddWithValue("@NOME", pDmoProduto.Nome).SqlDbType = SqlDbType.VarChar;
+            cmd.Parameters.AddWithValue("@PRECO", pDmoProduto.Preco).SqlDbType = SqlDbType.SmallMoney;
 
-                if (string.IsNullOrEmpty(pDmoProduto.UrlFoto))
-                    cmd.Parameters.AddWithValue("@URL_FOTO", DBNull.Value).SqlDbType = SqlDbType.VarChar;
-                else
-                    cmd.Parameters.AddWithValue("@URL_FOTO", pDmoProduto.UrlFoto).SqlDbType = SqlDbType.VarChar;
+            if (string.IsNullOrEmpty(pDmoProduto.UrlFoto))
+                cmd.Parameters.AddWithValue("@URL_FOTO", DBNull.Value).SqlDbType = SqlDbType.VarChar;
+            else
+                cmd.Parameters.AddWithValue("@URL_FOTO", pDmoProduto.UrlFoto).SqlDbType = SqlDbType.VarChar;
 
-                if (pDmoProduto.Categoria == null || pDmoProduto.Categoria.IdCategoria == null)
-                    cmd.Parameters.AddWithValue("@CATEGORIA", DBNull.Value).SqlDbType = SqlDbType.Int;
-                else
-                    cmd.Parameters.AddWithValue("@CATEGORIA", pDmoProduto.Categoria.IdCategoria).SqlDbType = SqlDbType.Int;
+            if (pDmoProduto.Categoria == null || pDmoProduto.Categoria.IdCategoria == null)
+                cmd.Parameters.AddWithValue("@CATEGORIA", DBNull.Value).SqlDbType = SqlDbType.Int;
+            else
+                cmd.Parameters.AddWithValue("@CATEGORIA", pDmoProduto.Categoria.IdCategoria).SqlDbType = SqlDbType.Int;
 
-                if (pDmoProduto.Marca == null || pDmoProduto.Marca.IdMarca == null)
-                    cmd.Parameters.AddWithValue("@MARCA", DBNull.Value).SqlDbType = SqlDbType.Int;
-                else
-                    cmd.Parameters.AddWithValue("@MARCA", pDmoProduto.Marca.IdMarca).SqlDbType = SqlDbType.Int;
+            if (pDmoProduto.Marca == null || pDmoProduto.Marca.IdMarca == null)
+                cmd.Parameters.AddWithValue("@MARCA", DBNull.Value).SqlDbType = SqlDbType.Int;
+            else
+                cmd.Parameters.AddWithValue("@MARCA", pDmoProduto.Marca.IdMarca).SqlDbType = SqlDbType.Int;
 
-                cmd.ExecuteNonQuery();
-                conexao.Desconectar();
+            cmd.ExecuteNonQuery();
+            conexao.Desconectar();
 
-                return ConsultarUltimoId();
-            }
-            catch (Exception erro)
-            {
-                return null;
-            }
+            return ConsultarUltimoId();
         }
 
         /// <summary>
@@ -82,42 +75,35 @@ namespace KadoshModas.DAL
         /// <returns>Retorna uma lista de DmoProduto com todos os Produtos cadastrados na base de dados</returns>
         public List<DmoProduto> Consultar()
         {
-            try
+            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA, conexao.Conectar());
+            SqlDataReader dataReader = cmd.ExecuteReader();
+
+            List<DmoProduto> listaDeProdutos = new List<DmoProduto>();
+
+            while (dataReader.Read())
             {
-                SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA, conexao.Conectar());
-                SqlDataReader dataReader = cmd.ExecuteReader();
-
-                List<DmoProduto> listaDeProdutos = new List<DmoProduto>();
-
-                while (dataReader.Read())
+                DmoProduto produto = new DmoProduto
                 {
-                    DmoProduto produto = new DmoProduto
-                    {
-                        IdProduto = int.Parse(dataReader["ID_PRODUTO"].ToString()),
-                        Nome = dataReader["NOME"].ToString(),
-                        Preco = float.Parse(dataReader["PRECO"].ToString()),
-                        UrlFoto = dataReader["URL_FOTO"].ToString(),
-                        DataDeCriacao = DateTime.Parse(dataReader["DT_CRIACAO"].ToString()),
-                        DataDeAtualizacao = DateTime.Parse(dataReader["DT_ATUALIZACAO"].ToString())
-                    };
+                    IdProduto = int.Parse(dataReader["ID_PRODUTO"].ToString()),
+                    Nome = dataReader["NOME"].ToString(),
+                    Preco = float.Parse(dataReader["PRECO"].ToString()),
+                    UrlFoto = dataReader["URL_FOTO"].ToString(),
+                    DataDeCriacao = DateTime.Parse(dataReader["DT_CRIACAO"].ToString()),
+                    DataDeAtualizacao = DateTime.Parse(dataReader["DT_ATUALIZACAO"].ToString())
+                };
 
-                    if (int.TryParse(dataReader["CATEGORIA"].ToString(), out int idCategoria))
-                        produto.Categoria = new DmoCategoria { IdCategoria = idCategoria };
+                if (int.TryParse(dataReader["CATEGORIA"].ToString(), out int idCategoria))
+                    produto.Categoria = new DmoCategoria { IdCategoria = idCategoria };
 
-                    if (int.TryParse(dataReader["MARCA"].ToString(), out int idMarca))
-                        produto.Marca = new DmoMarca { IdMarca = idMarca };
+                if (int.TryParse(dataReader["MARCA"].ToString(), out int idMarca))
+                    produto.Marca = new DmoMarca { IdMarca = idMarca };
 
-                    listaDeProdutos.Add(produto);
-                }
-
-                conexao.Desconectar();
-
-                return listaDeProdutos;
+                listaDeProdutos.Add(produto);
             }
-            catch (Exception erro)
-            {
-                return null;
-            }
+
+            conexao.Desconectar();
+
+            return listaDeProdutos;
         }
 
         /// <summary>
@@ -139,7 +125,7 @@ namespace KadoshModas.DAL
             }
             catch
             {
-                return 0;
+                return null;
             }
         }
 

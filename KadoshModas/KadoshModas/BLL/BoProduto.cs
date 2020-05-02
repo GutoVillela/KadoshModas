@@ -27,21 +27,21 @@ namespace KadoshModas.BLL
                 throw new Exception("As propriedades Nome e Preço do Produto são obrigatórios");
 
             //Cadastro do Produto
-            int? idProduto = new DaoProduto().Cadastrar(pDmoProduto);
+            pDmoProduto.IdProduto = new DaoProduto().Cadastrar(pDmoProduto);
 
-            if (idProduto == null)
+            if (pDmoProduto.IdProduto == null)
                 return null;
 
             //Copiar imagem para pasta e recuperar nova URL
             if (!string.IsNullOrEmpty(pDmoProduto.UrlFoto))
-                AtualizarFoto(SalvarFotoERecuperarUrl(pDmoProduto.UrlFoto, "FP_" + idProduto + ".jpg"), idProduto);
+                AtualizarFoto(SalvarFotoERecuperarUrl(pDmoProduto.UrlFoto, "FP_" + pDmoProduto.IdProduto + ".jpg"), pDmoProduto.IdProduto);
 
             //Cadastro dos Atributos do Produto
             if (pDmoProduto.Atributos != null && pDmoProduto.Atributos.Any())
             {
                 foreach (DmoAtributosDoProduto atributoDoProduto in pDmoProduto.Atributos)
                 {
-                    atributoDoProduto.Produto = new DmoProduto { IdProduto = idProduto };
+                    atributoDoProduto.Produto = new DmoProduto { IdProduto = pDmoProduto.IdProduto };
                     new DaoAtributosDoProduto().Cadastrar(atributoDoProduto);
                 }
             }
@@ -51,12 +51,20 @@ namespace KadoshModas.BLL
             {
                 foreach(DmoFornecedor fornecedor in pDmoProduto.Fornecedores)
                 {
-                    new DaoProduto().CadastrarFornecedorDoProduto(Convert.ToInt32(fornecedor.IdFornecedor), Convert.ToInt32(idProduto));
+                    new DaoProduto().CadastrarFornecedorDoProduto(Convert.ToInt32(fornecedor.IdFornecedor), Convert.ToInt32(pDmoProduto.IdProduto));
                 }
             }
-            
 
             return new DaoProduto().ConsultarUltimoId();
+        }
+
+        /// <summary>
+        /// Consulta todos os Produtos na base de dados
+        /// </summary>
+        /// <returns>Retorna uma lista de objetos DmoProduto com todos os Produtos da base</returns>
+        public List<DmoProduto> Consultar()
+        {
+            return new DaoProduto().Consultar();
         }
 
         /// <summary>

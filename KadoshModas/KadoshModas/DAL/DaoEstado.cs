@@ -37,39 +37,32 @@ namespace KadoshModas.DAL
         /// <returns>Retorna uma lista de DmoEstado com todos os Estados da base</returns>
         public List<DmoEstado> Consultar()
         {
-            try
+            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA, conexao.Conectar());
+            SqlDataReader dataReader = cmd.ExecuteReader();
+
+            List<DmoEstado> listaDeEstados = new List<DmoEstado>();
+
+            while (dataReader.Read())
             {
-                SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA, conexao.Conectar());
-                SqlDataReader dataReader = cmd.ExecuteReader();
-
-                List<DmoEstado> listaDeEstados = new List<DmoEstado>();
-
-                while (dataReader.Read())
+                DmoEstado estado = new DmoEstado
                 {
-                    DmoEstado estado = new DmoEstado
-                    {
-                        IdEstado = int.Parse(dataReader["ID_ESTADO"].ToString()),
-                        Nome = dataReader["NOME"].ToString(),
-                        UF = dataReader["UF"].ToString(),
-                        IBGE = int.Parse(dataReader["IBGE"].ToString()),
-                        DDD = dataReader["DDD"].ToString()
-                    };
+                    IdEstado = int.Parse(dataReader["ID_ESTADO"].ToString()),
+                    Nome = dataReader["NOME"].ToString(),
+                    UF = dataReader["UF"].ToString(),
+                    IBGE = int.Parse(dataReader["IBGE"].ToString()),
+                    DDD = dataReader["DDD"].ToString()
+                };
 
-                    int idPais;
-                    if (int.TryParse(dataReader["PAIS"].ToString(), out idPais))
-                        estado.Pais = new DmoPais { IdPais = idPais };
+                int idPais;
+                if (int.TryParse(dataReader["PAIS"].ToString(), out idPais))
+                    estado.Pais = new DmoPais { IdPais = idPais };
 
-                    listaDeEstados.Add(estado);
-                }
-
-                conexao.Desconectar();
-
-                return listaDeEstados;
+                listaDeEstados.Add(estado);
             }
-            catch (Exception erro)
-            {
-                return null;
-            }
+
+            conexao.Desconectar();
+
+            return listaDeEstados;
         }
         #endregion
     }
