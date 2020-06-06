@@ -31,6 +31,11 @@ namespace KadoshModas.DML
         /// Valor deste Item da Venda
         /// </summary>
         public float Valor { get; set; }
+
+        /// <summary>
+        /// Desconto aplicado para o Item da Venda (seguindo lógica de promoção, entre 0 e 100)
+        /// </summary>
+        public float Desconto { get; set; }
         #endregion
     }
 }

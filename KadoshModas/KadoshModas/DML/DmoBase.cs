@@ -10,7 +10,7 @@ namespace KadoshModas.DML
     /// <summary>
     /// Classe DML base para todas as classes DML. Contém propriedades comuns entre todas as classes DML
     /// </summary>
-    public class DmoBase
+    public class DmoBase : ICloneable
     {
         #region Propriedades
         /// <summary>
@@ -36,7 +36,7 @@ namespace KadoshModas.DML
         /// <typeparam name="T">Tipo do Enum</typeparam>
         /// <param name="pEnum">Enum</param>
         /// <returns>Retorna pares de valor com Descrição (recuperado do atributo Description) e Valor do Enum</returns>
-        public SortedDictionary<string, int> DescricoesEnum<T>() where T : struct, IComparable, IFormattable, IConvertible
+        public static SortedDictionary<string, int> DescricoesEnum<T>() where T : struct, IComparable, IFormattable, IConvertible
         {
             if (!typeof(T).IsEnum)
                 throw new ArgumentException("pEnum deve ser do tipo Enum");
@@ -58,7 +58,7 @@ namespace KadoshModas.DML
         /// <typeparam name="T"></typeparam>
         /// <param name="pEnum"></param>
         /// <returns></returns>
-        public string DescricaoEnum<T>(Enum pEnum) where T : struct, IComparable, IFormattable, IConvertible
+        public static string DescricaoEnum<T>(Enum pEnum) where T : struct, IComparable, IFormattable, IConvertible
         {
             if (pEnum.GetType().IsEnum)
             {
@@ -76,6 +76,15 @@ namespace KadoshModas.DML
             }
             else
                 throw new ArgumentException("pEnum deve ser do tipo Enum");
+        }
+
+        /// <summary>
+        /// Cria uma nova instância deste objeto com os mesmos valores
+        /// </summary>
+        /// <returns></returns>
+        public object Clone()
+        {
+            return this.MemberwiseClone();
         }
         #endregion
     }

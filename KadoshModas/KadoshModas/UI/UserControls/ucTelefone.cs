@@ -53,7 +53,7 @@ namespace KadoshModas.UI.UserControls
                     picTelefone.IconChar = FontAwesome.Sharp.IconChar.Phone;
 
                 ToolTip toolTip = new ToolTip();
-                toolTip.SetToolTip(picTelefone, Telefone.DescricaoEnum<DmoTelefone.TiposDeTelefone>(Telefone.TipoDeTelefone));
+                toolTip.SetToolTip(picTelefone, DmoTelefone.DescricaoEnum<DmoTelefone.TiposDeTelefone>(Telefone.TipoDeTelefone));
             }
         }
 

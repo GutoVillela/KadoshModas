@@ -49,7 +49,9 @@ namespace KadoshModas.DML
         /// Lista de Telefones do Cliente
         /// </summary>
         public List<DmoTelefoneDoCliente> Telefones { get; set; }
+        #endregion
 
+        #region Enum
         /// <summary>
         /// Sexos
         /// </summary>
@@ -59,6 +61,13 @@ namespace KadoshModas.DML
 
             Masculino
         }
+        #endregion
+
+        #region Constantes
+        /// <summary>
+        /// Define a constante para o Id do Cliente Indefinido, utilizado caso o Cliente não seja fornecido
+        /// </summary>
+        public static readonly int? IdClienteIndefinido = 1;
         #endregion
     }
 }

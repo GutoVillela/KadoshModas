@@ -18,6 +18,11 @@ namespace KadoshModas.DML
         public int? IdProduto { get; set; }
 
         /// <summary>
+        /// Código de Barras do Produto
+        /// </summary>
+        public string CodigoDeBarra { get; set; }
+
+        /// <summary>
         /// Nome do Produto
         /// </summary>
         public string Nome { get; set; }

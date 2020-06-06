@@ -9,10 +9,6 @@ namespace KadoshModas.DML
     public class DmoCategoria : DmoBase
     {
         #region Propriedades de Categoria
-        /// <summary>
-        /// ID da Categoria
-        /// </summary>
-        public int? IdCategoria { get; set; }
 
         /// <summary>
         /// Nome da Categoria

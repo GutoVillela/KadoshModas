@@ -40,6 +40,7 @@ namespace KadoshModas.DAL
         /// <summary>
         /// Consulta todas as Cidades de um determinado Estado
         /// </summary>
+        /// <param name="pIdEstado">Id do Estado</param>
         /// <returns>Retorna uma lista de DmoCidade com todas as Cidades do Estado especificado</returns>
         public List<DmoCidade> ConsultarDoEstado(int pIdEstado)
         {
@@ -67,6 +68,34 @@ namespace KadoshModas.DAL
             conexao.Desconectar();
 
             return listaDeCidades;
+        }
+
+        /// <summary>
+        /// Consulta uma Cidade específica
+        /// </summary>
+        /// <param name="pIdCidade">Id da Cidade</param>
+        /// <returns>Retorna Cidade Preenchida</returns>
+        public DmoCidade ConsultarCidade(int pIdCidade)
+        {
+            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA + " C WHERE C.ID_CIDADE = @ID_CIDADE", conexao.Conectar());
+            cmd.Parameters.AddWithValue("@ID_CIDADE", pIdCidade).SqlDbType = SqlDbType.Int;
+
+            SqlDataReader dataReader = cmd.ExecuteReader();
+
+            dataReader.Read();
+
+            DmoCidade cidade = new DmoCidade
+            {
+                IdCidade = int.Parse(dataReader["ID_CIDADE"].ToString()),
+                Nome = dataReader["NOME"].ToString(),
+                Estado = new DmoEstado { IdEstado = int.Parse(dataReader["UF"].ToString()) },
+                IBGE = int.Parse(dataReader["IBGE"].ToString())
+            };
+
+            dataReader.Close();
+            conexao.Desconectar();
+
+            return cidade;
         }
         #endregion
     }

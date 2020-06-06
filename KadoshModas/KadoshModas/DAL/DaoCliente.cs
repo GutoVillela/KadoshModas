@@ -30,7 +30,7 @@ namespace KadoshModas.DAL
         /// <summary>
         /// Nome da tabela de Clientes no banco de dados
         /// </summary>
-        const string NOME_TABELA = "TB_CLIENTES";
+        public static readonly string NOME_TABELA = "TB_CLIENTES";
         #endregion
 
         #region Métodos
@@ -76,10 +76,29 @@ namespace KadoshModas.DAL
         /// <summary>
         /// Consulta todos os clientes
         /// </summary>
+        /// <param name="pBuscarClienteIndefinido">Define se busca retornará o Cliente Indefinido</param>
+        /// <param name="pBuscaClientesDesativados">Define se busca retornará Clientes desativados</param>
         /// <returns>Retorna uma lista de DmoCliente com todos os clientes da base</returns>
-        public List<DmoCliente> Consultar()
+        public List<DmoCliente> Consultar(bool pBuscarClienteIndefinido, bool pBuscaClientesDesativados)
         {
             SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA, conexao.Conectar());
+
+            if (!pBuscaClientesDesativados)
+            {
+                cmd.CommandText += " WHERE ATIVO = 1";
+            }
+
+            if (!pBuscarClienteIndefinido)
+            {
+                if(cmd.CommandText.Contains("WHERE"))
+                    cmd.CommandText += " AND";
+                else
+                    cmd.CommandText += " WHERE";
+
+                cmd.CommandText += " ID_CLIENTE != @ID_CLIENTE; ";
+                cmd.Parameters.AddWithValue("@ID_CLIENTE", DmoCliente.IdClienteIndefinido).SqlDbType = SqlDbType.Int;
+            }
+            
             SqlDataReader dataReader = cmd.ExecuteReader();
 
             List<DmoCliente> listaDeClientes = new List<DmoCliente>();
@@ -91,9 +110,10 @@ namespace KadoshModas.DAL
                 cliente.Nome = dataReader["NOME"].ToString();
                 cliente.Email = dataReader["EMAIL"].ToString();
                 cliente.CPF = dataReader["CPF"].ToString();
-                cliente.Sexo = (DmoCliente.Sexos) int.Parse(dataReader["SEXO"].ToString());
+                cliente.Sexo = string.IsNullOrEmpty(dataReader["SEXO"].ToString()) ? DmoCliente.Sexos.Masculino : (DmoCliente.Sexos) int.Parse(dataReader["SEXO"].ToString());
                 cliente.Endereco = string.IsNullOrEmpty(dataReader["ENDERECO"].ToString()) ? null : new DmoEndereco { IdEndereco = int.Parse(dataReader["ENDERECO"].ToString()) };
                 cliente.UrlFoto = dataReader["URL_FOTO"].ToString();
+                cliente.Ativo = bool.Parse(dataReader["ATIVO"].ToString());
                 cliente.DataDeCriacao = DateTime.Parse(dataReader["DT_CRIACAO"].ToString());
                 cliente.DataDeAtualizacao = DateTime.Parse(dataReader["DT_ATUALIZACAO"].ToString());
 
@@ -112,7 +132,7 @@ namespace KadoshModas.DAL
         /// <returns>Retorna uma lista de DmoCliente com todos os clientes da base</returns>
         public List<DmoCliente> Consultar(string pNome)
         {
-            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA + " C WHERE C.NOME LIKE @NOME;", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA + " C WHERE C.NOME LIKE @NOME AND ATIVO = 1", conexao.Conectar());
             cmd.Parameters.AddWithValue("@NOME", pNome + "%").SqlDbType = SqlDbType.VarChar;
             SqlDataReader dataReader = cmd.ExecuteReader();
 
@@ -125,9 +145,10 @@ namespace KadoshModas.DAL
                 cliente.Nome = dataReader["NOME"].ToString();
                 cliente.Email = dataReader["EMAIL"].ToString();
                 cliente.CPF = dataReader["CPF"].ToString();
-                cliente.Sexo = (DmoCliente.Sexos)int.Parse(dataReader["SEXO"].ToString());
+                cliente.Sexo = string.IsNullOrEmpty(dataReader["SEXO"].ToString()) ? DmoCliente.Sexos.Masculino : (DmoCliente.Sexos)int.Parse(dataReader["SEXO"].ToString());
                 cliente.Endereco = string.IsNullOrEmpty(dataReader["ENDERECO"].ToString()) ? null : new DmoEndereco { IdEndereco = int.Parse(dataReader["ENDERECO"].ToString()) };
                 cliente.UrlFoto = dataReader["URL_FOTO"].ToString();
+                cliente.Ativo = bool.Parse(dataReader["ATIVO"].ToString());
                 cliente.DataDeCriacao = DateTime.Parse(dataReader["DT_CRIACAO"].ToString());
                 cliente.DataDeAtualizacao = DateTime.Parse(dataReader["DT_ATUALIZACAO"].ToString());
 
@@ -137,6 +158,42 @@ namespace KadoshModas.DAL
             conexao.Desconectar();
 
             return listaDeClientes;
+        }
+
+        /// <summary>
+        /// Consulta um Cliente específico por ID
+        /// </summary>
+        /// <param name="pIdCliente">ID do Cliente</param>
+        /// <param name="pBuscaClientesDesativados">Define se busca retornará Clientes Desativados</param>
+        /// <returns>Retorna um Cliente específico</returns>
+        public DmoCliente ConsultarClientePorId(int pIdCliente, bool pBuscaClientesDesativados = false)
+        {
+            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA + " C WHERE C.ID_CLIENTE = @ID_CLIENTE", conexao.Conectar());
+            cmd.Parameters.AddWithValue("@ID_CLIENTE", pIdCliente).SqlDbType = SqlDbType.Int;
+
+            if (!pBuscaClientesDesativados)
+                cmd.CommandText += " AND ATIVO = 1";
+
+            SqlDataReader dataReader = cmd.ExecuteReader();
+            dataReader.Read();
+
+            DmoCliente cliente = new DmoCliente
+            {
+                IdCliente = int.Parse(dataReader["ID_CLIENTE"].ToString()),
+                Nome = dataReader["NOME"].ToString(),
+                Email = dataReader["EMAIL"].ToString(),
+                CPF = dataReader["CPF"].ToString(),
+                Sexo = string.IsNullOrEmpty(dataReader["SEXO"].ToString()) ? DmoCliente.Sexos.Masculino : (DmoCliente.Sexos)int.Parse(dataReader["SEXO"].ToString()),
+                Endereco = string.IsNullOrEmpty(dataReader["ENDERECO"].ToString()) ? null : new DmoEndereco { IdEndereco = int.Parse(dataReader["ENDERECO"].ToString()) },
+                UrlFoto = dataReader["URL_FOTO"].ToString(),
+                Ativo = bool.Parse(dataReader["ATIVO"].ToString()),
+                DataDeCriacao = DateTime.Parse(dataReader["DT_CRIACAO"].ToString()),
+                DataDeAtualizacao = DateTime.Parse(dataReader["DT_ATUALIZACAO"].ToString())
+            };
+
+            conexao.Desconectar();
+
+            return cliente;
         }
 
         /// <summary>
@@ -177,6 +234,47 @@ namespace KadoshModas.DAL
         }
 
         /// <summary>
+        /// Atualiza o Cliente 
+        /// </summary>
+        /// <param name="dmoCliente">Objeto DmoCliente preenchido e com ID do Cliente válido</param>
+        public void Atualizar(DmoCliente pDmoCliente)
+        {
+            SqlCommand cmd = new SqlCommand(@"UPDATE " + NOME_TABELA + " SET NOME = @NOME, EMAIL = @EMAIL, CPF = @CPF, SEXO = @SEXO, ENDERECO = @ENDERECO, URL_FOTO = @URL_FOTO, ATIVO = @ATIVO, DT_ATUALIZACAO = GETDATE() WHERE ID_CLIENTE = @ID_CLIENTE;", conexao.Conectar());
+
+            cmd.Parameters.AddWithValue("@ID_CLIENTE", pDmoCliente.IdCliente).SqlDbType = SqlDbType.Int;
+
+            cmd.Parameters.AddWithValue("@NOME", pDmoCliente.Nome).SqlDbType = SqlDbType.VarChar;
+
+            if (string.IsNullOrEmpty(pDmoCliente.Email))
+                cmd.Parameters.AddWithValue("@EMAIL", DBNull.Value).SqlDbType = SqlDbType.VarChar;
+            else
+                cmd.Parameters.AddWithValue("@EMAIL", pDmoCliente.Email).SqlDbType = SqlDbType.VarChar;
+
+            if (string.IsNullOrEmpty(pDmoCliente.CPF))
+                cmd.Parameters.AddWithValue("@CPF", DBNull.Value).SqlDbType = SqlDbType.Char;
+            else
+                cmd.Parameters.AddWithValue("@CPF", pDmoCliente.CPF).SqlDbType = SqlDbType.Char;
+
+            cmd.Parameters.AddWithValue("@SEXO", (int)pDmoCliente.Sexo).SqlDbType = SqlDbType.Int;
+
+
+            if (pDmoCliente.Endereco == null)
+                cmd.Parameters.AddWithValue("@ENDERECO", DBNull.Value).SqlDbType = SqlDbType.Int;
+            else
+                cmd.Parameters.AddWithValue("@ENDERECO", pDmoCliente.Endereco.IdEndereco).SqlDbType = SqlDbType.Int;
+
+            if (string.IsNullOrEmpty(pDmoCliente.UrlFoto))
+                cmd.Parameters.AddWithValue("@URL_FOTO", DBNull.Value).SqlDbType = SqlDbType.VarChar;
+            else
+                cmd.Parameters.AddWithValue("@URL_FOTO", pDmoCliente.UrlFoto).SqlDbType = SqlDbType.VarChar;
+
+            cmd.Parameters.AddWithValue("@ATIVO", pDmoCliente.Ativo).SqlDbType = SqlDbType.Bit;
+
+            cmd.ExecuteNonQuery();
+            conexao.Desconectar();
+        }
+
+        /// <summary>
         /// Busca os Telefones de um determinado Cliente
         /// </summary>
         /// <param name="pIdCliente">Id co Cliente</param>
@@ -197,6 +295,7 @@ namespace KadoshModas.DAL
                     DmoTelefoneDoCliente telefone = new DmoTelefoneDoCliente
                     {
                         Cliente = new DmoCliente { IdCliente = pIdCliente },
+                        IdTelefone = int.Parse(dataReader["TELEFONE"].ToString()),
                         DDD = dataReader["DDD"].ToString(),
                         Numero = dataReader["NUMERO"].ToString(),
                         TipoDeTelefone = (DmoTelefone.TiposDeTelefone)int.Parse(dataReader["TIPO_TELEFONE"].ToString()),
@@ -265,6 +364,19 @@ namespace KadoshModas.DAL
                 return false;
             }
             
+        }
+
+        /// <summary>
+        /// Desativa o Cliente
+        /// </summary>
+        /// <param name="pIdCliente">Id do Cliente</param>
+        public void DesativarCliente(int pIdCliente)
+        {
+            SqlCommand cmd = new SqlCommand("UPDATE " + NOME_TABELA + " SET ATIVO = 0 WHERE ID_CLIENTE = @ID_CLIENTE", conexao.Conectar());
+            cmd.Parameters.AddWithValue("ID_CLIENTE", pIdCliente).SqlDbType = SqlDbType.Int;
+
+            cmd.ExecuteNonQuery();
+            conexao.Desconectar();
         }
 
         /// <summary>

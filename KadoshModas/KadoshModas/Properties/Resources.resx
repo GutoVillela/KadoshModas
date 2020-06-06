@@ -118,22 +118,34 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="LOGO_FUNDO_TRANSPARENTE" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\LOGO_FUNDO_TRANSPARENTE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icone-produto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icone-produto.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icone-valido" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icone-valido.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icone-invalido" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icone-invalido.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="retangulo_azul_claro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\retangulo_azul_claro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="usuario-perfil-padrao" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\usuario-perfil-padrao.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icone_kadosh" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\icone_kadosh.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="transparent-loading-gif" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\transparent-loading-gif.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icone-produto" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icone-produto.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="retangulo_verde_claro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\retangulo_verde_claro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="usuario-perfil-padrao" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\usuario-perfil-padrao.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icone-invalido" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icone-invalido.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LOGO_FUNDO_TRANSPARENTE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LOGO_FUNDO_TRANSPARENTE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="retangulo_vermelho_claro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\retangulo_vermelho_claro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

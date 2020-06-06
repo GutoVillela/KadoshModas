@@ -42,24 +42,33 @@ namespace KadoshModas.DAL
         /// </summary>
         /// <param name="pDmoCategoria">Objeto DmoCategoria preenchido</param>
         /// <returns>Retorna o Id da Categoria cadastrada.</returns>
-        public int? Cadastrar(DmoCategoria pDmoCategoria)
+        public void Cadastrar(DmoCategoria pDmoCategoria)
         {
             SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (NOME) VALUES (@NOME);", conexao.Conectar());
             cmd.Parameters.AddWithValue("@NOME", pDmoCategoria.Nome).SqlDbType = SqlDbType.VarChar;
 
             cmd.ExecuteNonQuery();
             conexao.Desconectar();
-
-            return ConsultarUltimoId();
         }
 
         /// <summary>
         /// Consulta todas as Categorias cadastradas na base
         /// </summary>
+        /// <param name="pNomeCategoria">Se fornecido, busca somente as Categorias com nomes que iniciam com o valor fornecido</param>
         /// <returns>Retorna uma lista de DmoCategoria com todas os Categorias cadastradas na base de dados</returns>
-        public List<DmoCategoria> Consultar()
+        public List<DmoCategoria> Consultar(string pNomeCategoria = null)
         {
             SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA, conexao.Conectar());
+
+            if (!string.IsNullOrEmpty(pNomeCategoria))
+            {
+                if (!cmd.CommandText.Contains("WHERE"))
+                    cmd.CommandText += " WHERE";
+
+                cmd.CommandText += " NOME LIKE @NOME";
+                cmd.Parameters.AddWithValue("@NOME", pNomeCategoria + "%").SqlDbType = SqlDbType.VarChar;
+            }
+
             SqlDataReader dataReader = cmd.ExecuteReader();
 
             List<DmoCategoria> listaDeCategorias = new List<DmoCategoria>();
@@ -68,8 +77,8 @@ namespace KadoshModas.DAL
             {
                 DmoCategoria categoria = new DmoCategoria
                 {
-                    IdCategoria = int.Parse(dataReader["ID_CATEGORIA"].ToString()),
                     Nome = dataReader["NOME"].ToString(),
+                    Ativo = bool.Parse(dataReader["ATIVO"].ToString()),
                     DataDeCriacao = DateTime.Parse(dataReader["DT_CRIACAO"].ToString()),
                     DataDeAtualizacao = DateTime.Parse(dataReader["DT_ATUALIZACAO"].ToString())
                 };
@@ -83,26 +92,20 @@ namespace KadoshModas.DAL
         }
 
         /// <summary>
-        /// Consulta o último Id de Categoria cadastrada na base
+        /// Atualiza a Categoria
         /// </summary>
-        /// <returns>Retorno último Id de Categoria cadastrada na base. Em caso de erro retorna null</returns>
-        private int? ConsultarUltimoId()
+        /// <param name="pCategoria">Objeto DmoCategoria com as novas informações da Categoria</param>
+        /// <param name="pNomeCategoria">Nome original da Categoria antes da edição</param>
+        public void Atualizar(DmoCategoria pCategoria, string pNomeCategoria)
         {
-            try
-            {
-                SqlCommand cmd = new SqlCommand("SELECT MAX(ID_CATEGORIA) AS ID FROM " + NOME_TABELA, conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"UPDATE " + NOME_TABELA + " SET NOME = @NOME, ATIVO = @ATIVO, DT_ATUALIZACAO = GETDATE() WHERE NOME = @NOME_ORIGINAL", conexao.Conectar());
 
-                SqlDataReader dr = cmd.ExecuteReader();
+            cmd.Parameters.AddWithValue("@NOME", pCategoria.Nome).SqlDbType = SqlDbType.VarChar;
+            cmd.Parameters.AddWithValue("@ATIVO", pCategoria.Ativo).SqlDbType = SqlDbType.Bit;
+            cmd.Parameters.AddWithValue("@NOME_ORIGINAL", pNomeCategoria).SqlDbType = SqlDbType.VarChar;
 
-                dr.Read();
-
-                return int.Parse(dr[0].ToString());
-
-            }
-            catch
-            {
-                return 0;
-            }
+            cmd.ExecuteNonQuery();
+            conexao.Desconectar();
         }
         #endregion
 

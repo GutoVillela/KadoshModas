@@ -15,10 +15,41 @@ namespace KadoshModas.UI
     public partial class CadProduto : Form
     {
         #region Construtor
+        /// <summary>
+        /// Inicializa o Formulário com função de Cadastrar Produto
+        /// </summary>
         public CadProduto()
         {
             InitializeComponent();
             produto = new DmoProduto();
+            btnCadastrar.Text = "Cadastrar Produto";
+            this._funcaoFormulario = FuncaoFormulario.Cadastrar;
+        }
+
+        /// <summary>
+        /// Inicializa o Formulário com função de Atualizar Produto
+        /// </summary>
+        /// <param name="pProduto">Produto a ser atualizado</param>
+        public CadProduto(DmoProduto pProduto)
+        {
+            InitializeComponent();
+            produto = pProduto;
+            txtEstoque.Visible = lblEstoqueRotulo.Visible = false;
+            btnCadastrar.Text = "Alterar Produto";
+            PreencherCampos(pProduto);
+            this._funcaoFormulario = FuncaoFormulario.Alterar;
+        }
+        #endregion
+
+        #region Enum
+        /// <summary>
+        /// Enum que define a funcionalidade exercida pelo formulário
+        /// </summary>
+        private enum FuncaoFormulario
+        {
+            Cadastrar,
+
+            Alterar
         }
         #endregion
 
@@ -37,6 +68,11 @@ namespace KadoshModas.UI
         /// Verifica se usuário já definiu os fornecedores para o produto (utilize a propriedade FornecedoresDefinidos para acessar este dado)
         /// </summary>
         private bool _fornecedoresDefinidos;
+
+        /// <summary>
+        /// Enum que define função atual do Formulário
+        /// </summary>
+        private FuncaoFormulario _funcaoFormulario;
         #endregion
 
         #region Propriedades
@@ -81,54 +117,56 @@ namespace KadoshModas.UI
         }
         #endregion
 
-        #region Eventos
-        private void CadProduto_Load(object sender, EventArgs e)
+        #region Métodos
+        /// <summary>
+        /// Preenche os campos com as informações do Cliente
+        /// </summary>
+        /// <param name="pProduto">Objeto DmoProduto preenchido com as informações do Produto</param>
+        private void PreencherCampos(DmoProduto pProduto)
         {
-            //ComboBox de Marcas
-            List<DmoMarca> marcas = new BoMarca().Consultar();
-            cboMarca.DataSource = marcas;
-            cboMarca.DisplayMember = "Nome";
-            cboMarca.ValueMember = "IdMarca";
+            txtNomeProduto.Text = pProduto.Nome;
+            txtCodigoDeBarras.Text = pProduto.CodigoDeBarra;
+            txtPrecoUnidade.Text = pProduto.Preco.ToString();
 
-            //ComboBox de Categorias
-            List<DmoCategoria> categorias = new BoCategoria().Consultar();
-            cboCategoria.DataSource = categorias;
-            cboCategoria.DisplayMember = "Nome";
-            cboCategoria.ValueMember = "IdCategoria";
+            if(pProduto.Marca != null && !string.IsNullOrEmpty(pProduto.Marca.Nome))
+                cboMarca.SelectedValue = pProduto.Marca.Nome;
+
+            if (pProduto.Categoria != null && !string.IsNullOrEmpty(pProduto.Categoria.Nome))
+                cboCategoria.SelectedValue = pProduto.Categoria.Nome;
+
+            if(pProduto.Atributos != null && pProduto.Atributos.Any())
+            {
+                if(pProduto.Atributos.Any(a => a.Atributo.Nome == "COR"))
+                {
+                    txtCor.Text = pProduto.Atributos.Find(a => a.Atributo.Nome == "COR").Atributo.Nome;
+                }
+
+                if (pProduto.Atributos.Any(a => a.Atributo.Nome == "NUMERO"))
+                {
+                    txtTamanho.Text = pProduto.Atributos.Find(a => a.Atributo.Nome == "NUMERO").Atributo.Nome;
+                }
+
+                if (pProduto.Atributos.Any(a => a.Atributo.Nome == "TAMANHO"))
+                {
+                    txtTamanho.Text = pProduto.Atributos.Find(a => a.Atributo.Nome == "TAMANHO").Atributo.Nome;
+                }
+            }
+
+            // Foto
+            if (!string.IsNullOrEmpty(pProduto.UrlFoto))
+                picFotoProduto.Image = new Bitmap(pProduto.UrlFoto);
         }
 
-        private void btnCadastrar_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Efetua o Cadastro do Produto
+        /// </summary>
+        /// <param name="pProduto">Objeto DmoProduto com informações do Produto para Cadastro</param>
+        private void CadastrarProduto(DmoProduto pProduto)
         {
-            produto.Nome = txtNomeProduto.Text.Trim();
-            produto.Preco = float.Parse(txtPrecoUnidade.Text.Trim());
-            produto.Categoria = new DmoCategoria { IdCategoria = int.Parse(cboCategoria.SelectedValue.ToString()) };
-            produto.Marca = new DmoMarca { IdMarca = int.Parse(cboMarca.SelectedValue.ToString()) };
-
-            if (_usuarioEscolheuFotoProduto)
-                produto.UrlFoto = openFileDialogFoto.FileName;
-
-            DmoAtributosDoProduto cor = new DmoAtributosDoProduto
-            {
-                Atributo = new DmoAtributo { IdAtributo = 1 },
-                Valor = txtCor.Text.Trim()
-            };
-
-            DmoAtributosDoProduto tamanho = new DmoAtributosDoProduto
-            {
-                Atributo = new DmoAtributo { IdAtributo = 3 },
-                Valor = txtTamanho.Text.Trim()
-            };
-
-            List<DmoAtributosDoProduto> atributosDoProduto = new List<DmoAtributosDoProduto>();
-            atributosDoProduto.Add(cor);
-            atributosDoProduto.Add(tamanho);
-
-            produto.Atributos = atributosDoProduto;
-
             //Efetuar cadastro do produto
-            produto.IdProduto = new BoProduto().Cadastrar(produto);
+            pProduto.IdProduto = new BoProduto().Cadastrar(produto);
 
-            if (produto.IdProduto != null)
+            if (pProduto.IdProduto != null)
             {
                 MessageBox.Show("Produto cadastrado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -140,7 +178,7 @@ namespace KadoshModas.UI
                     Minimo = 0
                 };
 
-                if(new BoEstoque().Cadastrar(estoque) != null)
+                if (new BoEstoque().Cadastrar(estoque) != null)
                 {
                     MessageBox.Show("Estoque cadastrado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -150,6 +188,110 @@ namespace KadoshModas.UI
             }
             else
                 MessageBox.Show("Erro ao cadastrar produto!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        /// <summary>
+        /// Efetua a Atualização do Produto
+        /// </summary>
+        /// <param name="pProduto">Objeto DmoProduto com informações do Produto para Atualizar</param>
+        private void AtualizarProduto(DmoProduto pProduto)
+        {
+            try
+            {
+                new BoProduto().Atualizar(pProduto);
+                MessageBox.Show("Produto alterado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show("Erro ao alterar produto! Mensagem original: " + erro.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        #endregion
+
+        #region Eventos
+        private void CadProduto_Load(object sender, EventArgs e)
+        {
+            //ComboBox de Marcas
+            List<DmoMarca> marcas = new BoMarca().Consultar();
+            cboMarca.DataSource = marcas;
+            cboMarca.DisplayMember = "Nome";
+            cboMarca.ValueMember = "Nome";
+
+            //ComboBox de Categorias
+            List<DmoCategoria> categorias = new BoCategoria().Consultar();
+            cboCategoria.DataSource = categorias;
+            cboCategoria.DisplayMember = "Nome";
+            cboCategoria.ValueMember = "Nome";
+        }
+
+        private void btnCadastrar_Click(object sender, EventArgs e)
+        {
+            //Críticas
+            if (string.IsNullOrEmpty(txtNomeProduto.Text.Trim()))
+            {
+                MessageBox.Show("O campo Nome do Produto é obrigatório!", "Campo Obrigatório!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(txtPrecoUnidade.Text.Trim()))
+            {
+                MessageBox.Show("O campo Preço Por Unidade é obrigatório!", "Campo Obrigatório!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Cadastro
+            produto.Nome = txtNomeProduto.Text.Trim();
+            produto.CodigoDeBarra = txtCodigoDeBarras.Text.Trim();
+            produto.Preco = float.Parse(txtPrecoUnidade.Text.Trim());
+
+            if(cboCategoria.SelectedIndex != -1)
+                produto.Categoria = new DmoCategoria { Nome = cboCategoria.SelectedValue.ToString() };
+            if(cboMarca.SelectedIndex != -1)
+                produto.Marca = new DmoMarca { Nome = cboMarca.SelectedValue.ToString() };
+
+            if (UsuarioEscolheuFotoProduto)
+                produto.UrlFoto = openFileDialogFoto.FileName;
+
+            #region Atributos do Produto
+            List<DmoAtributosDoProduto> atributosDoProduto = new List<DmoAtributosDoProduto>();
+
+            if (!string.IsNullOrWhiteSpace(txtCor.Text))
+            {
+                DmoAtributosDoProduto cor = new DmoAtributosDoProduto
+                {
+                    Atributo = new DmoAtributo { IdAtributo = 1 },
+                    Valor = txtCor.Text.Trim()
+                };
+
+                atributosDoProduto.Add(cor);
+            }
+
+            if (!string.IsNullOrEmpty(txtTamanho.Text))
+            {
+                DmoAtributosDoProduto tamanho = new DmoAtributosDoProduto
+                {
+                    Atributo = new DmoAtributo { IdAtributo = 3 },
+                    Valor = txtTamanho.Text.Trim()
+                };
+                atributosDoProduto.Add(tamanho);
+            }
+
+            if(atributosDoProduto.Any())
+                produto.Atributos = atributosDoProduto;
+            #endregion
+
+            try
+            {
+                if (_funcaoFormulario == FuncaoFormulario.Cadastrar)
+                    CadastrarProduto(produto);
+                else if(_funcaoFormulario == FuncaoFormulario.Alterar)
+                    AtualizarProduto(produto);
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show("Erro ao cadastrar produto! Mensagem original: " + erro.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnEscolherFoto_Click(object sender, EventArgs e)
@@ -163,7 +305,7 @@ namespace KadoshModas.UI
 
         private void btnRemoverFoto_Click(object sender, EventArgs e)
         {
-            picFotoProduto.Image = Properties.Resources.usuario_perfil_padrao;
+            picFotoProduto.Image = Properties.Resources.icone_produto;
             UsuarioEscolheuFotoProduto = false;
         }
 
@@ -177,8 +319,15 @@ namespace KadoshModas.UI
             else
                 FornecedoresDefinidos = true;
         }
+
+        private void btnDesativarProduto_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Tem certeza que deseja excluir o Produto? ", "Confirmar exclusão do produto", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                new BoProduto().DesativarProduto(int.Parse(produto.IdProduto.ToString()));
+                this.Close();
+            }
+        }
         #endregion
-
-
     }
 }

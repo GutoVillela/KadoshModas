@@ -54,6 +54,7 @@
             this.rbtCPF.TabStop = true;
             this.rbtCPF.Text = "CPF";
             this.rbtCPF.UseVisualStyleBackColor = true;
+            this.rbtCPF.Visible = false;
             this.rbtCPF.CheckedChanged += new System.EventHandler(this.rbtCPF_CheckedChanged);
             // 
             // rbtNome
@@ -67,6 +68,7 @@
             this.rbtNome.TabStop = true;
             this.rbtNome.Text = "Nome";
             this.rbtNome.UseVisualStyleBackColor = true;
+            this.rbtNome.Visible = false;
             this.rbtNome.CheckedChanged += new System.EventHandler(this.rbtNome_CheckedChanged);
             // 
             // pnlConCliente
@@ -89,7 +91,9 @@
             this.Controls.Add(this.rbtNome);
             this.Controls.Add(this.txtConsulta);
             this.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "ConCliente";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Consulta de Clientes";
             this.Load += new System.EventHandler(this.ConCliente_Load);
             this.ResumeLayout(false);

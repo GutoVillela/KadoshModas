@@ -44,13 +44,15 @@ namespace KadoshModas.UI.UserControls
         #region Eventos
         private void ucClienteListItem_Load(object sender, EventArgs e)
         {
-            this.Width = this.Parent.Width - SystemInformation.VerticalScrollBarWidth;
+            this.Width = this.Parent.Width - SystemInformation.VerticalScrollBarWidth - 20;
         }
-        #endregion
 
         private void btnVerFicha_Click(object sender, EventArgs e)
         {
             new FichaCliente(Cliente).ShowDialog();
         }
+        #endregion
+
+
     }
 }

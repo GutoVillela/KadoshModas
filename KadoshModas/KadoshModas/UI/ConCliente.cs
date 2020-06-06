@@ -40,14 +40,14 @@ namespace KadoshModas.UI
         #region Eventos
         private void ConCliente_Load(object sender, EventArgs e)
         {
-            CarregarGrid(new BLL.BoCliente().Consultar());
+            CarregarGrid(new BLL.BoCliente().Consultar(true));
         }
 
         private void txtConsulta_TextChanged(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtConsulta.Text.Trim()))
             {
-                CarregarGrid(new BLL.BoCliente().Consultar());
+                CarregarGrid(new BLL.BoCliente().Consultar(true));
             }
             else
             {

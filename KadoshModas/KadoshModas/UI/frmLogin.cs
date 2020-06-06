@@ -1,4 +1,5 @@
 ﻿using KadoshModas.BLL;
+using KadoshModas.DAL;
 using KadoshModas.DML;
 using KadoshModas.UI;
 using System;
@@ -23,9 +24,9 @@ namespace KadoshModas
         #region Eventos
         private void frmLogin_Load(object sender, EventArgs e)
         {
-            DmoBase dmoBase = new DmoBase();
-            var v = dmoBase.DescricoesEnum<DmoTelefone.TiposDeTelefone>();
+            
         }
+
         private void btnEntrar_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
@@ -35,14 +36,21 @@ namespace KadoshModas
                 Senha = txtSenha.Text
             };
 
-            if(new BoLogin().ValidarLogin(login))
+            try
             {
-                TelaPrincipal telaPrincipal = new TelaPrincipal();
-                this.Hide();
-                telaPrincipal.Show();
+                if (new BoLogin().ValidarLogin(login))
+                {
+                    TelaPrincipal telaPrincipal = new TelaPrincipal();
+                    this.Hide();
+                    telaPrincipal.Show();
+                }
+                else
+                    MessageBox.Show("Login inválido");
             }
-            else
-                MessageBox.Show("Login inválido");
+            catch (Exception erro)
+            {
+                MessageBox.Show("Aconteceu um erro ao tentar acessar o sistema! Por favor entre em contato com o Administrador! Mensagem original: " + erro.Message, "Erro ao acessar o sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
             this.Cursor = Cursors.Default;
         }
@@ -50,6 +58,18 @@ namespace KadoshModas
         private void btnFechar_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void txtUsuario_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+                btnEntrar_Click(sender, e);
+        }
+
+        private void txtSenha_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btnEntrar_Click(sender, e);
         }
         #endregion
     }

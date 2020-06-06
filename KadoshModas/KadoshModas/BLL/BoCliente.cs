@@ -18,34 +18,53 @@ namespace KadoshModas.BLL
         /// <summary>
         /// Cadastra um cliente na base de dados
         /// </summary>
-        /// <param name="cliente">Objeto DmoCliente preenchido com pelo menos o Nome do cliente</param>
+        /// <param name="pDmoCliente">Objeto DmoCliente preenchido com pelo menos o Nome do cliente</param>
         /// <returns>Retorna true em caso de sucesso ou false caso algum erro tenha ocorrido</returns>
-        public bool Cadastrar(DmoCliente dmoCliente)
+        public bool Cadastrar(DmoCliente pDmoCliente)
         {
             int? idClienteCadastrado;
 
-            if(dmoCliente.Endereco != null)
+            #region Cadastro do Endereço
+            if (pDmoCliente.Endereco != null)
             {
-                dmoCliente.Endereco.IdEndereco = new DaoEndereco().Cadastrar(dmoCliente.Endereco);
+                pDmoCliente.Endereco.IdEndereco = new BoEndereco().Cadastrar(pDmoCliente.Endereco);
             }
+            #endregion
 
-            idClienteCadastrado = new DaoCliente().Cadastrar(dmoCliente);
+            #region Cadastro do Cliente
+            idClienteCadastrado = new DaoCliente().Cadastrar(pDmoCliente);
+            #endregion
 
             if (idClienteCadastrado != null)
             {
                 //Copiar imagem para pasta e recuperar nova URL
-                if (!string.IsNullOrEmpty(dmoCliente.UrlFoto))
-                    AtualizarFoto(SalvarFotoERecuperarUrl(dmoCliente.UrlFoto, "FC_" + idClienteCadastrado + ".jpg"), idClienteCadastrado);
+                if (!string.IsNullOrEmpty(pDmoCliente.UrlFoto))
+                    AtualizarFoto(SalvarFotoERecuperarUrl(pDmoCliente.UrlFoto, "FC_" + idClienteCadastrado + ".jpg"), idClienteCadastrado);
 
-                //Cadastro de telefones
-                if (dmoCliente.Telefones != null && dmoCliente.Telefones.Count > 0)
+                #region Cadastro de telefones
+                if (pDmoCliente.Telefones != null && pDmoCliente.Telefones.Any())
                 {
-                    foreach (DmoTelefoneDoCliente telefone in dmoCliente.Telefones)
+                    #region Remover Telefones duplicados da lista
+                    List<DmoTelefoneDoCliente> listaAux = new List<DmoTelefoneDoCliente>();
+
+                    foreach (DmoTelefoneDoCliente telefone in pDmoCliente.Telefones)
+                    {
+                        if (!listaAux.Any(t => t.DDD == telefone.DDD && t.Numero == telefone.Numero))
+                        {
+                            listaAux.Add(telefone);
+                        }
+                    }
+
+                    pDmoCliente.Telefones = listaAux;
+                    #endregion
+
+                    foreach (DmoTelefoneDoCliente telefone in pDmoCliente.Telefones)
                     {
                         telefone.Cliente = new DmoCliente { IdCliente = idClienteCadastrado };
                         new BoTelefoneDoCliente().Cadastrar(telefone);
                     }
                 }
+                #endregion
 
                 return true;
             }
@@ -58,10 +77,12 @@ namespace KadoshModas.BLL
         /// <summary>
         /// Consulta todos os clientes na base de dados
         /// </summary>
+        /// <param name="pBuscarClienteIndefinido">Define se busca retornará o Cliente Indefinido</param>
+        /// <param name="pBuscaClientesDesativados">Define se busca retornará Clientes Desativados</param>
         /// <returns>Retorna uma lista de objetos DmoCliente com todos os clientes da base</returns>
-        public List<DmoCliente> Consultar()
+        public List<DmoCliente> Consultar(bool pBuscarClienteIndefinido, bool pBuscaClientesDesativados = false)
         {
-            List <DmoCliente> listaDeClientes = new DaoCliente().Consultar();
+            List <DmoCliente> listaDeClientes = new DaoCliente().Consultar(pBuscarClienteIndefinido, pBuscaClientesDesativados);
 
             for(int i = 0; i < listaDeClientes.Count; i++)
             {
@@ -74,6 +95,26 @@ namespace KadoshModas.BLL
             }
 
             return listaDeClientes;
+        }
+
+        /// <summary>
+        /// Consulta um Cliente específico por ID
+        /// </summary>
+        /// <param name="pIdCliente">ID do Cliente</param>
+        /// <param name="pBuscaClientesDesativados">Define se busca retornará Clientes Desativados</param>
+        /// <returns>Retorna um Cliente específico</returns>
+        public DmoCliente ConsultarClientePorId(int pIdCliente, bool pBuscaClientesDesativados = false)
+        {
+            DmoCliente cliente = new DaoCliente().ConsultarClientePorId(pIdCliente, pBuscaClientesDesativados);
+            
+            //Buscar Endereço do Cliente
+            if (cliente.Endereco != null)
+                cliente.Endereco = new BoEndereco().ConsultarEnderecoPorId(int.Parse(cliente.Endereco.IdEndereco.ToString()));
+
+            //Buscar Lista de Telefones do Cliente
+            cliente.Telefones = new DaoCliente().ConsultarTelefonesDoCliente(int.Parse(cliente.IdCliente.ToString()));
+
+            return cliente;
         }
 
         /// <summary>
@@ -94,9 +135,17 @@ namespace KadoshModas.BLL
         /// <returns>Retorna uma string com nova URL da Foto do Cliente</returns>
         private string SalvarFotoERecuperarUrl(string pUrlFoto, string pNomeNovaFoto)
         {
-            
             string diretorioImagem = INF.DiretoriosDoSistema.DIR_FOTOS_CLIENTES + "\\" + pNomeNovaFoto;
-            File.Copy(pUrlFoto, diretorioImagem, true);
+
+            try
+            {
+                File.Copy(pUrlFoto, diretorioImagem, true);
+            }
+            catch
+            {
+                diretorioImagem = INF.DiretoriosDoSistema.DIR_FOTOS_CLIENTES + "\\F" + pNomeNovaFoto;
+                File.Copy(pUrlFoto, diretorioImagem, true);
+            }
 
             return diretorioImagem;
         }
@@ -110,6 +159,76 @@ namespace KadoshModas.BLL
         public bool AtualizarFoto(string pNovaUrlFoto, int? pIdCliente)
         {
             return new DaoCliente().AtualizarFoto(pNovaUrlFoto, pIdCliente);
+        }
+
+        /// <summary>
+        /// Atualiza o Cliente
+        /// </summary>
+        /// <param name="cliente">Objeto DmoCliente preenchido com pelo menos o Nome e ID do Cliente</param>
+        public void Atualizar(DmoCliente pDmoCliente)
+        {
+            if (pDmoCliente == null || pDmoCliente.IdCliente == null)
+                throw new ArgumentException("O parâmetro pDmoCliente não pode ser nulo e deve conter um ID do Cliente válido.");
+
+            if (pDmoCliente.Endereco != null)
+            {
+                if(pDmoCliente.Endereco.IdEndereco != null)
+                    new BoEndereco().Atualizar(pDmoCliente.Endereco);
+                else
+                    pDmoCliente.Endereco.IdEndereco = new BoEndereco().Cadastrar(pDmoCliente.Endereco);
+            }
+
+            new DaoCliente().Atualizar(pDmoCliente);
+
+
+            //Copiar imagem para pasta e recuperar nova URL
+            if (!string.IsNullOrEmpty(pDmoCliente.UrlFoto))
+                AtualizarFoto(SalvarFotoERecuperarUrl(pDmoCliente.UrlFoto, "FC_" + pDmoCliente.IdCliente + ".jpg"), pDmoCliente.IdCliente);
+
+
+            // Excluir e recadastrar Telefones
+            ExcluirTelefonesDoCliente(int.Parse(pDmoCliente.IdCliente.ToString()));
+
+            if (pDmoCliente.Telefones != null && pDmoCliente.Telefones.Any())
+            {
+                // Remover Telefones duplicados da lista
+                List<DmoTelefoneDoCliente> listaAux = new List<DmoTelefoneDoCliente>();
+
+                foreach (DmoTelefoneDoCliente telefone in pDmoCliente.Telefones)
+                {
+                    if (!listaAux.Any(t => t.DDD == telefone.DDD && t.Numero == telefone.Numero))
+                    {
+                        listaAux.Add(telefone);
+                    }
+                }
+
+                pDmoCliente.Telefones = listaAux;
+
+                foreach (DmoTelefoneDoCliente telefone in pDmoCliente.Telefones)
+                {
+                    telefone.Cliente = pDmoCliente;
+                    new BoTelefoneDoCliente().Cadastrar(telefone);
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// Excluir todos os Telefones relacionados ao Cliente
+        /// </summary>
+        /// <param name="pIdCliente">Id do Cliente</param>
+        private void ExcluirTelefonesDoCliente(int pIdCliente)
+        {
+            new DaoTelefone().ExcluirTelefonesDoCliente(pIdCliente);
+        }
+
+        /// <summary>
+        /// Desativa o Cliente
+        /// </summary>
+        /// <param name="pIdCliente">Id do Cliente</param>
+        public void DesativarCliente(int pIdCliente)
+        {
+            new DaoCliente().DesativarCliente(pIdCliente);
         }
 
         /// <summary>

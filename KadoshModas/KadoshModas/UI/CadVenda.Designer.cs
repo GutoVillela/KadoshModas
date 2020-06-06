@@ -30,11 +30,16 @@
         {
             this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dtpDataVenda = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblNumeroVenda = new System.Windows.Forms.Label();
             this.dgvItensDaVenda = new System.Windows.Forms.DataGridView();
+            this.Codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Produto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Quantidade = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Preco = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Subtotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblTotalVenda = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -46,15 +51,8 @@
             this.btnDefinirCliente = new FontAwesome.Sharp.IconButton();
             this.btnRemoverCliente = new FontAwesome.Sharp.IconButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.Codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Produto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Quantidade = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Preco = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Subtotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dmoItemDaVendaBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgvItensDaVenda)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dmoItemDaVendaBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -66,14 +64,14 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Cliente: ";
             // 
-            // dateTimePicker1
+            // dtpDataVenda
             // 
-            this.dateTimePicker1.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuBar;
-            this.dateTimePicker1.Enabled = false;
-            this.dateTimePicker1.Location = new System.Drawing.Point(83, 12);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(332, 28);
-            this.dateTimePicker1.TabIndex = 20;
+            this.dtpDataVenda.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuBar;
+            this.dtpDataVenda.Location = new System.Drawing.Point(83, 12);
+            this.dtpDataVenda.Name = "dtpDataVenda";
+            this.dtpDataVenda.Size = new System.Drawing.Size(332, 28);
+            this.dtpDataVenda.TabIndex = 20;
+            this.dtpDataVenda.ValueChanged += new System.EventHandler(this.dtpDataVenda_ValueChanged);
             // 
             // label2
             // 
@@ -93,15 +91,15 @@
             this.label3.TabIndex = 27;
             this.label3.Text = "Venda Nº:";
             // 
-            // label4
+            // lblNumeroVenda
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Tai Le", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(550, 13);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(72, 27);
-            this.label4.TabIndex = 28;
-            this.label4.Text = "00001";
+            this.lblNumeroVenda.AutoSize = true;
+            this.lblNumeroVenda.Font = new System.Drawing.Font("Microsoft Tai Le", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNumeroVenda.Location = new System.Drawing.Point(550, 13);
+            this.lblNumeroVenda.Name = "lblNumeroVenda";
+            this.lblNumeroVenda.Size = new System.Drawing.Size(72, 27);
+            this.lblNumeroVenda.TabIndex = 28;
+            this.lblNumeroVenda.Text = "00001";
             // 
             // dgvItensDaVenda
             // 
@@ -120,23 +118,52 @@
             this.dgvItensDaVenda.RowHeadersVisible = false;
             this.dgvItensDaVenda.Size = new System.Drawing.Size(594, 198);
             this.dgvItensDaVenda.TabIndex = 29;
+            this.dgvItensDaVenda.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvItensDaVenda_CellEndEdit);
+            // 
+            // Codigo
+            // 
+            this.Codigo.HeaderText = "Código";
+            this.Codigo.Name = "Codigo";
+            this.Codigo.ReadOnly = true;
+            // 
+            // Produto
+            // 
+            this.Produto.HeaderText = "Produto";
+            this.Produto.Name = "Produto";
+            this.Produto.ReadOnly = true;
+            // 
+            // Quantidade
+            // 
+            this.Quantidade.HeaderText = "Quantidade";
+            this.Quantidade.Name = "Quantidade";
+            // 
+            // Preco
+            // 
+            this.Preco.HeaderText = "Preço (R$)";
+            this.Preco.Name = "Preco";
+            this.Preco.ReadOnly = true;
+            // 
+            // Subtotal
+            // 
+            this.Subtotal.HeaderText = "Subtotal";
+            this.Subtotal.Name = "Subtotal";
+            this.Subtotal.ReadOnly = true;
             // 
             // lblTotalVenda
             // 
             this.lblTotalVenda.AutoSize = true;
             this.lblTotalVenda.Font = new System.Drawing.Font("Microsoft Tai Le", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotalVenda.Location = new System.Drawing.Point(511, 379);
+            this.lblTotalVenda.Location = new System.Drawing.Point(94, 378);
             this.lblTotalVenda.Name = "lblTotalVenda";
             this.lblTotalVenda.Size = new System.Drawing.Size(111, 34);
             this.lblTotalVenda.TabIndex = 32;
             this.lblTotalVenda.Text = "R$ 0,00";
-            this.lblTotalVenda.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Tai Le", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(370, 382);
+            this.label6.Location = new System.Drawing.Point(17, 382);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(71, 30);
             this.label6.TabIndex = 31;
@@ -201,7 +228,7 @@
             this.btnCancelarVenda.Flip = FontAwesome.Sharp.FlipOrientation.Normal;
             this.btnCancelarVenda.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancelarVenda.ForeColor = System.Drawing.Color.White;
-            this.btnCancelarVenda.IconChar = FontAwesome.Sharp.IconChar.DollarSign;
+            this.btnCancelarVenda.IconChar = FontAwesome.Sharp.IconChar.Times;
             this.btnCancelarVenda.IconColor = System.Drawing.Color.DarkRed;
             this.btnCancelarVenda.IconSize = 30;
             this.btnCancelarVenda.Location = new System.Drawing.Point(16, 429);
@@ -214,6 +241,7 @@
             this.btnCancelarVenda.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCancelarVenda.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.btnCancelarVenda.UseVisualStyleBackColor = false;
+            this.btnCancelarVenda.Click += new System.EventHandler(this.btnCancelarVenda_Click);
             // 
             // btnFecharVenda
             // 
@@ -223,7 +251,7 @@
             this.btnFecharVenda.Flip = FontAwesome.Sharp.FlipOrientation.Normal;
             this.btnFecharVenda.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFecharVenda.ForeColor = System.Drawing.Color.White;
-            this.btnFecharVenda.IconChar = FontAwesome.Sharp.IconChar.DollarSign;
+            this.btnFecharVenda.IconChar = FontAwesome.Sharp.IconChar.CashRegister;
             this.btnFecharVenda.IconColor = System.Drawing.Color.DarkGreen;
             this.btnFecharVenda.IconSize = 30;
             this.btnFecharVenda.Location = new System.Drawing.Point(407, 429);
@@ -236,6 +264,7 @@
             this.btnFecharVenda.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnFecharVenda.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.btnFecharVenda.UseVisualStyleBackColor = false;
+            this.btnFecharVenda.Click += new System.EventHandler(this.btnFecharVenda_Click);
             // 
             // btnDefinirCliente
             // 
@@ -280,39 +309,6 @@
             this.btnRemoverCliente.UseVisualStyleBackColor = false;
             this.btnRemoverCliente.Click += new System.EventHandler(this.btnRemoverCliente_Click);
             // 
-            // Codigo
-            // 
-            this.Codigo.HeaderText = "Código";
-            this.Codigo.Name = "Codigo";
-            this.Codigo.ReadOnly = true;
-            // 
-            // Produto
-            // 
-            this.Produto.HeaderText = "Produto";
-            this.Produto.Name = "Produto";
-            this.Produto.ReadOnly = true;
-            // 
-            // Quantidade
-            // 
-            this.Quantidade.HeaderText = "Quantidade";
-            this.Quantidade.Name = "Quantidade";
-            // 
-            // Preco
-            // 
-            this.Preco.HeaderText = "Preço (R$)";
-            this.Preco.Name = "Preco";
-            this.Preco.ReadOnly = true;
-            // 
-            // Subtotal
-            // 
-            this.Subtotal.HeaderText = "Subtotal";
-            this.Subtotal.Name = "Subtotal";
-            this.Subtotal.ReadOnly = true;
-            // 
-            // dmoItemDaVendaBindingSource
-            // 
-            this.dmoItemDaVendaBindingSource.DataSource = typeof(KadoshModas.DML.DmoItemDaVenda);
-            // 
             // CadVenda
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -322,11 +318,11 @@
             this.Controls.Add(this.lblTotalVenda);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.btnCancelarVenda);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.lblNumeroVenda);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnFecharVenda);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.dtpDataVenda);
             this.Controls.Add(this.btnDefinirCliente);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -334,11 +330,11 @@
             this.Name = "CadVenda";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Cadastro de Vendas";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CadVenda_FormClosing);
             this.Load += new System.EventHandler(this.CadVenda_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvItensDaVenda)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dmoItemDaVendaBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -348,14 +344,13 @@
 
         private System.Windows.Forms.Label label1;
         private FontAwesome.Sharp.IconButton btnDefinirCliente;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dtpDataVenda;
         private System.Windows.Forms.Label label2;
         private FontAwesome.Sharp.IconButton btnFecharVenda;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblNumeroVenda;
         private System.Windows.Forms.DataGridView dgvItensDaVenda;
         private FontAwesome.Sharp.IconButton btnCancelarVenda;
-        private System.Windows.Forms.BindingSource dmoItemDaVendaBindingSource;
         private System.Windows.Forms.Label lblTotalVenda;
         private System.Windows.Forms.Label label6;
         private FontAwesome.Sharp.IconButton btnAddProduto;

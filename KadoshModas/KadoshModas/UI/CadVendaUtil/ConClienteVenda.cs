@@ -23,7 +23,7 @@ namespace KadoshModas.UI
         /// <summary>
         /// Cliente selecionado pelo Usuário
         /// </summary>
-        public static DmoCliente ClienteEscolhido { get; set; }
+        public static DmoCliente ClienteEscolhido { get; set; } = new DmoCliente() { IdCliente = DmoCliente.IdClienteIndefinido };
         #endregion
 
         #region Métodos
@@ -48,19 +48,29 @@ namespace KadoshModas.UI
                 dgvConCliente.Rows[dgvConCliente.Rows.GetLastRow(DataGridViewElementStates.None)].Tag = cliente;
             }
         }
+
+        /// <summary>
+        /// Define o Cliente escolhido na DataGridView
+        /// </summary>
+        /// <param name="indexLinha">Index da Linha escolhida</param>
+        private void EscolherCliente(int indexLinha)
+        {
+            ClienteEscolhido = (DML.DmoCliente)dgvConCliente.Rows[indexLinha].Tag;
+            this.Close();
+        }
         #endregion
 
         #region Eventos
         private void ConCliente_Load(object sender, EventArgs e)
         {
-            CarregarGrid(new BoCliente().Consultar());
+            CarregarGrid(new BoCliente().Consultar(false));
         }
 
         private void txtConsulta_TextChanged(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtConsulta.Text.Trim()))
             {
-                CarregarGrid(new BLL.BoCliente().Consultar());
+                CarregarGrid(new BLL.BoCliente().Consultar(false));
             }
             else
             {
@@ -73,8 +83,12 @@ namespace KadoshModas.UI
 
         private void dgvConCliente_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            ClienteEscolhido = (DML.DmoCliente)dgvConCliente.Rows[e.RowIndex].Tag;
-            this.Close();
+            EscolherCliente(e.RowIndex);
+        }
+
+        private void dgvConCliente_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            EscolherCliente(e.RowIndex);
         }
         #endregion
     }

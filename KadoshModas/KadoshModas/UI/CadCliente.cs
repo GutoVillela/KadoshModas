@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -20,6 +21,39 @@ namespace KadoshModas.UI
         {
             InitializeComponent();
             this.cliente = new DmoCliente();
+            this._funcaoFormulario = FuncaoFormulario.Cadastrar;
+        }
+
+        public CadCliente(DmoCliente pDmoCliente)
+        {
+            InitializeComponent();
+            this.cliente = pDmoCliente;
+            this._funcaoFormulario = FuncaoFormulario.Alterar;
+            PreencherCampos(cliente);
+        }
+        #endregion
+
+        #region Enum
+        /// <summary>
+        /// Enum que define a funcionalidade exercida pelo formulário
+        /// </summary>
+        private enum FuncaoFormulario
+        {
+            Cadastrar,
+
+            Alterar
+        }
+
+        /// <summary>
+        /// Enum que define as etapas para o cadastro do Cliente
+        /// </summary>
+        private enum EtapaDeCadastro
+        {
+            InformacoesPessoais = 1,
+
+            InformacoesDeContato = 2,
+
+            Foto = 3
         }
         #endregion
 
@@ -29,7 +63,9 @@ namespace KadoshModas.UI
         /// </summary>
         private DmoCliente cliente;
 
-        private int _etapaAtual;
+        private FuncaoFormulario _funcaoFormulario;
+
+        private EtapaDeCadastro _etapaAtual;
 
         private bool _usuarioEscolheuFotoCliente;
 
@@ -40,16 +76,19 @@ namespace KadoshModas.UI
         /// <summary>
         /// Representa a etapa de cadastro atual
         /// </summary>
-        private int EtapaAtual 
+        private EtapaDeCadastro EtapaAtual 
         {
             get { return _etapaAtual; }
             set
             {
-                if(value == 3)
+                if(value == EtapaDeCadastro.Foto)
                 {
                     btnCadastrarCliente.IconChar = FontAwesome.Sharp.IconChar.CheckCircle;
                     btnCadastrarCliente.BackColor = Color.Green;
-                    btnCadastrarCliente.Text = "Cadastrar Cliente";
+                    if (_funcaoFormulario == FuncaoFormulario.Cadastrar)
+                        btnCadastrarCliente.Text = "Cadastrar Cliente";
+                    else if (_funcaoFormulario == FuncaoFormulario.Alterar)
+                        btnCadastrarCliente.Text = "Alterar Cliente";
                 }
                 else
                 {
@@ -97,31 +136,84 @@ namespace KadoshModas.UI
             cboEstado.SelectedItem = estados.Find(estado => estado.Nome == "São Paulo");
 
             //ComboBox de Tipo de Telefone
-            cboTipoTelefone.DataSource = new BindingSource(new DmoTelefone().DescricoesEnum<DmoTelefone.TiposDeTelefone>().OrderBy(key => key.Value), null);
+            cboTipoTelefone.DataSource = new BindingSource(DmoTelefone.DescricoesEnum<DmoTelefone.TiposDeTelefone>().OrderBy(key => key.Value), null);
             cboTipoTelefone.DisplayMember = "Key";
 
-            MudarParaEtapa(1);
+            MudarParaEtapa(EtapaDeCadastro.InformacoesPessoais);
+        }
+
+        /// <summary>
+        /// Preenche os campos com as informações do Cliente
+        /// </summary>
+        /// <param name="pDmoCliente">Objeto DmoCliente preenchido com as informações do Cliente</param>
+        private void PreencherCampos(DmoCliente pDmoCliente)
+        {
+            //Informações pessoais
+            txtNomeCliente.Text = pDmoCliente.Nome;
+            txtCpf.Text = pDmoCliente.CPF;
+
+            if (pDmoCliente.Sexo == DmoCliente.Sexos.Feminino)
+                rdbSexoFeminino.Checked = true;
+            else if(pDmoCliente.Sexo == DmoCliente.Sexos.Masculino)
+                rdbSexoMasculino.Checked = true;
+
+            //Endereço
+            if(pDmoCliente.Endereco != null)
+            {
+                txtRua.Text = pDmoCliente.Endereco.Rua;
+                txtBairro.Text = pDmoCliente.Endereco.Bairro;
+                txtCep.Text = pDmoCliente.Endereco.CEP;
+                txtNumero.Text = pDmoCliente.Endereco.Numero;
+                cboEstado.SelectedText = pDmoCliente.Endereco.Cidade.Estado.Nome;
+                cboCidade.SelectedText = pDmoCliente.Endereco.Cidade.Nome;
+                txtComplemento.Text = pDmoCliente.Endereco.Complemento;
+            }
+
+            //Informações de contato
+            txtEmail.Text = pDmoCliente.Email;
+
+            if(pDmoCliente.Telefones != null && pDmoCliente.Telefones.Any())
+            {
+                if(pDmoCliente.Telefones.Count > 1)
+                {
+                    chkMaisNumeros.Checked = true;
+
+                    foreach (DmoTelefone telefone in pDmoCliente.Telefones)
+                    {
+                        lstTelefones.Items.Add("(" + telefone.DDD + ")" + telefone.Numero + " - " + DmoTelefone.DescricaoEnum<DmoTelefone.TiposDeTelefone>(telefone.TipoDeTelefone) + " - Falar com: " + (string.IsNullOrEmpty(telefone.FalarCom) ? " O próprio cliente" : telefone.FalarCom));
+                    }
+                }
+                else
+                {
+                    txtTelefone.Text = pDmoCliente.Telefones[0].DDD + pDmoCliente.Telefones[0].Numero;
+                }
+            }
+
+            // Foto
+            if (!string.IsNullOrEmpty(pDmoCliente.UrlFoto))
+                picFotoCliente.Image = new Bitmap(pDmoCliente.UrlFoto);
+
         }
 
         /// <summary>
         /// Altera o formulário para configura o ambiente para nova etapa de cadastro
         /// </summary>
-        /// <param name="pNumEtapa">Número da Etapa de Cadastro desejada</param>
-        private void MudarParaEtapa(int pNumEtapa)
+        /// <param name="pNumEtapa">Etapa de Cadastro desejada</param>
+        private void MudarParaEtapa(EtapaDeCadastro pNumEtapa)
         {
-            if (EtapaAtual == 1)
+            if (EtapaAtual == EtapaDeCadastro.InformacoesPessoais)
             {
                 if (!ConcluirEtapa1())
                     return;
             }
-            else if (EtapaAtual == 2)
+            else if (EtapaAtual == EtapaDeCadastro.InformacoesDeContato)
                 if (!ConcluirEtapa2())
                     return;
 
             //Mudar para Etapa
             switch (pNumEtapa)
             {
-                case 1:
+                case EtapaDeCadastro.InformacoesPessoais:
                     pnlCadCliEtapa1.BringToFront();
                     pnlCadCliEtapa1.Visible = true;
 
@@ -133,7 +225,7 @@ namespace KadoshModas.UI
                     picEtapa3.IconChar = FontAwesome.Sharp.IconChar.Circle;
 
                     break;
-                case 2:
+                case EtapaDeCadastro.InformacoesDeContato:
                     pnlCadCliEtapa2.BringToFront();
                     pnlCadCliEtapa2.Visible = true;
 
@@ -144,7 +236,7 @@ namespace KadoshModas.UI
                     picEtapa2.IconChar = FontAwesome.Sharp.IconChar.DotCircle;
                     picEtapa3.IconChar = FontAwesome.Sharp.IconChar.Circle;
                     break;
-                case 3:
+                case EtapaDeCadastro.Foto:
                     pnlCadCliEtapa3.BringToFront();
                     pnlCadCliEtapa3.Visible = true;
 
@@ -185,14 +277,16 @@ namespace KadoshModas.UI
                     this.cliente.Telefones = new List<DmoTelefoneDoCliente>();
 
                 //Verificar se telefone já foi adicionado na lista
-                if (cliente.Telefones.Any(t => t.DDD == telefone.DDD && t.Numero == telefone.Numero))
+                if (!cliente.Telefones.Any(t => t.DDD == telefone.DDD && t.Numero == telefone.Numero))
                 {
-                    MessageBox.Show("Este número já foi adicionado na lista de telefones. Se você deseja CORRIGI-LO, exclua-o da lista de telefones e depois tente novamente.", "Telefone já adicionado na lista", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return true;
+                    cliente.Telefones.Add(telefone);
                 }
 
-                cliente.Telefones.Add(telefone);
-                lstTelefones.Items.Add("(" + telefone.DDD + ")" + telefone.Numero + " - " + telefone.DescricaoEnum<DmoTelefone.TiposDeTelefone>(telefone.TipoDeTelefone) + " - Falar com: " + (string.IsNullOrEmpty(telefone.FalarCom) ? " O próprio cliente" : telefone.FalarCom));
+                
+                string numLista = "(" + telefone.DDD + ")" + telefone.Numero + " - " + DmoTelefone.DescricaoEnum<DmoTelefone.TiposDeTelefone>(telefone.TipoDeTelefone) + " - Falar com: " + (string.IsNullOrEmpty(telefone.FalarCom) ? " O próprio cliente" : telefone.FalarCom);
+
+                if(!lstTelefones.Items.Contains(numLista))
+                    lstTelefones.Items.Add(numLista);
                 
                 return true;
 
@@ -243,17 +337,18 @@ namespace KadoshModas.UI
                     return false;
                 }
 
-                cliente.Endereco = new DmoEndereco
-                {
-                    Rua = txtRua.Text.Trim(),
-                    Numero = txtNumero.Text.Trim(),
-                    Cidade = (DmoCidade)cboCidade.SelectedItem
-                };
+                if (cliente.Endereco == null)
+                    cliente.Endereco = new DmoEndereco();
+
+                cliente.Endereco.Rua = txtRua.Text.Trim();
+                cliente.Endereco.Numero = txtNumero.Text.Trim();
+                cliente.Endereco.Cidade = (DmoCidade)cboCidade.SelectedItem;
+
                 if (!string.IsNullOrEmpty(txtBairro.Text.Trim()))
                     cliente.Endereco.Bairro = txtBairro.Text.Trim();
 
                 if (!string.IsNullOrEmpty(txtCep.Text.Replace("-", "").Trim()))
-                    cliente.Endereco.CEP = txtCep.Text.Replace("-", "").Trim();
+                    cliente.Endereco.CEP = txtCep.Text.Trim();
 
                 if (!string.IsNullOrEmpty(txtComplemento.Text.Trim()))
                     cliente.Endereco.Complemento = txtComplemento.Text.Trim();
@@ -305,11 +400,37 @@ namespace KadoshModas.UI
             {
                 MessageBox.Show("Cliente cadastrado com sucesso", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 cadastroFinalizado = true;
-                this.Close();
+
+                if (_funcaoFormulario == FuncaoFormulario.Alterar)
+                    this.Close();
+                else
+                    AbrirFormulario(new VisaoGeral());
             }
             else
                 MessageBox.Show("Aconteceu um erro ao cadastrar o novo cliente", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             
+        }
+
+        /// <summary>
+        /// Altera o Cliente com as informações preenchidas nas etapas de cadastro
+        /// </summary>
+        private void AlterarCliente()
+        {
+            try
+            {
+                new BoCliente().Atualizar(cliente);
+                MessageBox.Show("Cliente alterado com sucesso.", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cadastroFinalizado = true;
+                if (_funcaoFormulario == FuncaoFormulario.Alterar)
+                    this.Close();
+                else
+                    AbrirFormulario(new VisaoGeral());
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show("Aconteceu um erro ao alterar o cliente. Mensagem original: " + erro.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
 
         /// <summary>
@@ -325,9 +446,20 @@ namespace KadoshModas.UI
             });
         }
 
-        private async Task<bool> VerificaCPFExistenteAsync(string pCPF)
+        /// <summary>
+        /// Abre um Formulário na Tela Principal e fecha este formulário
+        /// </summary>
+        /// <param name="pFormulario">Formulário a ser aberto</param>
+        private void AbrirFormulario(Form pFormulario)
         {
-            return true;
+            pFormulario.TopLevel = false;
+            pFormulario.FormBorderStyle = FormBorderStyle.None;
+            pFormulario.Dock = DockStyle.Fill;
+            this.Parent.Controls.Add(pFormulario);
+            this.Parent.Tag = pFormulario;
+            pFormulario.BringToFront();
+            pFormulario.Show();
+            this.Close();
         }
         #endregion
 
@@ -340,10 +472,19 @@ namespace KadoshModas.UI
 
         private void btnCadastrarCliente_Click(object sender, EventArgs e)
         {
-            if(EtapaAtual == 3)
-                CadastrarCliente();
+            if(EtapaAtual == EtapaDeCadastro.Foto)
+            {
+                if (this._funcaoFormulario == FuncaoFormulario.Cadastrar)
+                {
+                    CadastrarCliente();
+                }
+                else if (this._funcaoFormulario == FuncaoFormulario.Alterar)
+                {
+                    AlterarCliente();
+                }
+            }
             else
-                MudarParaEtapa(EtapaAtual + 1);
+                MudarParaEtapa((EtapaDeCadastro) ((int)EtapaAtual + 1));
             
         }
 
@@ -408,7 +549,7 @@ namespace KadoshModas.UI
             {
                 if (new BoCliente().ValidarCPF(cpfInformado))
                 {
-                    if(!await new BoCliente().VerificaCPFExistenteAsync(cpfInformado))
+                    if(!await new BoCliente().VerificaCPFExistenteAsync(cpfInformado) || cpfInformado == cliente.CPF)
                         pcbLoaderCPF.Image = Properties.Resources.icone_valido;
                     else
                         pcbLoaderCPF.Image = Properties.Resources.icone_invalido;
@@ -423,17 +564,17 @@ namespace KadoshModas.UI
 
         private void picEtapa1_Click(object sender, EventArgs e)
         {
-            MudarParaEtapa(1);
+            MudarParaEtapa(EtapaDeCadastro.InformacoesPessoais);
         }
 
         private void picEtapa2_Click(object sender, EventArgs e)
         {
-            MudarParaEtapa(2);
+            MudarParaEtapa(EtapaDeCadastro.InformacoesDeContato);
         }
 
         private void picEtapa3_Click(object sender, EventArgs e)
         {
-            MudarParaEtapa(3);
+            MudarParaEtapa(EtapaDeCadastro.Foto);
         }
 
         private void btnTirarFoto_Click(object sender, EventArgs e)

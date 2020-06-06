@@ -21,7 +21,10 @@ namespace KadoshModas.BLL
         /// <returns>Retorna true em caso de sucesso e false em caso de erro</returns>
         public bool Cadastrar(DmoTelefoneDoCliente pDmoTelefoneDoCliente)
         {
-            pDmoTelefoneDoCliente.IdTelefone = new DaoTelefone().Cadastrar(pDmoTelefoneDoCliente);
+            pDmoTelefoneDoCliente.IdTelefone = new BoTelefone().ConsultaIdTelefone(pDmoTelefoneDoCliente.DDD, pDmoTelefoneDoCliente.Numero);
+
+            if(pDmoTelefoneDoCliente.IdTelefone == null)
+                pDmoTelefoneDoCliente.IdTelefone = new DaoTelefone().Cadastrar(pDmoTelefoneDoCliente);
 
             if (pDmoTelefoneDoCliente.IdTelefone == null)
                 return false;

@@ -71,6 +71,19 @@ namespace KadoshModas.DAL
             }
 
         }
+
+        /// <summary>
+        /// Exclui todos os Atributos do Produto
+        /// </summary>
+        /// <param name="pIdProduto">ID do Produto</param>
+        public void ExcluirAtributosDoProduto(int pIdProduto)
+        {
+            SqlCommand cmd = new SqlCommand(@"DELETE FROM " + NOME_TABELA + " WHERE PRODUTO = @PRODUTO", conexao.Conectar());
+            cmd.Parameters.AddWithValue("@PRODUTO", pIdProduto).SqlDbType = SqlDbType.Int;
+
+            cmd.ExecuteNonQuery();
+            conexao.Desconectar();
+        }
         #endregion
     }
 }

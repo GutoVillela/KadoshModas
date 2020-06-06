@@ -12,10 +12,6 @@ namespace KadoshModas.DML
     public class DmoMarca : DmoBase
     {
         #region Propriedades de Marca
-        /// <summary>
-        /// ID da Marca
-        /// </summary>
-        public int? IdMarca { get; set; }
 
         /// <summary>
         /// Nome da Marca

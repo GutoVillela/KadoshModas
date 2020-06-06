@@ -44,24 +44,29 @@ namespace KadoshModas.DAL
         /// <returns>Retorna o Id do Produto cadastrado. Em caso de erro retorna null</returns>
         public int? Cadastrar(DmoProduto pDmoProduto)
         {
-            SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (NOME, PRECO, URL_FOTO, CATEGORIA, MARCA) VALUES (@NOME, @PRECO, @URL_FOTO, @CATEGORIA, @MARCA);", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (NOME, PRECO, CODIGO_DE_BARRA, URL_FOTO, CATEGORIA, MARCA) VALUES (@NOME, @PRECO, @CODIGO_DE_BARRA, @URL_FOTO, @CATEGORIA, @MARCA);", conexao.Conectar());
             cmd.Parameters.AddWithValue("@NOME", pDmoProduto.Nome).SqlDbType = SqlDbType.VarChar;
             cmd.Parameters.AddWithValue("@PRECO", pDmoProduto.Preco).SqlDbType = SqlDbType.SmallMoney;
+
+            if (string.IsNullOrEmpty(pDmoProduto.CodigoDeBarra))
+                cmd.Parameters.AddWithValue("@CODIGO_DE_BARRA", DBNull.Value).SqlDbType = SqlDbType.VarChar;
+            else
+                cmd.Parameters.AddWithValue("@CODIGO_DE_BARRA", pDmoProduto.CodigoDeBarra).SqlDbType = SqlDbType.VarChar;
 
             if (string.IsNullOrEmpty(pDmoProduto.UrlFoto))
                 cmd.Parameters.AddWithValue("@URL_FOTO", DBNull.Value).SqlDbType = SqlDbType.VarChar;
             else
                 cmd.Parameters.AddWithValue("@URL_FOTO", pDmoProduto.UrlFoto).SqlDbType = SqlDbType.VarChar;
 
-            if (pDmoProduto.Categoria == null || pDmoProduto.Categoria.IdCategoria == null)
-                cmd.Parameters.AddWithValue("@CATEGORIA", DBNull.Value).SqlDbType = SqlDbType.Int;
+            if (pDmoProduto.Categoria == null || pDmoProduto.Categoria.Nome == null)
+                cmd.Parameters.AddWithValue("@CATEGORIA", DBNull.Value).SqlDbType = SqlDbType.VarChar;
             else
-                cmd.Parameters.AddWithValue("@CATEGORIA", pDmoProduto.Categoria.IdCategoria).SqlDbType = SqlDbType.Int;
+                cmd.Parameters.AddWithValue("@CATEGORIA", pDmoProduto.Categoria.Nome).SqlDbType = SqlDbType.VarChar;
 
-            if (pDmoProduto.Marca == null || pDmoProduto.Marca.IdMarca == null)
-                cmd.Parameters.AddWithValue("@MARCA", DBNull.Value).SqlDbType = SqlDbType.Int;
+            if (pDmoProduto.Marca == null || pDmoProduto.Marca.Nome == null)
+                cmd.Parameters.AddWithValue("@MARCA", DBNull.Value).SqlDbType = SqlDbType.VarChar;
             else
-                cmd.Parameters.AddWithValue("@MARCA", pDmoProduto.Marca.IdMarca).SqlDbType = SqlDbType.Int;
+                cmd.Parameters.AddWithValue("@MARCA", pDmoProduto.Marca.Nome).SqlDbType = SqlDbType.VarChar;
 
             cmd.ExecuteNonQuery();
             conexao.Desconectar();
@@ -72,12 +77,105 @@ namespace KadoshModas.DAL
         /// <summary>
         /// Consulta todos os Produtos
         /// </summary>
+        /// <param name="pNome">Se fornecido, busca os Produtos com Nomes que INICIAM com a cadeia de caracteres fornecida</param>
+        /// <param name="pPrecoMax">Se fornecido, busca os Produtos com preço ATÉ o valor fornecido</param>
+        /// <param name="pCodBarras">Se fornecido, busca os Produtos com o Código de Barras IGUAL ao valor fornecido</param>
+        /// <param name="pCategorias">Se fornecido, busca os Produtos DENTRO das Categorias fornecidas</param>
+        /// <param name="pMarcas">Se fornecido, busca os Produtos DENTRO das Marcas fornecidas</param>
+        /// <param name="pBuscaInativos">Define se a busca retornará Produtos Inativos</param>
         /// <returns>Retorna uma lista de DmoProduto com todos os Produtos cadastrados na base de dados</returns>
-        public List<DmoProduto> Consultar()
+        public List<DmoProduto> Consultar(string pNome = null, float? pPrecoMax = null, string pCodBarras = null, List<DmoCategoria> pCategorias = null, List<DmoMarca> pMarcas = null, bool pBuscaInativos = false)
         {
             SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA, conexao.Conectar());
-            SqlDataReader dataReader = cmd.ExecuteReader();
 
+            #region Filtros
+            if (!string.IsNullOrEmpty(pNome))
+            {
+                if (!cmd.CommandText.Contains("WHERE"))
+                    cmd.CommandText += " WHERE";
+                else
+                    cmd.CommandText += " AND";
+
+                cmd.CommandText += " NOME LIKE @NOME";
+                cmd.Parameters.AddWithValue("@NOME", pNome + "%").SqlDbType = SqlDbType.VarChar;
+            }
+
+            if(pPrecoMax != null)
+            {
+                if (!cmd.CommandText.Contains("WHERE"))
+                    cmd.CommandText += " WHERE";
+                else
+                    cmd.CommandText += " AND";
+
+                cmd.CommandText += " PRECO <= @PRECO";
+                cmd.Parameters.AddWithValue("@PRECO", pPrecoMax).SqlDbType = SqlDbType.SmallMoney;
+            }
+
+            if (!string.IsNullOrEmpty(pCodBarras))
+            {
+                if (!cmd.CommandText.Contains("WHERE"))
+                    cmd.CommandText += " WHERE";
+                else
+                    cmd.CommandText += " AND";
+
+                cmd.CommandText += " CODIGO_DE_BARRA = @CODIGO_DE_BARRA";
+                cmd.Parameters.AddWithValue("@CODIGO_DE_BARRA", pCodBarras).SqlDbType = SqlDbType.VarChar;
+            }
+
+            if (pCategorias != null && pCategorias.Any())
+            {
+                if (!cmd.CommandText.Contains("WHERE"))
+                    cmd.CommandText += " WHERE";
+                else
+                    cmd.CommandText += " AND";
+
+                cmd.CommandText += " CATEGORIA IN (";
+
+                for(int i = 0; i < pCategorias.Count; i++)
+                {
+                    if(i != 0)
+                        cmd.CommandText += ", ";
+
+                    cmd.CommandText += "@CATEGORIA" + i;
+                    cmd.Parameters.AddWithValue("@CATEGORIA" + i, pCategorias[i].Nome).SqlDbType = SqlDbType.VarChar;
+                }
+
+                cmd.CommandText += ")";
+            }
+
+            if (pMarcas != null && pMarcas.Any())
+            {
+                if (!cmd.CommandText.Contains("WHERE"))
+                    cmd.CommandText += " WHERE";
+                else
+                    cmd.CommandText += " AND";
+
+                cmd.CommandText += " MARCA IN (";
+
+                for (int i = 0; i < pMarcas.Count; i++)
+                {
+                    if (i != 0)
+                        cmd.CommandText += ", ";
+
+                    cmd.CommandText += "@MARCA" + i;
+                    cmd.Parameters.AddWithValue("@MARCA" + i, pMarcas[i].Nome).SqlDbType = SqlDbType.VarChar;
+                }
+
+                cmd.CommandText += ")";
+            }
+
+            if (!pBuscaInativos)
+            {
+                if (!cmd.CommandText.Contains("WHERE"))
+                    cmd.CommandText += " WHERE";
+                else
+                    cmd.CommandText += " AND";
+
+                cmd.CommandText += " ATIVO = 1";
+            }
+            #endregion
+
+            SqlDataReader dataReader = cmd.ExecuteReader();
             List<DmoProduto> listaDeProdutos = new List<DmoProduto>();
 
             while (dataReader.Read())
@@ -88,22 +186,102 @@ namespace KadoshModas.DAL
                     Nome = dataReader["NOME"].ToString(),
                     Preco = float.Parse(dataReader["PRECO"].ToString()),
                     UrlFoto = dataReader["URL_FOTO"].ToString(),
+                    Categoria = string.IsNullOrEmpty(dataReader["CATEGORIA"].ToString()) ? null : new DmoCategoria { Nome = dataReader["CATEGORIA"].ToString() },
+                    Marca = string.IsNullOrEmpty(dataReader["MARCA"].ToString()) ? null : new DmoMarca { Nome = dataReader["MARCA"].ToString() },
+                    Ativo = bool.Parse(dataReader["ATIVO"].ToString()),
                     DataDeCriacao = DateTime.Parse(dataReader["DT_CRIACAO"].ToString()),
                     DataDeAtualizacao = DateTime.Parse(dataReader["DT_ATUALIZACAO"].ToString())
                 };
 
-                if (int.TryParse(dataReader["CATEGORIA"].ToString(), out int idCategoria))
-                    produto.Categoria = new DmoCategoria { IdCategoria = idCategoria };
-
-                if (int.TryParse(dataReader["MARCA"].ToString(), out int idMarca))
-                    produto.Marca = new DmoMarca { IdMarca = idMarca };
-
                 listaDeProdutos.Add(produto);
             }
 
+            dataReader.Close();
             conexao.Desconectar();
 
             return listaDeProdutos;
+        }
+
+        /// <summary>
+        /// Consulta um Produto específico por Id
+        /// </summary>
+        /// <param name="pIdProduto">ID do Produto</param>
+        /// <returns>Retorna um Produto específico</returns>
+        public DmoProduto Consultar(int pIdProduto)
+        {
+            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA + " WHERE ID_PRODUTO = @ID_PRODUTO;", conexao.Conectar());
+            cmd.Parameters.AddWithValue("@ID_PRODUTO", pIdProduto).SqlDbType = SqlDbType.Int;
+
+            SqlDataReader dataReader = cmd.ExecuteReader();
+
+            dataReader.Read();
+            
+            DmoProduto produto = new DmoProduto
+            {
+                IdProduto = int.Parse(dataReader["ID_PRODUTO"].ToString()),
+                Nome = dataReader["NOME"].ToString(),
+                Preco = float.Parse(dataReader["PRECO"].ToString()),
+                UrlFoto = dataReader["URL_FOTO"].ToString(),
+                Categoria = string.IsNullOrEmpty(dataReader["CATEGORIA"].ToString()) ? null : new DmoCategoria { Nome = dataReader["CATEGORIA"].ToString() },
+                Marca = string.IsNullOrEmpty(dataReader["MARCA"].ToString()) ? null : new DmoMarca { Nome = dataReader["MARCA"].ToString() },
+                Ativo = bool.Parse(dataReader["ATIVO"].ToString()),
+                DataDeCriacao = DateTime.Parse(dataReader["DT_CRIACAO"].ToString()),
+                DataDeAtualizacao = DateTime.Parse(dataReader["DT_ATUALIZACAO"].ToString())
+            };
+
+            conexao.Desconectar();
+
+            return produto;
+        }
+
+        /// <summary>
+        /// Atualiza o Produto
+        /// </summary>
+        /// <param name="pProduto">Objeto DmoProduto com informações do Produto e ID do Produto a ser atualizado</param>
+        public void Atualizar(DmoProduto pProduto)
+        {
+            SqlCommand cmd = new SqlCommand(@"UPDATE " + NOME_TABELA + " SET NOME = @NOME, PRECO = @PRECO, CODIGO_DE_BARRA = @CODIGO_DE_BARRA, URL_FOTO = @URL_FOTO, CATEGORIA = @CATEGORIA, MARCA = @MARCA WHERE ID_PRODUTO = @ID_PRODUTO", conexao.Conectar());
+
+            cmd.Parameters.AddWithValue("@ID_PRODUTO", pProduto.IdProduto).SqlDbType = SqlDbType.Int;
+            cmd.Parameters.AddWithValue("@NOME", pProduto.Nome).SqlDbType = SqlDbType.VarChar;
+            cmd.Parameters.AddWithValue("@PRECO", pProduto.Preco).SqlDbType = SqlDbType.SmallMoney;
+
+            if (string.IsNullOrEmpty(pProduto.CodigoDeBarra))
+                cmd.Parameters.AddWithValue("@CODIGO_DE_BARRA", DBNull.Value).SqlDbType = SqlDbType.VarChar;
+            else
+                cmd.Parameters.AddWithValue("@CODIGO_DE_BARRA", pProduto.CodigoDeBarra).SqlDbType = SqlDbType.VarChar;
+
+            if (string.IsNullOrEmpty(pProduto.UrlFoto))
+                cmd.Parameters.AddWithValue("@URL_FOTO", DBNull.Value).SqlDbType = SqlDbType.VarChar;
+            else
+                cmd.Parameters.AddWithValue("@URL_FOTO", pProduto.UrlFoto).SqlDbType = SqlDbType.VarChar;
+
+            if (pProduto.Categoria == null || pProduto.Categoria.Nome == null)
+                cmd.Parameters.AddWithValue("@CATEGORIA", DBNull.Value).SqlDbType = SqlDbType.VarChar;
+            else
+                cmd.Parameters.AddWithValue("@CATEGORIA", pProduto.Categoria.Nome).SqlDbType = SqlDbType.VarChar;
+
+            if (pProduto.Marca == null || pProduto.Marca.Nome == null)
+                cmd.Parameters.AddWithValue("@MARCA", DBNull.Value).SqlDbType = SqlDbType.VarChar;
+            else
+                cmd.Parameters.AddWithValue("@MARCA", pProduto.Marca.Nome).SqlDbType = SqlDbType.VarChar;
+
+            cmd.ExecuteNonQuery();
+            conexao.Desconectar();
+        }
+
+        /// <summary>
+        /// Desativa o Produto
+        /// </summary>
+        /// <param name="pIdProduto">ID do Produto</param>
+        public void DesativarProduto(int pIdProduto)
+        {
+            SqlCommand cmd = new SqlCommand(@"UPDATE " + NOME_TABELA + " SET ATIVO = 0 WHERE ID_PRODUTO = @ID_PRODUTO", conexao.Conectar());
+
+            cmd.Parameters.AddWithValue("@ID_PRODUTO", pIdProduto).SqlDbType = SqlDbType.Int;
+            
+            cmd.ExecuteNonQuery();
+            conexao.Desconectar();
         }
 
         /// <summary>
@@ -129,7 +307,7 @@ namespace KadoshModas.DAL
             }
         }
 
-        //// <summary>
+        /// <summary>
         /// Atualiza a Url da Foto do Produto na base de dados
         /// </summary>
         /// <param name="pNovaUrlFoto">URL da novo foto</param>
@@ -155,31 +333,6 @@ namespace KadoshModas.DAL
                 return false;
             }
 
-        }
-
-        /// <summary>
-        /// Cadastra um Fornecedor para o Produto
-        /// </summary>
-        /// <param name="pIdFornecedor">ID do Fornecedor</param>
-        /// <param name="IdProduto">ID do Produto</param>
-        /// <returns>Retorna true em caso de sucesso ou false em caso de erro</returns>
-        public bool CadastrarFornecedorDoProduto(int pIdFornecedor, int pIdProduto)
-        {
-            try
-            {
-                SqlCommand cmd = new SqlCommand(@"INSERT INTO TB_FORNECEDORES_DO_PRODUTO (FORNECEDOR, PRODUTO) VALUES (@FORNECEDOR, @PRODUTO);", conexao.Conectar());
-                cmd.Parameters.AddWithValue("@FORNECEDOR", pIdFornecedor).SqlDbType = SqlDbType.Int;
-                cmd.Parameters.AddWithValue("@PRODUTO", pIdProduto).SqlDbType = SqlDbType.Int;
-
-                cmd.ExecuteNonQuery();
-                conexao.Desconectar();
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
         }
         #endregion
     }

@@ -102,12 +102,58 @@ namespace KadoshModas.DAL
                 Numero = dataReader["NUMERO"].ToString(),
                 Complemento = dataReader["COMPLEMENTO"].ToString(),
                 CEP = dataReader["CEP"].ToString(),
-                Cidade = string.IsNullOrEmpty(dataReader["CIDADE"].ToString()) ? null : new DmoCidade { IdCidade = int.Parse(dataReader["CIDADE"].ToString()) },
+                Cidade = string.IsNullOrEmpty(dataReader["CIDADE"].ToString()) ? null : new DaoCidade().ConsultarCidade(int.Parse(dataReader["CIDADE"].ToString())),
                 DataDeCriacao = DateTime.Parse(dataReader["DT_CRIACAO"].ToString()),
                 DataDeAtualizacao = DateTime.Parse(dataReader["DT_ATUALIZACAO"].ToString())
             };
 
             return endereco;
+        }
+
+        /// <summary>
+        /// Atualiza o Endereço 
+        /// </summary>
+        /// <param name="dmoCliente">Objeto DmoEndereco preenchido e com ID válido</param>
+        public void Atualizar(DmoEndereco pDmoEndereco)
+        {
+            SqlCommand cmd = new SqlCommand(@"UPDATE " + NOME_TABELA + " SET RUA = @RUA, BAIRRO = @BAIRRO, NUMERO = @NUMERO, COMPLEMENTO = @COMPLEMENTO, CEP = @CEP, CIDADE = @CIDADE, ATIVO = @ATIVO, DT_ATUALIZACAO = GETDATE() WHERE ID_ENDERECO = @ID_ENDERECO;", conexao.Conectar());
+
+            cmd.Parameters.AddWithValue("@ID_ENDERECO", pDmoEndereco.IdEndereco).SqlDbType = SqlDbType.Int;
+
+            if (pDmoEndereco.Rua == null)
+                cmd.Parameters.AddWithValue("@RUA", DBNull.Value).SqlDbType = SqlDbType.VarChar;
+            else
+                cmd.Parameters.AddWithValue("@RUA", pDmoEndereco.Rua).SqlDbType = SqlDbType.VarChar;
+
+            if (pDmoEndereco.Bairro == null)
+                cmd.Parameters.AddWithValue("@BAIRRO", DBNull.Value).SqlDbType = SqlDbType.VarChar;
+            else
+                cmd.Parameters.AddWithValue("@BAIRRO", pDmoEndereco.Rua).SqlDbType = SqlDbType.VarChar;
+
+            if (pDmoEndereco.Numero == null)
+                cmd.Parameters.AddWithValue("@NUMERO", DBNull.Value).SqlDbType = SqlDbType.VarChar;
+            else
+                cmd.Parameters.AddWithValue("@NUMERO", pDmoEndereco.Numero).SqlDbType = SqlDbType.VarChar;
+
+            if (pDmoEndereco.Complemento == null)
+                cmd.Parameters.AddWithValue("@COMPLEMENTO", DBNull.Value).SqlDbType = SqlDbType.VarChar;
+            else
+                cmd.Parameters.AddWithValue("@COMPLEMENTO", pDmoEndereco.Complemento).SqlDbType = SqlDbType.VarChar;
+
+            if (pDmoEndereco.CEP == null)
+                cmd.Parameters.AddWithValue("@CEP", DBNull.Value).SqlDbType = SqlDbType.Char;
+            else
+                cmd.Parameters.AddWithValue("@CEP", pDmoEndereco.CEP).SqlDbType = SqlDbType.Char;
+
+            if (pDmoEndereco.Cidade == null)
+                cmd.Parameters.AddWithValue("@CIDADE", DBNull.Value).SqlDbType = SqlDbType.Int;
+            else
+                cmd.Parameters.AddWithValue("@CIDADE", pDmoEndereco.Cidade.IdCidade).SqlDbType = SqlDbType.Int;
+
+            cmd.Parameters.AddWithValue("@ATIVO", pDmoEndereco.Ativo).SqlDbType = SqlDbType.Bit;
+
+            cmd.ExecuteNonQuery();
+            conexao.Desconectar();
         }
 
         /// <summary>

@@ -31,6 +31,26 @@ namespace KadoshModas.BLL
 
             new DaoItemDaVenda().Cadastrar(pItemDaVenda);
         }
+
+        /// <summary>
+        /// Consulta todos os Itens da Venda de uma Venda específica
+        /// </summary>
+        /// <param name="pIdVenda">Id da Venda</param>
+        /// <returns>Lista de Itens da Venda</returns>
+        public List<DmoItemDaVenda> ConsultarItensDaVenda (int? pIdVenda)
+        {
+            if (pIdVenda == null)
+                throw new ArgumentNullException("O parâmetro pIdVenda é obrigatório e não pode ser nulo.");
+
+            List <DmoItemDaVenda> itensDaVenda = new DaoItemDaVenda().ConsultarItensDaVenda(pIdVenda);
+            
+            foreach(DmoItemDaVenda item in itensDaVenda)
+            {
+                item.Produto = new BoProduto().Consultar(int.Parse(item.Produto.IdProduto.ToString()));
+            }
+
+            return itensDaVenda;
+        }
         #endregion
     }
 }

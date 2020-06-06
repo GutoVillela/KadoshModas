@@ -47,9 +47,10 @@
             this.Fornecedor,
             this.Endereco,
             this.CNPJ});
-            this.dgvFornecedores.Location = new System.Drawing.Point(27, 41);
+            this.dgvFornecedores.Location = new System.Drawing.Point(27, 68);
             this.dgvFornecedores.Name = "dgvFornecedores";
-            this.dgvFornecedores.Size = new System.Drawing.Size(626, 348);
+            this.dgvFornecedores.RowHeadersVisible = false;
+            this.dgvFornecedores.Size = new System.Drawing.Size(626, 321);
             this.dgvFornecedores.TabIndex = 0;
             this.dgvFornecedores.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFornecedores_CellContentClick);
             // 
@@ -78,10 +79,11 @@
             // 
             // DefinirFornecedores
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(686, 444);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.ClientSize = new System.Drawing.Size(689, 444);
             this.Controls.Add(this.dgvFornecedores);
+            this.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "DefinirFornecedores";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Definir Fornecedores para o Produto";

@@ -1,4 +1,5 @@
-﻿using KadoshModas.DML;
+﻿using KadoshModas.DAL;
+using KadoshModas.DML;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,15 @@ namespace KadoshModas.BLL
         public bool Cadastrar(DmoAtributosDoProduto pDmoValoresAtributos)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Exclui todos os Atributos do Produto
+        /// </summary>
+        /// <param name="pIdProduto">ID do Produto</param>
+        public void ExcluirAtributosDoProduto(int pIdProduto)
+        {
+            new DaoAtributosDoProduto().ExcluirAtributosDoProduto(pIdProduto);
         }
         #endregion
     }

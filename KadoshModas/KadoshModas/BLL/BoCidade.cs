@@ -21,5 +21,15 @@ namespace KadoshModas.BLL
         {
             return new DaoCidade().ConsultarDoEstado(pIdEstado);
         }
+
+        /// <summary>
+        /// Consulta uma Cidade específica
+        /// </summary>
+        /// <param name="pIdCidade">Id da Cidade</param>
+        /// <returns>Retorna Cidade Preenchida</returns>
+        public DmoCidade ConsultarCidade(int pIdCidade)
+        {
+            return new DaoCidade().ConsultarCidade(pIdCidade);
+        }
     }
 }

@@ -19,23 +19,23 @@ namespace KadoshModas.DAL
         /// </summary>
         public Conexao()
         {
-            string stringDeConexao = "Data Source="+ this.dataSource +";Initial Catalog=" + this.nomeBD + ";Integrated Security=true";
-            this.conexao = new SqlConnection(stringDeConexao);
+            string stringDeConexao = @"Server="+ this._server + ";Initial Catalog=" + this._nomeBD + ";Integrated Security=true";
+            this._conexao = new SqlConnection(stringDeConexao);
         }
 
         #region Atributos para Conexão
         /// <summary>
-        /// Data Source do banco de dados
+        /// Server do banco de dados
         /// </summary>
-        private readonly string dataSource = "(localdb)\\MSSQLLocalDb";
+        private readonly string _server = @"(localdb)\MSSQLLocalDb";
 
         /// <summary>
         /// Nome do banco de dados
         /// </summary>
-        private readonly string nomeBD = "BD_KADOSH";
+        private readonly string _nomeBD = "BD_KADOSH";
         #endregion
 
-        private SqlConnection conexao;
+        private SqlConnection _conexao;
 
         /// <summary>
         /// Abre a conexão com o Banco de Dados
@@ -45,10 +45,10 @@ namespace KadoshModas.DAL
         {
             try
             {
-                if (this.conexao.State != ConnectionState.Open)
-                    this.conexao.Open();
+                if (this._conexao.State != ConnectionState.Open)
+                    this._conexao.Open();
 
-                return this.conexao;
+                return this._conexao;
             }
             catch
             {
@@ -64,10 +64,10 @@ namespace KadoshModas.DAL
         {
             try
             {
-                if (this.conexao.State != ConnectionState.Open)
-                    await this.conexao.OpenAsync();
+                if (this._conexao.State != ConnectionState.Open)
+                    await this._conexao.OpenAsync();
 
-                return this.conexao;
+                return this._conexao;
             }
             catch
             {
@@ -83,15 +83,43 @@ namespace KadoshModas.DAL
         {
             try
             {
-                if (this.conexao.State != ConnectionState.Closed)
-                    this.conexao.Close();
+                if (this._conexao.State != ConnectionState.Closed)
+                    this._conexao.Close();
 
-                return this.conexao;
+                return this._conexao;
             }
             catch
             {
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Verifica se o Banco de Dados já existe
+        /// </summary>
+        /// <returns>Retorna true caso banco de dados exista e false caso não exista</returns>
+        public bool VerificaSeBancoJaExiste()
+        {
+            bool retorno = false;
+
+            using (var conn = new SqlConnection(@"Server=" + this._server + ";Database=master;Trusted_Connection=True;"))
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT 1 FROM SYS.DATABASES WHERE NAME LIKE @NOME_BD";
+                    cmd.Parameters.AddWithValue("@NOME_BD", this._nomeBD).SqlDbType = SqlDbType.VarChar;
+                        
+                    var valor = cmd.ExecuteScalar();
+
+                    if (valor != null && valor != DBNull.Value && Convert.ToInt32(valor).Equals(1))
+                    {
+                        retorno = true;
+                    }
+                }
+            }
+
+            return retorno;
         }
     }
 }

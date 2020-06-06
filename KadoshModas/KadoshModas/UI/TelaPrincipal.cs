@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KadoshModas.INF;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -35,6 +36,8 @@ namespace KadoshModas.UI
             pnlSubmenuClientes.Visible = false;
             pnlSubmenuVendas.Visible = false;
             pnlSubmenuProdutos.Visible = false;
+            pnlSubmenuEstoque.Visible = false;
+            pnlSubmenuFornecedores.Visible = false;
             pnlSubmenuOpcoesAvancadas.Visible = false;
         }
 
@@ -68,7 +71,9 @@ namespace KadoshModas.UI
         #region Eventos
         private void TelaPrincipal_Load(object sender, EventArgs e)
         {
-
+            this.Size = new Size { Height = 639, Width = 916 };
+            AbrirFormulario(new VisaoGeral());
+            //Definir funcionalidades de acordo com nível de permissao do Usuário
         }
 
         private void TelaPrincipal_FormClosed(object sender, FormClosedEventArgs e)
@@ -91,9 +96,25 @@ namespace KadoshModas.UI
             ExibirSubmenu(pnlSubmenuProdutos);
         }
 
+        private void btnEstoque_Click(object sender, EventArgs e)
+        {
+            ExibirSubmenu(pnlSubmenuEstoque);
+        }
+
+        private void btnFornecedores_Click(object sender, EventArgs e)
+        {
+            ExibirSubmenu(pnlSubmenuFornecedores);
+        }
+
+        private void btnOpcoesAvancadas_Click(object sender, EventArgs e)
+        {
+            ExibirSubmenu(pnlSubmenuOpcoesAvancadas);
+        }
+
         private void btnVisaoGeral_Click(object sender, EventArgs e)
         {
             EsconderSubmenus();
+            AbrirFormulario(new VisaoGeral());
         }
 
         private void btnMarcas_Click(object sender, EventArgs e)
@@ -130,6 +151,30 @@ namespace KadoshModas.UI
         {
             EsconderSubmenus();
             AbrirFormulario(new CadVenda());
+        }
+
+        private void btnConVenda_Click(object sender, EventArgs e)
+        {
+            EsconderSubmenus();
+            AbrirFormulario(new ConVenda());
+        }
+
+        private void btnConProduto_Click(object sender, EventArgs e)
+        {
+            EsconderSubmenus();
+            AbrirFormulario(new ConProduto());
+        }
+
+        private void btnCadFornecedor_Click(object sender, EventArgs e)
+        {
+            EsconderSubmenus();
+            AbrirFormulario(new CadFornecedor());
+        }
+
+        private void btnConFornecedor_Click(object sender, EventArgs e)
+        {
+            EsconderSubmenus();
+            AbrirFormulario(new ConFornecedor());
         }
         #endregion
     }

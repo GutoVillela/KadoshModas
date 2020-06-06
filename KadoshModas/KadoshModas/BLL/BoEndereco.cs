@@ -15,6 +15,16 @@ namespace KadoshModas.BLL
     {
         #region Métodos
         /// <summary>
+        /// Cadastra um novo Endereço 
+        /// </summary>
+        /// <param name="pEndereco">Objeto DmoEndereco preenchido</param>
+        /// <returns>Retorna o Id do Endereço cadastrado</returns>
+        public int? Cadastrar(DmoEndereco pEndereco)
+        {
+            return new DaoEndereco().Cadastrar(pEndereco);
+        }
+
+        /// <summary>
         /// Busca o Endereço por ID
         /// </summary>
         /// <param name="pIdEndereco">ID do Endereço</param>
@@ -22,6 +32,18 @@ namespace KadoshModas.BLL
         public DmoEndereco ConsultarEnderecoPorId(int pIdEndereco)
         {
             return new DaoEndereco().ConsultarEnderecoPorId(pIdEndereco);
+        }
+
+        /// <summary>
+        /// Atualiza o Endereço
+        /// </summary>
+        /// <param name="pDmoEndereco">Objeto DmoEndereco preenchido e com ID válido</param>
+        public void Atualizar(DmoEndereco pDmoEndereco)
+        {
+            if (pDmoEndereco == null || pDmoEndereco.IdEndereco == null)
+                throw new ArgumentException("O parâmetro pDmoEndereco não pode ser nulo e deve contar um ID de Endereço válido.");
+
+            new DaoEndereco().Atualizar(pDmoEndereco);
         }
         #endregion
     }

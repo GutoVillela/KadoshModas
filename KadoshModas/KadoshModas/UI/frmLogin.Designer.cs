@@ -55,7 +55,7 @@
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(209, 25);
             this.txtUsuario.TabIndex = 2;
-            this.txtUsuario.Text = "admin";
+            this.txtUsuario.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtUsuario_KeyDown);
             // 
             // txtSenha
             // 
@@ -68,7 +68,7 @@
             this.txtSenha.PasswordChar = '*';
             this.txtSenha.Size = new System.Drawing.Size(209, 25);
             this.txtSenha.TabIndex = 3;
-            this.txtSenha.Text = "admin";
+            this.txtSenha.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSenha_KeyDown);
             // 
             // btnEsqueciSenha
             // 
@@ -82,6 +82,7 @@
             this.btnEsqueciSenha.TabIndex = 5;
             this.btnEsqueciSenha.Text = "Esqueci minha senha";
             this.btnEsqueciSenha.UseVisualStyleBackColor = true;
+            this.btnEsqueciSenha.Visible = false;
             // 
             // picUsuario
             // 

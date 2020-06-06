@@ -71,6 +71,16 @@ namespace KadoshModas.Properties {
         }
         
         /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Icon semelhante a (Ícone).
+        /// </summary>
+        internal static System.Drawing.Icon icone_kadosh {
+            get {
+                object obj = ResourceManager.GetObject("icone_kadosh", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icone_produto {
@@ -96,6 +106,36 @@ namespace KadoshModas.Properties {
         internal static System.Drawing.Bitmap LOGO_FUNDO_TRANSPARENTE {
             get {
                 object obj = ResourceManager.GetObject("LOGO_FUNDO_TRANSPARENTE", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap retangulo_azul_claro {
+            get {
+                object obj = ResourceManager.GetObject("retangulo_azul_claro", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap retangulo_verde_claro {
+            get {
+                object obj = ResourceManager.GetObject("retangulo_verde_claro", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap retangulo_vermelho_claro {
+            get {
+                object obj = ResourceManager.GetObject("retangulo_vermelho_claro", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

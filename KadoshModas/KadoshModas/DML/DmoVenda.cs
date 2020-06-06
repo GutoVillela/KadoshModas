@@ -19,6 +19,14 @@ namespace KadoshModas.DML
         public DmoVenda()
         {
             ItensDaVenda = new List<DmoItemDaVenda>();
+            ParcelasDaVenda = new List<DmoParcela>();
+            Situacao = SituacoesVenda.EmAberto;
+            
+            //Inicializar Venda com Cliente Indefinido
+            Cliente = new DmoCliente()
+            {
+                IdCliente = DmoCliente.IdClienteIndefinido
+            };
         }
         #endregion
 
@@ -59,17 +67,38 @@ namespace KadoshModas.DML
         public float JurosAPrazo { get; set; }
 
         /// <summary>
+        /// Situação da Venda
+        /// </summary>
+        public SituacoesVenda Situacao { get; set; }
+
+        /// <summary>
+        /// Data em que a Venda foi realizada
+        /// </summary>
+        public DateTime DataVenda { get; set; }
+
+        /// <summary>
+        /// Data em que a Venda foi quitada
+        /// </summary>
+        public DateTime DataQuitacaoVenda { get; set; }
+
+        /// <summary>
         /// Itens desta Venda
         /// </summary>
         public List<DmoItemDaVenda> ItensDaVenda { get; set; }
+
+        /// <summary>
+        /// Parcelas Desta Venda
+        /// </summary>
+        public List<DmoParcela> ParcelasDaVenda { get; set; }
         #endregion
 
+        #region Enum
         /// <summary>
         /// Enum que define as formas de pagamento para Venda
         /// </summary>
         public enum FormasDePagamento
         {
-            [Description("Residencial")]
+            [Description("Dinheiro")]
             Dinheiro,
 
             [Description("Cartão de Débito")]
@@ -78,5 +107,21 @@ namespace KadoshModas.DML
             [Description("Cartão de Crédito")]
             CartaoDeCredito
         }
+
+        /// <summary>
+        /// Enum que define as situações da Venda
+        /// </summary>
+        public enum SituacoesVenda
+        {
+            [Description("Em Aberto")]
+            EmAberto,
+
+            [Description("Concluído")]
+            Concluido,
+
+            [Description("Cancelado")]
+            Cancelado
+        }
+        #endregion
     }
 }

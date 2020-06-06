@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.dgvConCliente = new System.Windows.Forms.DataGridView();
-            this.rbtCPF = new System.Windows.Forms.RadioButton();
-            this.rbtNome = new System.Windows.Forms.RadioButton();
-            this.txtConsulta = new System.Windows.Forms.TextBox();
             this.Código = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CPF = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Sexo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rbtCPF = new System.Windows.Forms.RadioButton();
+            this.rbtNome = new System.Windows.Forms.RadioButton();
+            this.txtConsulta = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConCliente)).BeginInit();
             this.SuspendLayout();
             // 
@@ -53,16 +53,44 @@
             this.Nome,
             this.CPF,
             this.Sexo});
-            this.dgvConCliente.Location = new System.Drawing.Point(18, 155);
+            this.dgvConCliente.Location = new System.Drawing.Point(18, 121);
             this.dgvConCliente.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dgvConCliente.MultiSelect = false;
             this.dgvConCliente.Name = "dgvConCliente";
             this.dgvConCliente.ReadOnly = true;
             this.dgvConCliente.RowHeadersVisible = false;
             this.dgvConCliente.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvConCliente.Size = new System.Drawing.Size(610, 354);
+            this.dgvConCliente.Size = new System.Drawing.Size(586, 371);
             this.dgvConCliente.TabIndex = 0;
             this.dgvConCliente.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvConCliente_CellContentDoubleClick);
+            this.dgvConCliente.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvConCliente_CellDoubleClick);
+            // 
+            // Código
+            // 
+            this.Código.FillWeight = 50F;
+            this.Código.HeaderText = "Código";
+            this.Código.Name = "Código";
+            this.Código.ReadOnly = true;
+            // 
+            // Nome
+            // 
+            this.Nome.HeaderText = "Nome";
+            this.Nome.Name = "Nome";
+            this.Nome.ReadOnly = true;
+            // 
+            // CPF
+            // 
+            this.CPF.FillWeight = 90F;
+            this.CPF.HeaderText = "CPF";
+            this.CPF.Name = "CPF";
+            this.CPF.ReadOnly = true;
+            // 
+            // Sexo
+            // 
+            this.Sexo.FillWeight = 70F;
+            this.Sexo.HeaderText = "Sexo";
+            this.Sexo.Name = "Sexo";
+            this.Sexo.ReadOnly = true;
             // 
             // rbtCPF
             // 
@@ -93,48 +121,23 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtConsulta.Location = new System.Drawing.Point(18, 32);
             this.txtConsulta.Name = "txtConsulta";
-            this.txtConsulta.Size = new System.Drawing.Size(610, 28);
+            this.txtConsulta.Size = new System.Drawing.Size(586, 28);
             this.txtConsulta.TabIndex = 4;
             this.txtConsulta.TextChanged += new System.EventHandler(this.txtConsulta_TextChanged);
-            // 
-            // Código
-            // 
-            this.Código.FillWeight = 50F;
-            this.Código.HeaderText = "Código";
-            this.Código.Name = "Código";
-            this.Código.ReadOnly = true;
-            // 
-            // Nome
-            // 
-            this.Nome.HeaderText = "Nome";
-            this.Nome.Name = "Nome";
-            this.Nome.ReadOnly = true;
-            // 
-            // CPF
-            // 
-            this.CPF.FillWeight = 90F;
-            this.CPF.HeaderText = "CPF";
-            this.CPF.Name = "CPF";
-            this.CPF.ReadOnly = true;
-            // 
-            // Sexo
-            // 
-            this.Sexo.FillWeight = 70F;
-            this.Sexo.HeaderText = "Sexo";
-            this.Sexo.Name = "Sexo";
-            this.Sexo.ReadOnly = true;
             // 
             // ConClienteVenda
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(734, 528);
+            this.ClientSize = new System.Drawing.Size(634, 511);
             this.Controls.Add(this.rbtCPF);
             this.Controls.Add(this.rbtNome);
             this.Controls.Add(this.txtConsulta);
             this.Controls.Add(this.dgvConCliente);
             this.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.MinimumSize = new System.Drawing.Size(650, 550);
             this.Name = "ConClienteVenda";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Consulta de Cliente";

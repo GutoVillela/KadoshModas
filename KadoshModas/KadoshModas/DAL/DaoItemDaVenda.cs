@@ -63,6 +63,39 @@ namespace KadoshModas.DAL
             cmd.ExecuteNonQuery();
             conexao.Desconectar();
         }
+
+        /// <summary>
+        /// Consulta todos os Itens da Venda de uma Venda específica
+        /// </summary>
+        /// <param name="pIdVenda">Id da Venda</param>
+        /// <returns>Lista de Itens da Venda</returns>
+        public List<DmoItemDaVenda> ConsultarItensDaVenda(int? pIdVenda)
+        {
+            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA + " WHERE VENDA = @VENDA", conexao.Conectar());
+            cmd.Parameters.AddWithValue("@VENDA", pIdVenda).SqlDbType = SqlDbType.Int;
+
+            SqlDataReader dataReader = cmd.ExecuteReader();
+
+            List<DmoItemDaVenda> listaDeItensDaVenda = new List<DmoItemDaVenda>();
+
+            while (dataReader.Read())
+            {
+                DmoItemDaVenda itemDaVenda = new DmoItemDaVenda();
+                itemDaVenda.Venda = new DmoVenda() { IdVenda = int.Parse(dataReader["VENDA"].ToString()) };
+                itemDaVenda.Produto = new DmoProduto() { IdProduto = int.Parse(dataReader["PRODUTO"].ToString()) };
+                itemDaVenda.Quantidade = uint.Parse(dataReader["QUANTIDADE"].ToString());
+                itemDaVenda.Valor = float.Parse(dataReader["VALOR_ITEM"].ToString());
+                itemDaVenda.Desconto = string.IsNullOrEmpty(dataReader["DESCONTO"].ToString()) ? 0 : float.Parse(dataReader["DESCONTO"].ToString());
+                itemDaVenda.DataDeCriacao = DateTime.Parse(dataReader["DT_CRIACAO"].ToString());
+                itemDaVenda.DataDeAtualizacao = DateTime.Parse(dataReader["DT_ATUALIZACAO"].ToString());
+
+                listaDeItensDaVenda.Add(itemDaVenda);
+            }
+
+            conexao.Desconectar();
+
+            return listaDeItensDaVenda;
+        }
         #endregion
     }
 }

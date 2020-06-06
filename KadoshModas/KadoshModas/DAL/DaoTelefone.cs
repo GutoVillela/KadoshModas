@@ -35,10 +35,9 @@ namespace KadoshModas.DAL
 
         #region Métodos
         /// <summary>
-        /// Cadastra um novo telefone e associa a um cliente
+        /// Cadastra um novo Telefone na base de dados
         /// </summary>
-        /// <param name="idCliente">Id do cliente</param>
-        /// <param name="telefone">Número de telefone</param>
+        /// <param name="dmoTelefone">Objeto DmoTelefone preenchido</param>
         /// <returns></returns>
         public int? Cadastrar(DmoTelefone dmoTelefone)
         {
@@ -59,27 +58,81 @@ namespace KadoshModas.DAL
         }
 
         /// <summary>
-        /// Consulta o último Id de Telefone cadastrado na base
+        /// Consulta o ID de um Telefone na base de dados.
         /// </summary>
-        /// <returns>Retorno último Id de cliente cadastrado na base. Em caso de erro retorna null</returns>
-        private int? ConsultarUltimoId()
+        /// <param name="pDDD">DDD do Telefone</param>
+        /// <param name="pNumero">Número do Telefone</param>
+        /// <returns>Retorna o ID do Telefone. Caso o Telefone não exista, retorna null.</returns>
+        public int? ConsultaIdTelefone(string pDDD, string pNumero)
         {
             try
             {
-                SqlCommand cmd = new SqlCommand("SELECT MAX(ID_TELEFONE) AS ID FROM " + NOME_TABELA, conexao.Conectar());
+                SqlCommand cmd = new SqlCommand("SELECT ID_TELEFONE FROM " + NOME_TABELA + " WHERE DDD = @DDD AND NUMERO = @NUMERO", conexao.Conectar());
+                cmd.Parameters.AddWithValue("@DDD", pDDD).SqlDbType = SqlDbType.Char;
+                cmd.Parameters.AddWithValue("@NUMERO", pNumero).SqlDbType = SqlDbType.Char;
 
                 SqlDataReader dr = cmd.ExecuteReader();
 
                 dr.Read();
 
                 return int.Parse(dr[0].ToString());
-
             }
             catch
             {
-                return 0;
+                return null;
             }
         }
+
+        /// <summary>
+        /// Exlcuir o Telefone especificado
+        /// </summary>
+        /// <param name="pIdTelefone">Id do Telefone</param>
+        public void Excluir(int pIdTelefone)
+        {
+            SqlCommand cmd = new SqlCommand(@"DELETE FROM " + NOME_TABELA + " WHERE ID_TELEFONE = @ID_TELEFONE;", conexao.Conectar());
+            cmd.Parameters.AddWithValue("@ID_TELEFONE", pIdTelefone).SqlDbType = SqlDbType.Int;
+
+            cmd.ExecuteNonQuery();
+            conexao.Desconectar();
+        }
+
+        /// <summary>
+        /// Excluir todos os Telefones relacionados ao Cliente
+        /// </summary>
+        /// <param name="pIdCliente">Id do Cliente</param>
+        public void ExcluirTelefonesDoCliente(int pIdCliente)
+        {
+            SqlCommand cmd = new SqlCommand(@"DELETE FROM " + NOME_TABELA + " WHERE ID_TELEFONE IN (SELECT TELEFONE FROM TB_TELEFONES_DO_CLIENTE WHERE CLIENTE = @CLIENTE)", conexao.Conectar());
+            cmd.Parameters.AddWithValue("@CLIENTE", pIdCliente).SqlDbType = SqlDbType.Int;
+
+            cmd.ExecuteNonQuery();
+            conexao.Desconectar();
+
+        }
+
+
+        /// <summary>
+        /// Consulta o último Id de Telefone cadastrado na base
+        /// </summary>
+        /// <returns>Retorno último Id de cliente cadastrado na base. Em caso de erro retorna null</returns>
+        private int? ConsultarUltimoId()
+    {
+        try
+        {
+            SqlCommand cmd = new SqlCommand("SELECT MAX(ID_TELEFONE) AS ID FROM " + NOME_TABELA, conexao.Conectar());
+
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            dr.Read();
+
+            return int.Parse(dr[0].ToString());
+
+        }
+        catch
+        {
+            return 0;
+        }
+    }
         #endregion
     }
 }

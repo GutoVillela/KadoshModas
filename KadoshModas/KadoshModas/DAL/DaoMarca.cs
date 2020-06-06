@@ -41,25 +41,34 @@ namespace KadoshModas.DAL
         /// Cadastra uma nova Marca
         /// </summary>
         /// <param name="pDmoMarca">Objeto DmoMarca preenchido</param>
-        /// <returns>Retorna o Id da Marca cadastrada.</returns>
-        public int? Cadastrar(DmoMarca pDmoMarca)
+        /// <returns>Retorna a Marca cadastrada.</returns>
+        public void Cadastrar(DmoMarca pDmoMarca)
         {
             SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (NOME) VALUES (@NOME);", conexao.Conectar());
             cmd.Parameters.AddWithValue("@NOME", pDmoMarca.Nome).SqlDbType = SqlDbType.VarChar;
 
             cmd.ExecuteNonQuery();
             conexao.Desconectar();
-
-            return ConsultarUltimoId();
         }
 
         /// <summary>
         /// Consulta todas as Marcas
         /// </summary>
+        /// <param name="pNomeMarca">Se fornecido, busca somente as Marcas com nomes que iniciam com o valor fornecido</param>
         /// <returns>Retorna uma lista de DmoMarca com todas os Marcas cadastradas na base de dados</returns>
-        public List<DmoMarca> Consultar()
+        public List<DmoMarca> Consultar(string pNomeMarca = null)
         {
             SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA, conexao.Conectar());
+
+            if (!string.IsNullOrEmpty(pNomeMarca))
+            {
+                if (!cmd.CommandText.Contains("WHERE"))
+                    cmd.CommandText += " WHERE";
+
+                cmd.CommandText += " NOME LIKE @NOME";
+                cmd.Parameters.AddWithValue("@NOME", pNomeMarca + "%").SqlDbType = SqlDbType.VarChar;
+            }
+
             SqlDataReader dataReader = cmd.ExecuteReader();
 
             List<DmoMarca> listaDeMarcas = new List<DmoMarca>();
@@ -68,8 +77,8 @@ namespace KadoshModas.DAL
             {
                 DmoMarca marca = new DmoMarca
                 {
-                    IdMarca = int.Parse(dataReader["ID_MARCA"].ToString()),
                     Nome = dataReader["NOME"].ToString(),
+                    Ativo = bool.Parse(dataReader["ATIVO"].ToString()),
                     DataDeCriacao = DateTime.Parse(dataReader["DT_CRIACAO"].ToString()),
                     DataDeAtualizacao = DateTime.Parse(dataReader["DT_ATUALIZACAO"].ToString())
                 };
@@ -83,26 +92,20 @@ namespace KadoshModas.DAL
         }
 
         /// <summary>
-        /// Consulta o último Id de Marca cadastrada na base
+        /// Atualiza a Marca
         /// </summary>
-        /// <returns>Retorno último Id de Marca cadastrada na base. Em caso de erro retorna null</returns>
-        private int? ConsultarUltimoId()
+        /// <param name="pMarca">Objeto DmoMarca com as novas informações da Marca</param>
+        /// <param name="pNomeMarca">Nome original da Marca antes da edição</param>
+        public void Atualizar(DmoMarca pMarca, string pNomeMarca)
         {
-            try
-            {
-                SqlCommand cmd = new SqlCommand("SELECT MAX(ID_MARCA) AS ID FROM " + NOME_TABELA, conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"UPDATE " + NOME_TABELA + " SET NOME = @NOME, ATIVO = @ATIVO, DT_ATUALIZACAO = GETDATE() WHERE NOME = @NOME_ORIGINAL", conexao.Conectar());
 
-                SqlDataReader dr = cmd.ExecuteReader();
+            cmd.Parameters.AddWithValue("@NOME", pMarca.Nome).SqlDbType = SqlDbType.VarChar;
+            cmd.Parameters.AddWithValue("@ATIVO", pMarca.Ativo).SqlDbType = SqlDbType.Bit;
+            cmd.Parameters.AddWithValue("@NOME_ORIGINAL", pNomeMarca).SqlDbType = SqlDbType.VarChar;
 
-                dr.Read();
-
-                return int.Parse(dr[0].ToString());
-
-            }
-            catch
-            {
-                return 0;
-            }
+            cmd.ExecuteNonQuery();
+            conexao.Desconectar();
         }
         #endregion
     }
