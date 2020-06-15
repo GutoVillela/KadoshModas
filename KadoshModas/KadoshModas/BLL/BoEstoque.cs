@@ -14,13 +14,13 @@ namespace KadoshModas.BLL
     {
         #region Métodos
         /// <summary>
-        /// Cadastra um novo Estoque na Base de Dados
+        /// Cadastra um novo Estoque na Base de Dados de forma assíncrona
         /// </summary>
         /// <param name="pDmoEstoque"></param>
         /// <returns></returns>
-        public int? Cadastrar(DmoEstoque pDmoEstoque)
+        public async Task<int?> CadastrarAsync(DmoEstoque pDmoEstoque)
         {
-            return new DAL.DaoEstoque().Cadastrar(pDmoEstoque);
+            return await new DAL.DaoEstoque().CadastrarAsync(pDmoEstoque);
         }
         #endregion
     }

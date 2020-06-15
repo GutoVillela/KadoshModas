@@ -42,23 +42,23 @@ namespace KadoshModas.DAL
         /// </summary>
         /// <param name="pDmoCategoria">Objeto DmoCategoria preenchido</param>
         /// <returns>Retorna o Id da Categoria cadastrada.</returns>
-        public void Cadastrar(DmoCategoria pDmoCategoria)
+        public async Task CadastrarAsync(DmoCategoria pDmoCategoria)
         {
-            SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (NOME) VALUES (@NOME);", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (NOME) VALUES (@NOME);", await conexao.ConectarAsync());
             cmd.Parameters.AddWithValue("@NOME", pDmoCategoria.Nome).SqlDbType = SqlDbType.VarChar;
 
-            cmd.ExecuteNonQuery();
+            await cmd.ExecuteNonQueryAsync();
             conexao.Desconectar();
         }
 
         /// <summary>
-        /// Consulta todas as Categorias cadastradas na base
+        /// Consulta todas as Categorias cadastradas na base de forma assíncrona
         /// </summary>
         /// <param name="pNomeCategoria">Se fornecido, busca somente as Categorias com nomes que iniciam com o valor fornecido</param>
         /// <returns>Retorna uma lista de DmoCategoria com todas os Categorias cadastradas na base de dados</returns>
-        public List<DmoCategoria> Consultar(string pNomeCategoria = null)
+        public async Task<List<DmoCategoria>> ConsultarAsync(string pNomeCategoria = null)
         {
-            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA, conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA, await conexao.ConectarAsync());
 
             if (!string.IsNullOrEmpty(pNomeCategoria))
             {
@@ -69,11 +69,11 @@ namespace KadoshModas.DAL
                 cmd.Parameters.AddWithValue("@NOME", pNomeCategoria + "%").SqlDbType = SqlDbType.VarChar;
             }
 
-            SqlDataReader dataReader = cmd.ExecuteReader();
+            SqlDataReader dataReader = await cmd.ExecuteReaderAsync();
 
             List<DmoCategoria> listaDeCategorias = new List<DmoCategoria>();
 
-            while (dataReader.Read())
+            while (await dataReader.ReadAsync())
             {
                 DmoCategoria categoria = new DmoCategoria
                 {
@@ -96,15 +96,15 @@ namespace KadoshModas.DAL
         /// </summary>
         /// <param name="pCategoria">Objeto DmoCategoria com as novas informações da Categoria</param>
         /// <param name="pNomeCategoria">Nome original da Categoria antes da edição</param>
-        public void Atualizar(DmoCategoria pCategoria, string pNomeCategoria)
+        public async Task AtualizarAsync(DmoCategoria pCategoria, string pNomeCategoria)
         {
-            SqlCommand cmd = new SqlCommand(@"UPDATE " + NOME_TABELA + " SET NOME = @NOME, ATIVO = @ATIVO, DT_ATUALIZACAO = GETDATE() WHERE NOME = @NOME_ORIGINAL", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"UPDATE " + NOME_TABELA + " SET NOME = @NOME, ATIVO = @ATIVO, DT_ATUALIZACAO = GETDATE() WHERE NOME = @NOME_ORIGINAL", await conexao.ConectarAsync());
 
             cmd.Parameters.AddWithValue("@NOME", pCategoria.Nome).SqlDbType = SqlDbType.VarChar;
             cmd.Parameters.AddWithValue("@ATIVO", pCategoria.Ativo).SqlDbType = SqlDbType.Bit;
             cmd.Parameters.AddWithValue("@NOME_ORIGINAL", pNomeCategoria).SqlDbType = SqlDbType.VarChar;
 
-            cmd.ExecuteNonQuery();
+            await cmd.ExecuteNonQueryAsync();
             conexao.Desconectar();
         }
         #endregion

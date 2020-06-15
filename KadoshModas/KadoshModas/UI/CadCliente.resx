@@ -1395,6 +1395,75 @@
   <data name="panel2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
   </data>
+  <data name="&gt;&gt;btnRemoverFoto.Name" xml:space="preserve">
+    <value>btnRemoverFoto</value>
+  </data>
+  <data name="&gt;&gt;btnRemoverFoto.Type" xml:space="preserve">
+    <value>FontAwesome.Sharp.IconButton, FontAwesome.Sharp, Version=5.12.1.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;btnRemoverFoto.Parent" xml:space="preserve">
+    <value>panel2</value>
+  </data>
+  <data name="&gt;&gt;btnRemoverFoto.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;btnEscolherFotoDoPc.Name" xml:space="preserve">
+    <value>btnEscolherFotoDoPc</value>
+  </data>
+  <data name="&gt;&gt;btnEscolherFotoDoPc.Type" xml:space="preserve">
+    <value>FontAwesome.Sharp.IconButton, FontAwesome.Sharp, Version=5.12.1.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;btnEscolherFotoDoPc.Parent" xml:space="preserve">
+    <value>panel2</value>
+  </data>
+  <data name="&gt;&gt;btnEscolherFotoDoPc.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;btnTirarFoto.Name" xml:space="preserve">
+    <value>btnTirarFoto</value>
+  </data>
+  <data name="&gt;&gt;btnTirarFoto.Type" xml:space="preserve">
+    <value>FontAwesome.Sharp.IconButton, FontAwesome.Sharp, Version=5.12.1.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;btnTirarFoto.Parent" xml:space="preserve">
+    <value>panel2</value>
+  </data>
+  <data name="&gt;&gt;btnTirarFoto.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;picFotoCliente.Name" xml:space="preserve">
+    <value>picFotoCliente</value>
+  </data>
+  <data name="&gt;&gt;picFotoCliente.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;picFotoCliente.Parent" xml:space="preserve">
+    <value>panel2</value>
+  </data>
+  <data name="&gt;&gt;picFotoCliente.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="panel2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>165, 10</value>
+  </data>
+  <data name="panel2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>300, 381</value>
+  </data>
+  <data name="panel2.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="&gt;&gt;panel2.Name" xml:space="preserve">
+    <value>panel2</value>
+  </data>
+  <data name="&gt;&gt;panel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel2.Parent" xml:space="preserve">
+    <value>pnlCadCliEtapa3</value>
+  </data>
+  <data name="&gt;&gt;panel2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="btnRemoverFoto.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
@@ -1508,27 +1577,6 @@
   </data>
   <data name="&gt;&gt;picFotoCliente.ZOrder" xml:space="preserve">
     <value>3</value>
-  </data>
-  <data name="panel2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>165, 10</value>
-  </data>
-  <data name="panel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>300, 381</value>
-  </data>
-  <data name="panel2.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
-  </data>
-  <data name="&gt;&gt;panel2.Name" xml:space="preserve">
-    <value>panel2</value>
-  </data>
-  <data name="&gt;&gt;panel2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;panel2.Parent" xml:space="preserve">
-    <value>pnlCadCliEtapa3</value>
-  </data>
-  <data name="&gt;&gt;panel2.ZOrder" xml:space="preserve">
-    <value>0</value>
   </data>
   <data name="pnlCadCliEtapa1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
@@ -1734,50 +1782,8 @@
   <data name="&gt;&gt;pnlCadCliEtapa3.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;btnCadastrarCliente.Name" xml:space="preserve">
-    <value>btnCadastrarCliente</value>
-  </data>
-  <data name="&gt;&gt;btnCadastrarCliente.Type" xml:space="preserve">
-    <value>FontAwesome.Sharp.IconButton, FontAwesome.Sharp, Version=5.12.1.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;btnCadastrarCliente.Parent" xml:space="preserve">
-    <value>pnlConteudo</value>
-  </data>
-  <data name="&gt;&gt;btnCadastrarCliente.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;btnCancelar.Name" xml:space="preserve">
-    <value>btnCancelar</value>
-  </data>
-  <data name="&gt;&gt;btnCancelar.Type" xml:space="preserve">
-    <value>FontAwesome.Sharp.IconButton, FontAwesome.Sharp, Version=5.12.1.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;btnCancelar.Parent" xml:space="preserve">
-    <value>pnlConteudo</value>
-  </data>
-  <data name="&gt;&gt;btnCancelar.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="pnlConteudo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 12</value>
-  </data>
-  <data name="pnlConteudo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>634, 511</value>
-  </data>
-  <data name="pnlConteudo.TabIndex" type="System.Int32, mscorlib">
-    <value>24</value>
-  </data>
-  <data name="&gt;&gt;pnlConteudo.Name" xml:space="preserve">
-    <value>pnlConteudo</value>
-  </data>
-  <data name="&gt;&gt;pnlConteudo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pnlConteudo.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;pnlConteudo.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="pnlConteudo.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="btnCadastrarCliente.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -1850,6 +1856,27 @@
   </data>
   <data name="&gt;&gt;btnCancelar.ZOrder" xml:space="preserve">
     <value>2</value>
+  </data>
+  <data name="pnlConteudo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 12</value>
+  </data>
+  <data name="pnlConteudo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>634, 511</value>
+  </data>
+  <data name="pnlConteudo.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
+  <data name="&gt;&gt;pnlConteudo.Name" xml:space="preserve">
+    <value>pnlConteudo</value>
+  </data>
+  <data name="&gt;&gt;pnlConteudo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pnlConteudo.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;pnlConteudo.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <metadata name="openFileDialogFoto.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>

@@ -59,8 +59,8 @@
             this.btnVisaoGeral = new FontAwesome.Sharp.IconButton();
             this.pnlLogo = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pnlCabecalho = new System.Windows.Forms.Panel();
             this.pnlForms = new System.Windows.Forms.Panel();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.pnlMenuLateral.SuspendLayout();
             this.pnlSubmenuOpcoesAvancadas.SuspendLayout();
             this.pnlSubmenuFornecedores.SuspendLayout();
@@ -93,7 +93,7 @@
             this.pnlMenuLateral.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlMenuLateral.Location = new System.Drawing.Point(0, 0);
             this.pnlMenuLateral.Name = "pnlMenuLateral";
-            this.pnlMenuLateral.Size = new System.Drawing.Size(250, 600);
+            this.pnlMenuLateral.Size = new System.Drawing.Size(250, 661);
             this.pnlMenuLateral.TabIndex = 1;
             // 
             // pnlSubmenuOpcoesAvancadas
@@ -739,36 +739,33 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // pnlCabecalho
-            // 
-            this.pnlCabecalho.BackColor = System.Drawing.Color.Black;
-            this.pnlCabecalho.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlCabecalho.Location = new System.Drawing.Point(250, 0);
-            this.pnlCabecalho.Name = "pnlCabecalho";
-            this.pnlCabecalho.Size = new System.Drawing.Size(650, 50);
-            this.pnlCabecalho.TabIndex = 2;
-            // 
             // pnlForms
             // 
             this.pnlForms.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.pnlForms.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlForms.Location = new System.Drawing.Point(250, 50);
+            this.pnlForms.Location = new System.Drawing.Point(250, 0);
             this.pnlForms.Name = "pnlForms";
-            this.pnlForms.Size = new System.Drawing.Size(650, 550);
+            this.pnlForms.Size = new System.Drawing.Size(934, 661);
             this.pnlForms.TabIndex = 3;
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Location = new System.Drawing.Point(250, 639);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(934, 22);
+            this.statusStrip1.TabIndex = 0;
+            this.statusStrip1.Text = "statusStrip1";
             // 
             // TelaPrincipal
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Gray;
-            this.ClientSize = new System.Drawing.Size(900, 600);
+            this.ClientSize = new System.Drawing.Size(1184, 661);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.pnlForms);
-            this.Controls.Add(this.pnlCabecalho);
             this.Controls.Add(this.pnlMenuLateral);
             this.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(900, 600);
             this.Name = "TelaPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -785,6 +782,7 @@
             this.pnlLogo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -808,7 +806,6 @@
         private FontAwesome.Sharp.IconButton btnNovaVenda;
         private FontAwesome.Sharp.IconButton btnOpcoesAvancadas;
         private FontAwesome.Sharp.IconButton btnEstoque;
-        private System.Windows.Forms.Panel pnlCabecalho;
         private System.Windows.Forms.Panel pnlForms;
         private System.Windows.Forms.Panel pnlSubmenuOpcoesAvancadas;
         private FontAwesome.Sharp.IconButton iconButton1;
@@ -822,5 +819,6 @@
         private FontAwesome.Sharp.IconButton btnCadFornecedor;
         private System.Windows.Forms.Panel pnlSubmenuEstoque;
         private FontAwesome.Sharp.IconButton btnConEstoque;
+        private System.Windows.Forms.StatusStrip statusStrip1;
     }
 }

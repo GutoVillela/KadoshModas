@@ -15,21 +15,21 @@ namespace KadoshModas.BLL
     {
         #region Métodos
         /// <summary>
-        /// Cadastra um Fornecedor na base de dados
+        /// Cadastra um Fornecedor na base de dados de forma assíncrona
         /// </summary>
         /// <param name="pFornecedor">Objeto DmoFornecedor preenchido com pelo menos o Nome do Fornecedor</param>
         /// <returns>Retorna o Id do Fornecedor cadastrado.</returns>
-        public int? Cadastrar(DmoFornecedor pFornecedor)
+        public async Task<int?> CadastrarAsync(DmoFornecedor pFornecedor)
         {
             #region Cadastro do Endereço
             if (pFornecedor.Endereco != null)
             {
-                pFornecedor.Endereco.IdEndereco = new BoEndereco().Cadastrar(pFornecedor.Endereco);
+                pFornecedor.Endereco.IdEndereco = await new BoEndereco().CadastrarAsync(pFornecedor.Endereco);
             }
             #endregion
 
             #region Cadastro do Cliente
-            pFornecedor.IdFornecedor = new DaoFornecedor().Cadastrar(pFornecedor);
+            pFornecedor.IdFornecedor = await new DaoFornecedor().CadastrarAsync(pFornecedor);
             #endregion
 
             if (pFornecedor.IdFornecedor != null)
@@ -54,7 +54,7 @@ namespace KadoshModas.BLL
                     foreach (DmoTelefoneDoFornecedor telefone in pFornecedor.Telefones)
                     {
                         telefone.Fornecedor = new DmoFornecedor { IdFornecedor = pFornecedor.IdFornecedor };
-                        new BoTelefoneDoFornecedor().Cadastrar(telefone);
+                        await new BoTelefoneDoFornecedor().CadastrarAsync(telefone);
                     }
                 }
                 #endregion
@@ -64,21 +64,21 @@ namespace KadoshModas.BLL
         }
 
         /// <summary>
-        /// Consulta todos os Fornecedores cadastrados na base de dados
+        /// Consulta todos os Fornecedores cadastrados na base de dados de forma assíncrona
         /// </summary>
         /// <param name="pNomeFornecedor">Se fornecido, busca os fornecedores cujos nomes iniciam com a string fornecida</param>
         /// <param name="pBuscaInativos">Define se busca incluirá nos resultados registros de fornecedores inativos</param>
         /// <returns>Retorna uma lista de DmoFornecedor com todos os Fornecedores encontrados</returns>
-        public List<DmoFornecedor> Consultar(string pNomeFornecedor = null, bool pBuscaInativos = false)
+        public async Task<List<DmoFornecedor>> ConsultarAsync(string pNomeFornecedor = null, bool pBuscaInativos = false)
         {
-            List<DmoFornecedor> fornecedores = new DaoFornecedor().Consultar(pNomeFornecedor, pBuscaInativos );
+            List<DmoFornecedor> fornecedores = await new DaoFornecedor().ConsultarAsync(pNomeFornecedor, pBuscaInativos );
 
             #region Busca Endereços para cada Fornecedor
             foreach (DmoFornecedor fornecedor in fornecedores)
             {
                 if(fornecedor.Endereco != null && fornecedor.Endereco.IdEndereco != null)
                 {
-                    fornecedor.Endereco = new BoEndereco().ConsultarEnderecoPorId(Convert.ToInt32(fornecedor.Endereco.IdEndereco));
+                    fornecedor.Endereco = await new BoEndereco().ConsultarEnderecoPorIdAsync(Convert.ToInt32(fornecedor.Endereco.IdEndereco));
                 }
             }
             #endregion

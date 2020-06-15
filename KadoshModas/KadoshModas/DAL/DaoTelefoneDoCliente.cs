@@ -37,15 +37,20 @@ namespace KadoshModas.DAL
         #endregion
 
         #region Métodos
-        public bool Cadastrar(DmoTelefoneDoCliente pDmoTelefoneDoCliente)
+        /// <summary>
+        /// Cadastra o Telefone do Cliente de forma assíncrona.
+        /// </summary>
+        /// <param name="pDmoTelefoneDoCliente">Ojeto DmoTelefoneDoCliente preenchido</param>
+        /// <returns>Retorna true em caso de sucesso e false em caso de erro</returns>
+        public async Task<bool> CadastrarAsync(DmoTelefoneDoCliente pDmoTelefoneDoCliente)
         {
             try
             {
-                SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (CLIENTE, TELEFONE) VALUES (@CLIENTE, @TELEFONE)", conexao.Conectar());
+                SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (CLIENTE, TELEFONE) VALUES (@CLIENTE, @TELEFONE)", await conexao.ConectarAsync());
                 cmd.Parameters.AddWithValue("@CLIENTE", pDmoTelefoneDoCliente.Cliente.IdCliente).SqlDbType = SqlDbType.Int;
                 cmd.Parameters.AddWithValue("@TELEFONE", pDmoTelefoneDoCliente.IdTelefone).SqlDbType = SqlDbType.Int;
 
-                cmd.ExecuteNonQuery();
+                await cmd.ExecuteNonQueryAsync();
                 conexao.Desconectar();
 
                 return true;

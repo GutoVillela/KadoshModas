@@ -152,10 +152,11 @@ namespace KadoshModas.UI
         #endregion
 
         #region Eventos
-        private void CadVenda_Load(object sender, EventArgs e)
+        private async void CadVenda_Load(object sender, EventArgs e)
         {
+            this.Icon = Properties.Resources.ICONE_KADOSH_128X128;
             Venda = new DmoVenda();
-            lblNumeroVenda.Text = (new BoVenda().ContarVendas() + 1).ToString().PadLeft(5, '0');
+            lblNumeroVenda.Text = (await new BoVenda().ContarVendasAsync() + 1).ToString().PadLeft(5, '0');
         }
 
         private void btnDefinirCliente_Click(object sender, EventArgs e)

@@ -37,20 +37,20 @@ namespace KadoshModas.DAL
 
         #region Métodos
         /// <summary>
-        /// Cadastra um Fornecedor para o Produto
+        /// Cadastra um Fornecedor para o Produto de forma assíncrona
         /// </summary>
         /// <param name="pIdFornecedor">ID do Fornecedor</param>
         /// <param name="pIdProduto">ID do Produto</param>
         /// <returns>Retorna true em caso de sucesso ou false em caso de erro</returns>
-        public bool CadastrarFornecedorDoProduto(int pIdFornecedor, int pIdProduto)
+        public async Task<bool> CadastrarFornecedorDoProdutoAsync(int pIdFornecedor, int pIdProduto)
         {
             try
             {
-                SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (FORNECEDOR, PRODUTO) VALUES (@FORNECEDOR, @PRODUTO);", _conexao.Conectar());
+                SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (FORNECEDOR, PRODUTO) VALUES (@FORNECEDOR, @PRODUTO);", await _conexao.ConectarAsync());
                 cmd.Parameters.AddWithValue("@FORNECEDOR", pIdFornecedor).SqlDbType = SqlDbType.Int;
                 cmd.Parameters.AddWithValue("@PRODUTO", pIdProduto).SqlDbType = SqlDbType.Int;
 
-                cmd.ExecuteNonQuery();
+                await cmd.ExecuteNonQueryAsync();
                 _conexao.Desconectar();
 
                 return true;
@@ -62,15 +62,15 @@ namespace KadoshModas.DAL
         }
 
         /// <summary>
-        /// Exclui todos os Fornecedores do Produto
+        /// Exclui todos os Fornecedores do Produto de forma assíncrona
         /// </summary>
         /// <param name="pIdProduto">ID do Produto</param>
-        public void ExcluirFornecedoresDoProduto(int pIdProduto)
+        public async Task ExcluirFornecedoresDoProdutoAsync(int pIdProduto)
         {
-            SqlCommand cmd = new SqlCommand(@"DELETE FROM " + NOME_TABELA + " WHERE PRODUTO = @PRODUTO", _conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"DELETE FROM " + NOME_TABELA + " WHERE PRODUTO = @PRODUTO", await _conexao.ConectarAsync());
             cmd.Parameters.AddWithValue("@PRODUTO", pIdProduto).SqlDbType = SqlDbType.Int;
 
-            cmd.ExecuteNonQuery();
+            await cmd.ExecuteNonQueryAsync();
             _conexao.Desconectar();
         }
         #endregion

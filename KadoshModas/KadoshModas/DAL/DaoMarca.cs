@@ -38,27 +38,27 @@ namespace KadoshModas.DAL
 
         #region Métodos
         /// <summary>
-        /// Cadastra uma nova Marca
+        /// Cadastra uma nova Marca de forma assíncrona
         /// </summary>
         /// <param name="pDmoMarca">Objeto DmoMarca preenchido</param>
         /// <returns>Retorna a Marca cadastrada.</returns>
-        public void Cadastrar(DmoMarca pDmoMarca)
+        public async Task CadastrarAsync(DmoMarca pDmoMarca)
         {
-            SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (NOME) VALUES (@NOME);", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (NOME) VALUES (@NOME);", await conexao.ConectarAsync());
             cmd.Parameters.AddWithValue("@NOME", pDmoMarca.Nome).SqlDbType = SqlDbType.VarChar;
 
-            cmd.ExecuteNonQuery();
+            await cmd.ExecuteNonQueryAsync();
             conexao.Desconectar();
         }
 
         /// <summary>
-        /// Consulta todas as Marcas
+        /// Consulta todas as Marcas de forma assíncrona
         /// </summary>
         /// <param name="pNomeMarca">Se fornecido, busca somente as Marcas com nomes que iniciam com o valor fornecido</param>
         /// <returns>Retorna uma lista de DmoMarca com todas os Marcas cadastradas na base de dados</returns>
-        public List<DmoMarca> Consultar(string pNomeMarca = null)
+        public async Task<List<DmoMarca>> ConsultarAsync(string pNomeMarca = null)
         {
-            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA, conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA, await conexao.ConectarAsync());
 
             if (!string.IsNullOrEmpty(pNomeMarca))
             {
@@ -69,11 +69,11 @@ namespace KadoshModas.DAL
                 cmd.Parameters.AddWithValue("@NOME", pNomeMarca + "%").SqlDbType = SqlDbType.VarChar;
             }
 
-            SqlDataReader dataReader = cmd.ExecuteReader();
+            SqlDataReader dataReader = await cmd.ExecuteReaderAsync();
 
             List<DmoMarca> listaDeMarcas = new List<DmoMarca>();
 
-            while (dataReader.Read())
+            while (await dataReader.ReadAsync())
             {
                 DmoMarca marca = new DmoMarca
                 {
@@ -92,19 +92,19 @@ namespace KadoshModas.DAL
         }
 
         /// <summary>
-        /// Atualiza a Marca
+        /// Atualiza a Marca de forma assíncrona
         /// </summary>
         /// <param name="pMarca">Objeto DmoMarca com as novas informações da Marca</param>
         /// <param name="pNomeMarca">Nome original da Marca antes da edição</param>
-        public void Atualizar(DmoMarca pMarca, string pNomeMarca)
+        public async Task AtualizarAsync(DmoMarca pMarca, string pNomeMarca)
         {
-            SqlCommand cmd = new SqlCommand(@"UPDATE " + NOME_TABELA + " SET NOME = @NOME, ATIVO = @ATIVO, DT_ATUALIZACAO = GETDATE() WHERE NOME = @NOME_ORIGINAL", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"UPDATE " + NOME_TABELA + " SET NOME = @NOME, ATIVO = @ATIVO, DT_ATUALIZACAO = GETDATE() WHERE NOME = @NOME_ORIGINAL", await conexao.ConectarAsync());
 
             cmd.Parameters.AddWithValue("@NOME", pMarca.Nome).SqlDbType = SqlDbType.VarChar;
             cmd.Parameters.AddWithValue("@ATIVO", pMarca.Ativo).SqlDbType = SqlDbType.Bit;
             cmd.Parameters.AddWithValue("@NOME_ORIGINAL", pNomeMarca).SqlDbType = SqlDbType.VarChar;
 
-            cmd.ExecuteNonQuery();
+            await cmd.ExecuteNonQueryAsync();
             conexao.Desconectar();
         }
         #endregion

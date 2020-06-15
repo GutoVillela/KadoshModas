@@ -16,5 +16,10 @@ namespace KadoshModas.UI.ConVendaUtil
         {
             InitializeComponent();
         }
+
+        private void ConClienteUtil_Load(object sender, EventArgs e)
+        {
+            this.Icon = Properties.Resources.ICONE_KADOSH_128X128;
+        }
     }
 }

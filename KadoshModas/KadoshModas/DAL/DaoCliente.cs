@@ -35,26 +35,26 @@ namespace KadoshModas.DAL
 
         #region Métodos
         /// <summary>
-        /// Cadastra um novo Cliente 
+        /// Cadastra um novo Cliente de forma assíncrona
         /// </summary>
         /// <param name="dmoCliente">Objeto DmoCliente preenchido</param>
         /// <returns>Retorna o Id do Cliente cadastrado.</returns>
-        public int? Cadastrar(DmoCliente dmoCliente)
+        public async Task<int?> CadastrarAsync(DmoCliente dmoCliente)
         {
-            SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (NOME, EMAIL, CPF, SEXO, ENDERECO, URL_FOTO) VALUES (@NOME, @EMAIL, @CPF, @SEXO, @ENDERECO, @URL_FOTO);", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (NOME, EMAIL, CPF, SEXO, ENDERECO, URL_FOTO) VALUES (@NOME, @EMAIL, @CPF, @SEXO, @ENDERECO, @URL_FOTO);", await conexao.ConectarAsync());
             cmd.Parameters.AddWithValue("@NOME", dmoCliente.Nome).SqlDbType = SqlDbType.VarChar;
 
-            if(string.IsNullOrEmpty(dmoCliente.Email))
+            if (string.IsNullOrEmpty(dmoCliente.Email))
                 cmd.Parameters.AddWithValue("@EMAIL", DBNull.Value).SqlDbType = SqlDbType.VarChar;
             else
                 cmd.Parameters.AddWithValue("@EMAIL", dmoCliente.Email).SqlDbType = SqlDbType.VarChar;
 
-            if(string.IsNullOrEmpty(dmoCliente.CPF))
+            if (string.IsNullOrEmpty(dmoCliente.CPF))
                 cmd.Parameters.AddWithValue("@CPF", DBNull.Value).SqlDbType = SqlDbType.Char;
             else
                 cmd.Parameters.AddWithValue("@CPF", dmoCliente.CPF).SqlDbType = SqlDbType.Char;
 
-            cmd.Parameters.AddWithValue("@SEXO", (int) dmoCliente.Sexo).SqlDbType = SqlDbType.Int;
+            cmd.Parameters.AddWithValue("@SEXO", (int)dmoCliente.Sexo).SqlDbType = SqlDbType.Int;
 
 
             if (dmoCliente.Endereco == null)
@@ -67,25 +67,92 @@ namespace KadoshModas.DAL
             else
                 cmd.Parameters.AddWithValue("@URL_FOTO", dmoCliente.UrlFoto).SqlDbType = SqlDbType.VarChar;
 
-            cmd.ExecuteNonQuery();
+            await cmd.ExecuteNonQueryAsync();
             conexao.Desconectar();
-                
-            return ConsultarUltimoId();
+
+            return await ConsultarUltimoIdAsync();
         }
 
         /// <summary>
-        /// Consulta todos os clientes
+        /// Consulta todos os clientes de forma assíncrona
         /// </summary>
+        /// <param name="pIdCliente">Se informado busca o Cliente exato pelo Id</param>
+        /// <param name="pNome">Se informado, filtra a busca por Nome do Cliente que inicia com os caracteres informados</param>
+        /// <param name="pEmail">Se informado, filtra a busca pelo Email que inicia com os caracteres informados</param>
+        /// <param name="pCpf">Se informado, filtra a busca pelo CPF que inicia com os caracteres informados</param>
+        /// <param name="pSexo">Se informado, filtra a busca pelo Sexo informado</param>
         /// <param name="pBuscarClienteIndefinido">Define se busca retornará o Cliente Indefinido</param>
         /// <param name="pBuscaClientesDesativados">Define se busca retornará Clientes desativados</param>
+        /// <param name="pAPartirDoRegistro">Se fornecido, inicia  a busca a partir do registro fornecido</param>
+        /// <param name="pAteORegistro">Se fornecido, busca até o registro fornecido</param>
         /// <returns>Retorna uma lista de DmoCliente com todos os clientes da base</returns>
-        public List<DmoCliente> Consultar(bool pBuscarClienteIndefinido, bool pBuscaClientesDesativados)
+        public async Task<List<DmoCliente>> ConsultarAsync(int? pIdCliente = null, string pNome = null, string pEmail = null, string pCpf = null, Sexo? pSexo = null, bool pBuscarClienteIndefinido = true, bool pBuscaClientesDesativados = false, uint? pAPartirDoRegistro = null, uint? pAteORegistro = null)
         {
-            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA, conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA, await conexao.ConectarAsync());
+            
+            
+
+            #region Filtros
+            if (pIdCliente != null)
+            {
+                cmd.CommandText += " WHERE";
+
+                cmd.CommandText += " ID_CLIENTE = @ID_CLIENTE";
+                cmd.Parameters.AddWithValue("@ID_CLIENTE", pIdCliente).SqlDbType = SqlDbType.Int;
+            }
+
+            if (!string.IsNullOrEmpty(pNome))
+            {
+                if (cmd.CommandText.Contains("WHERE"))
+                    cmd.CommandText += " AND";
+                else
+                    cmd.CommandText += " WHERE";
+
+                cmd.CommandText += " NOME LIKE @NOME";
+                cmd.Parameters.AddWithValue("@NOME", pNome + "%").SqlDbType = SqlDbType.VarChar;
+            }
+
+            if (!string.IsNullOrEmpty(pEmail))
+            {
+                if (cmd.CommandText.Contains("WHERE"))
+                    cmd.CommandText += " AND";
+                else
+                    cmd.CommandText += " WHERE";
+
+                cmd.CommandText += " EMAIL LIKE @EMAIL";
+                cmd.Parameters.AddWithValue("@EMAIL", pEmail + "%").SqlDbType = SqlDbType.VarChar;
+            }
+
+            if (!string.IsNullOrEmpty(pCpf))
+            {
+                if (cmd.CommandText.Contains("WHERE"))
+                    cmd.CommandText += " AND";
+                else
+                    cmd.CommandText += " WHERE";
+
+                cmd.CommandText += " CPF LIKE @CPF";
+                cmd.Parameters.AddWithValue("@CPF", pCpf + "%").SqlDbType = SqlDbType.VarChar;
+            }
+
+            if(pSexo != null)
+            {
+                if (cmd.CommandText.Contains("WHERE"))
+                    cmd.CommandText += " AND";
+                else
+                    cmd.CommandText += " WHERE";
+
+                cmd.CommandText += " SEXO = @SEXO";
+                cmd.Parameters.AddWithValue("@SEXO", (int) pSexo).SqlDbType = SqlDbType.Int;
+            }
 
             if (!pBuscaClientesDesativados)
             {
-                cmd.CommandText += " WHERE ATIVO = 1";
+                if (cmd.CommandText.Contains("WHERE"))
+                    cmd.CommandText += " AND";
+                else
+                    cmd.CommandText += " WHERE";
+
+                cmd.CommandText += " ATIVO = 1";
             }
 
             if (!pBuscarClienteIndefinido)
@@ -95,22 +162,41 @@ namespace KadoshModas.DAL
                 else
                     cmd.CommandText += " WHERE";
 
-                cmd.CommandText += " ID_CLIENTE != @ID_CLIENTE; ";
-                cmd.Parameters.AddWithValue("@ID_CLIENTE", DmoCliente.IdClienteIndefinido).SqlDbType = SqlDbType.Int;
+                cmd.CommandText += " ID_CLIENTE != @ID_CLIENTE_INDEFINIDO";
+                cmd.Parameters.AddWithValue("@ID_CLIENTE_INDEFINIDO", DmoCliente.IdClienteIndefinido).SqlDbType = SqlDbType.Int;
             }
-            
-            SqlDataReader dataReader = cmd.ExecuteReader();
+            #endregion
+
+            #region Ordenação
+            cmd.CommandText += " ORDER BY NOME";
+            #endregion
+
+            #region Paginação
+            if (pAPartirDoRegistro != null)
+            {
+                cmd.CommandText += " OFFSET @A_PARTIR_DO_REGISTRO ROWS";
+                cmd.Parameters.AddWithValue("@A_PARTIR_DO_REGISTRO", pAPartirDoRegistro).SqlDbType = SqlDbType.Int;
+            }
+
+            if (pAteORegistro != null)
+            {
+                cmd.CommandText += " FETCH NEXT @ATE_O_REGISTRO ROWS ONLY";
+                cmd.Parameters.AddWithValue("@ATE_O_REGISTRO", pAteORegistro).SqlDbType = SqlDbType.Int;
+            }
+            #endregion
+
+            SqlDataReader dataReader = await cmd.ExecuteReaderAsync();
 
             List<DmoCliente> listaDeClientes = new List<DmoCliente>();
 
-            while (dataReader.Read())
+            while (await dataReader.ReadAsync())
             {
                 DmoCliente cliente = new DmoCliente();
                 cliente.IdCliente = int.Parse(dataReader["ID_CLIENTE"].ToString());
                 cliente.Nome = dataReader["NOME"].ToString();
                 cliente.Email = dataReader["EMAIL"].ToString();
                 cliente.CPF = dataReader["CPF"].ToString();
-                cliente.Sexo = string.IsNullOrEmpty(dataReader["SEXO"].ToString()) ? DmoCliente.Sexos.Masculino : (DmoCliente.Sexos) int.Parse(dataReader["SEXO"].ToString());
+                cliente.Sexo = string.IsNullOrEmpty(dataReader["SEXO"].ToString()) ? Sexo.Masculino : (Sexo) int.Parse(dataReader["SEXO"].ToString());
                 cliente.Endereco = string.IsNullOrEmpty(dataReader["ENDERECO"].ToString()) ? null : new DmoEndereco { IdEndereco = int.Parse(dataReader["ENDERECO"].ToString()) };
                 cliente.UrlFoto = dataReader["URL_FOTO"].ToString();
                 cliente.Ativo = bool.Parse(dataReader["ATIVO"].ToString());
@@ -126,91 +212,20 @@ namespace KadoshModas.DAL
         }
 
         /// <summary>
-        /// Consulta todos os clientes cujo nomes iniciam com o termo informado
-        /// </summary>
-        /// <param name="pNome">Nome a ser buscado</param>
-        /// <returns>Retorna uma lista de DmoCliente com todos os clientes da base</returns>
-        public List<DmoCliente> Consultar(string pNome)
-        {
-            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA + " C WHERE C.NOME LIKE @NOME AND ATIVO = 1", conexao.Conectar());
-            cmd.Parameters.AddWithValue("@NOME", pNome + "%").SqlDbType = SqlDbType.VarChar;
-            SqlDataReader dataReader = cmd.ExecuteReader();
-
-            List<DmoCliente> listaDeClientes = new List<DmoCliente>();
-
-            while (dataReader.Read())
-            {
-                DmoCliente cliente = new DmoCliente();
-                cliente.IdCliente = int.Parse(dataReader["ID_CLIENTE"].ToString());
-                cliente.Nome = dataReader["NOME"].ToString();
-                cliente.Email = dataReader["EMAIL"].ToString();
-                cliente.CPF = dataReader["CPF"].ToString();
-                cliente.Sexo = string.IsNullOrEmpty(dataReader["SEXO"].ToString()) ? DmoCliente.Sexos.Masculino : (DmoCliente.Sexos)int.Parse(dataReader["SEXO"].ToString());
-                cliente.Endereco = string.IsNullOrEmpty(dataReader["ENDERECO"].ToString()) ? null : new DmoEndereco { IdEndereco = int.Parse(dataReader["ENDERECO"].ToString()) };
-                cliente.UrlFoto = dataReader["URL_FOTO"].ToString();
-                cliente.Ativo = bool.Parse(dataReader["ATIVO"].ToString());
-                cliente.DataDeCriacao = DateTime.Parse(dataReader["DT_CRIACAO"].ToString());
-                cliente.DataDeAtualizacao = DateTime.Parse(dataReader["DT_ATUALIZACAO"].ToString());
-
-                listaDeClientes.Add(cliente);
-            }
-
-            conexao.Desconectar();
-
-            return listaDeClientes;
-        }
-
-        /// <summary>
-        /// Consulta um Cliente específico por ID
-        /// </summary>
-        /// <param name="pIdCliente">ID do Cliente</param>
-        /// <param name="pBuscaClientesDesativados">Define se busca retornará Clientes Desativados</param>
-        /// <returns>Retorna um Cliente específico</returns>
-        public DmoCliente ConsultarClientePorId(int pIdCliente, bool pBuscaClientesDesativados = false)
-        {
-            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA + " C WHERE C.ID_CLIENTE = @ID_CLIENTE", conexao.Conectar());
-            cmd.Parameters.AddWithValue("@ID_CLIENTE", pIdCliente).SqlDbType = SqlDbType.Int;
-
-            if (!pBuscaClientesDesativados)
-                cmd.CommandText += " AND ATIVO = 1";
-
-            SqlDataReader dataReader = cmd.ExecuteReader();
-            dataReader.Read();
-
-            DmoCliente cliente = new DmoCliente
-            {
-                IdCliente = int.Parse(dataReader["ID_CLIENTE"].ToString()),
-                Nome = dataReader["NOME"].ToString(),
-                Email = dataReader["EMAIL"].ToString(),
-                CPF = dataReader["CPF"].ToString(),
-                Sexo = string.IsNullOrEmpty(dataReader["SEXO"].ToString()) ? DmoCliente.Sexos.Masculino : (DmoCliente.Sexos)int.Parse(dataReader["SEXO"].ToString()),
-                Endereco = string.IsNullOrEmpty(dataReader["ENDERECO"].ToString()) ? null : new DmoEndereco { IdEndereco = int.Parse(dataReader["ENDERECO"].ToString()) },
-                UrlFoto = dataReader["URL_FOTO"].ToString(),
-                Ativo = bool.Parse(dataReader["ATIVO"].ToString()),
-                DataDeCriacao = DateTime.Parse(dataReader["DT_CRIACAO"].ToString()),
-                DataDeAtualizacao = DateTime.Parse(dataReader["DT_ATUALIZACAO"].ToString())
-            };
-
-            conexao.Desconectar();
-
-            return cliente;
-        }
-
-        /// <summary>
-        /// Busca o Endereço de um determinado Cliente
+        /// Busca o Endereço de um determinado Cliente de forma assíncrona
         /// </summary>
         /// <param name="pIdCliente">ID do Cliente</param>
         /// <returns>Retorna um objeto DmoEndereco preenchido. Caso o Cliente especificado não possua Endereço cadastrado o valor null é retornado.</returns>
-        public DmoEndereco ConsultarEnderecoDoCliente(int pIdCliente)
+        public async Task<DmoEndereco> ConsultarEnderecoDoClienteAsync(int pIdCliente)
         {
             try
             {
-                SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + DaoEndereco.NOME_TABELA + " E JOIN " + NOME_TABELA + " C ON C.ENDERECO = E.ID_ENDERECO WHERE ID_CLIENTE = @ID_CLIENTE;", conexao.Conectar());
+                SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + DaoEndereco.NOME_TABELA + " E JOIN " + NOME_TABELA + " C ON C.ENDERECO = E.ID_ENDERECO WHERE ID_CLIENTE = @ID_CLIENTE;", await conexao.ConectarAsync());
                 cmd.Parameters.AddWithValue("@ID_CLIENTE", pIdCliente).SqlDbType = SqlDbType.Int;
 
-                SqlDataReader dataReader = cmd.ExecuteReader();
+                SqlDataReader dataReader = await cmd.ExecuteReaderAsync();
 
-                dataReader.Read();
+                await dataReader.ReadAsync();
 
                 DmoEndereco endereco = new DmoEndereco
                 {
@@ -234,12 +249,12 @@ namespace KadoshModas.DAL
         }
 
         /// <summary>
-        /// Atualiza o Cliente 
+        /// Atualiza o Cliente de forma assíncrona
         /// </summary>
         /// <param name="dmoCliente">Objeto DmoCliente preenchido e com ID do Cliente válido</param>
-        public void Atualizar(DmoCliente pDmoCliente)
+        public async Task AtualizarAsync(DmoCliente pDmoCliente)
         {
-            SqlCommand cmd = new SqlCommand(@"UPDATE " + NOME_TABELA + " SET NOME = @NOME, EMAIL = @EMAIL, CPF = @CPF, SEXO = @SEXO, ENDERECO = @ENDERECO, URL_FOTO = @URL_FOTO, ATIVO = @ATIVO, DT_ATUALIZACAO = GETDATE() WHERE ID_CLIENTE = @ID_CLIENTE;", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"UPDATE " + NOME_TABELA + " SET NOME = @NOME, EMAIL = @EMAIL, CPF = @CPF, SEXO = @SEXO, ENDERECO = @ENDERECO, URL_FOTO = @URL_FOTO, ATIVO = @ATIVO, DT_ATUALIZACAO = GETDATE() WHERE ID_CLIENTE = @ID_CLIENTE;", await conexao.ConectarAsync());
 
             cmd.Parameters.AddWithValue("@ID_CLIENTE", pDmoCliente.IdCliente).SqlDbType = SqlDbType.Int;
 
@@ -270,27 +285,27 @@ namespace KadoshModas.DAL
 
             cmd.Parameters.AddWithValue("@ATIVO", pDmoCliente.Ativo).SqlDbType = SqlDbType.Bit;
 
-            cmd.ExecuteNonQuery();
+            await cmd.ExecuteNonQueryAsync();
             conexao.Desconectar();
         }
 
         /// <summary>
-        /// Busca os Telefones de um determinado Cliente
+        /// Busca os Telefones de um determinado Cliente de forma assíncrona
         /// </summary>
         /// <param name="pIdCliente">Id co Cliente</param>
         /// <returns>Retorna uma lista de Telefones do Cliente. Retorna null em caso de erro.</returns>
-        public List<DmoTelefoneDoCliente> ConsultarTelefonesDoCliente(int pIdCliente)
+        public async Task<List<DmoTelefoneDoCliente>> ConsultarTelefonesDoClienteAsync(int pIdCliente)
         {
             try
             {
-                SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + DaoTelefoneDoCliente.NOME_TABELA + " TC JOIN " + NOME_TABELA + " C ON C.ID_CLIENTE = TC.CLIENTE JOIN " + DaoTelefone.NOME_TABELA + " T ON T.ID_TELEFONE = TC.TELEFONE WHERE ID_CLIENTE  = @ID_CLIENTE;", conexao.Conectar());
+                SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + DaoTelefoneDoCliente.NOME_TABELA + " TC JOIN " + NOME_TABELA + " C ON C.ID_CLIENTE = TC.CLIENTE JOIN " + DaoTelefone.NOME_TABELA + " T ON T.ID_TELEFONE = TC.TELEFONE WHERE ID_CLIENTE  = @ID_CLIENTE;", await conexao.ConectarAsync());
                 cmd.Parameters.AddWithValue("@ID_CLIENTE", pIdCliente).SqlDbType = SqlDbType.Int;
 
-                SqlDataReader dataReader = cmd.ExecuteReader();
+                SqlDataReader dataReader = await cmd.ExecuteReaderAsync();
 
                 List<DmoTelefoneDoCliente> listaDeTelefones = new List<DmoTelefoneDoCliente>();
 
-                while (dataReader.Read())
+                while (await dataReader.ReadAsync())
                 {
                     DmoTelefoneDoCliente telefone = new DmoTelefoneDoCliente
                     {
@@ -316,20 +331,25 @@ namespace KadoshModas.DAL
         }
 
         /// <summary>
-        /// Consulta o último Id de Cliente cadastrado na base
+        /// Consulta o último Id de Cliente cadastrado na base de forma assíncrona
         /// </summary>
         /// <returns>Retorno último Id de cliente cadastrado na base. Em caso de erro retorna null</returns>
-        private int? ConsultarUltimoId()
+        private async Task<int?> ConsultarUltimoIdAsync()
         {
             try
             {
-                SqlCommand cmd = new SqlCommand("SELECT MAX(ID_CLIENTE) AS ID FROM " + NOME_TABELA, conexao.Conectar());
+                SqlCommand cmd = new SqlCommand("SELECT MAX(ID_CLIENTE) AS ID FROM " + NOME_TABELA, await conexao.ConectarAsync());
 
-                SqlDataReader dr = cmd.ExecuteReader();
 
-                dr.Read();
+                SqlDataReader dr = await cmd.ExecuteReaderAsync();
 
-                return int.Parse(dr[0].ToString());
+                await dr.ReadAsync();
+
+                int ultimoId = int.Parse(dr[0].ToString());
+
+                conexao.Desconectar();
+
+                return ultimoId;
 
             }
             catch
@@ -339,22 +359,111 @@ namespace KadoshModas.DAL
         }
 
         /// <summary>
-        /// Atualiza a Url da Foto do Cliente na base de dados
+        /// Conta a quantidade de Clientes que correspondem à busca no banco de dados de Forma assíncrona
+        /// <param name="pNome">Se informado, filtra a busca por Nome do Cliente que inicia com os caracteres informados</param>
+        /// <param name="pEmail">Se informado, filtra a busca pelo Email que inicia com os caracteres informados</param>
+        /// <param name="pCpf">Se informado, filtra a busca pelo CPF que inicia com os caracteres informados</param>
+        /// <param name="pSexo">Se informado, filtra a busca pelo Sexo informado</param>
+        /// <param name="pBuscarClienteIndefinido">Define se busca retornará o Cliente Indefinido</param>
+        /// <param name="pBuscaClientesDesativados">Define se busca retornará Clientes desativados</param>
+        /// </summary>
+        /// <returns>Retorno a quantidade de clientes encontrados que atendem aos critérios de busca</returns>
+        public async Task<int> ContarClientesAsync(string pNome = null, string pEmail = null, string pCpf = null, Sexo? pSexo = null, bool pBuscarClienteIndefinido = true, bool pBuscaClientesDesativados = false)
+        {
+            SqlCommand cmd = new SqlCommand("SELECT COUNT(ID_CLIENTE) FROM " + NOME_TABELA, await conexao.ConectarAsync());
+
+            #region Filtros
+            if (!string.IsNullOrEmpty(pNome))
+            {
+                cmd.CommandText += " WHERE";
+
+                cmd.CommandText += " NOME LIKE @NOME";
+                cmd.Parameters.AddWithValue("@NOME", pNome + "%").SqlDbType = SqlDbType.VarChar;
+            }
+
+            if (!string.IsNullOrEmpty(pEmail))
+            {
+                if (cmd.CommandText.Contains("WHERE"))
+                    cmd.CommandText += " AND";
+                else
+                    cmd.CommandText += " WHERE";
+
+                cmd.CommandText += " EMAIL LIKE @EMAIL";
+                cmd.Parameters.AddWithValue("@EMAIL", pEmail + "%").SqlDbType = SqlDbType.VarChar;
+            }
+
+            if (!string.IsNullOrEmpty(pCpf))
+            {
+                if (cmd.CommandText.Contains("WHERE"))
+                    cmd.CommandText += " AND";
+                else
+                    cmd.CommandText += " WHERE";
+
+                cmd.CommandText += " CPF LIKE @CPF";
+                cmd.Parameters.AddWithValue("@CPF", pCpf + "%").SqlDbType = SqlDbType.VarChar;
+            }
+
+            if (pSexo != null)
+            {
+                if (cmd.CommandText.Contains("WHERE"))
+                    cmd.CommandText += " AND";
+                else
+                    cmd.CommandText += " WHERE";
+
+                cmd.CommandText += " SEXO = @SEXO";
+                cmd.Parameters.AddWithValue("@SEXO", (int)pSexo).SqlDbType = SqlDbType.Int;
+            }
+
+            if (!pBuscaClientesDesativados)
+            {
+                if (cmd.CommandText.Contains("WHERE"))
+                    cmd.CommandText += " AND";
+                else
+                    cmd.CommandText += " WHERE";
+
+                cmd.CommandText += " ATIVO = 1";
+            }
+
+            if (!pBuscarClienteIndefinido)
+            {
+                if (cmd.CommandText.Contains("WHERE"))
+                    cmd.CommandText += " AND";
+                else
+                    cmd.CommandText += " WHERE";
+
+                cmd.CommandText += " ID_CLIENTE != @ID_CLIENTE_INDEFINIDO";
+                cmd.Parameters.AddWithValue("@ID_CLIENTE_INDEFINIDO", DmoCliente.IdClienteIndefinido).SqlDbType = SqlDbType.Int;
+            }
+            #endregion
+
+            SqlDataReader dr = await cmd.ExecuteReaderAsync();
+
+            await dr.ReadAsync();
+
+            int quantidadeCliente = int.Parse(dr[0].ToString());
+
+            conexao.Desconectar();
+
+            return quantidadeCliente;
+        }
+
+        /// <summary>
+        /// Atualiza a Url da Foto do Cliente na base de dados de forma assíncrona
         /// </summary>
         /// <param name="pNovaUrlFoto">URL da novo foto</param>
         /// <param name="pIdCliente">Id do Cliente</param>
         /// <returns>Retorna true em caso de sucesso ou false em caso de erro</returns>
-        public bool AtualizarFoto(string pNovaUrlFoto, int? pIdCliente)
+        public async Task<bool> AtualizarFotoAsync(string pNovaUrlFoto, int? pIdCliente)
         {
             if (string.IsNullOrEmpty(pNovaUrlFoto) || pIdCliente == null)
                 throw new ArgumentException("Os parâmetros pNovaUrlFoto e pIdCliente não podem ser nulos");
             try
             {
-                SqlCommand cmd = new SqlCommand(@"UPDATE " + NOME_TABELA + " SET URL_FOTO = @URL_FOTO WHERE ID_CLIENTE = @ID_CLIENTE", conexao.Conectar());
+                SqlCommand cmd = new SqlCommand(@"UPDATE " + NOME_TABELA + " SET URL_FOTO = @URL_FOTO WHERE ID_CLIENTE = @ID_CLIENTE", await conexao.ConectarAsync());
                 cmd.Parameters.AddWithValue("@URL_FOTO", pNovaUrlFoto).SqlDbType = SqlDbType.VarChar;
                 cmd.Parameters.AddWithValue("@ID_CLIENTE", pIdCliente).SqlDbType = SqlDbType.Int;
 
-                cmd.ExecuteNonQuery();
+                await cmd.ExecuteNonQueryAsync();
                 conexao.Desconectar();
 
                 return true;
@@ -363,19 +472,18 @@ namespace KadoshModas.DAL
             {
                 return false;
             }
-            
         }
 
         /// <summary>
-        /// Desativa o Cliente
+        /// Desativa o Cliente de forma assíncrona
         /// </summary>
         /// <param name="pIdCliente">Id do Cliente</param>
-        public void DesativarCliente(int pIdCliente)
+        public async Task DesativarClienteAsync(int pIdCliente)
         {
-            SqlCommand cmd = new SqlCommand("UPDATE " + NOME_TABELA + " SET ATIVO = 0 WHERE ID_CLIENTE = @ID_CLIENTE", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand("UPDATE " + NOME_TABELA + " SET ATIVO = 0 WHERE ID_CLIENTE = @ID_CLIENTE", await conexao.ConectarAsync());
             cmd.Parameters.AddWithValue("ID_CLIENTE", pIdCliente).SqlDbType = SqlDbType.Int;
 
-            cmd.ExecuteNonQuery();
+            await cmd.ExecuteNonQueryAsync();
             conexao.Desconectar();
         }
 

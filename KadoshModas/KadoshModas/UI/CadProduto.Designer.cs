@@ -41,9 +41,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.btnCadastrar = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.btnDesativarProduto = new FontAwesome.Sharp.IconButton();
-            this.picFotoProduto = new System.Windows.Forms.PictureBox();
             this.cboMarca = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.cboCategoria = new System.Windows.Forms.ComboBox();
@@ -52,10 +49,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtNomeProduto = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.openFileDialogFoto = new System.Windows.Forms.OpenFileDialog();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.btnRemoverFoto = new FontAwesome.Sharp.IconButton();
             this.btnEscolherFoto = new FontAwesome.Sharp.IconButton();
             this.btnTirarFoto = new FontAwesome.Sharp.IconButton();
+            this.btnDesativarProduto = new FontAwesome.Sharp.IconButton();
+            this.picFotoProduto = new System.Windows.Forms.PictureBox();
+            this.openFileDialogFoto = new System.Windows.Forms.OpenFileDialog();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picFotoProduto)).BeginInit();
@@ -75,7 +75,6 @@
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.btnCadastrar);
-            this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.cboMarca);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.cboCategoria);
@@ -84,18 +83,19 @@
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.txtNomeProduto);
             this.panel1.Controls.Add(this.label1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Location = new System.Drawing.Point(268, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(634, 511);
+            this.panel1.Size = new System.Drawing.Size(650, 622);
             this.panel1.TabIndex = 0;
             // 
             // txtCodigoDeBarras
             // 
             this.txtCodigoDeBarras.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtCodigoDeBarras.Location = new System.Drawing.Point(422, 55);
+            this.txtCodigoDeBarras.Location = new System.Drawing.Point(155, 55);
             this.txtCodigoDeBarras.Name = "txtCodigoDeBarras";
-            this.txtCodigoDeBarras.Size = new System.Drawing.Size(204, 28);
+            this.txtCodigoDeBarras.Size = new System.Drawing.Size(471, 28);
             this.txtCodigoDeBarras.TabIndex = 2;
             // 
             // label10
@@ -103,7 +103,7 @@
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(284, 58);
+            this.label10.Location = new System.Drawing.Point(17, 58);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(132, 21);
             this.label10.TabIndex = 19;
@@ -122,14 +122,15 @@
             this.btnDefinirFornecedores.IconColor = System.Drawing.Color.LightPink;
             this.btnDefinirFornecedores.IconSize = 24;
             this.btnDefinirFornecedores.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnDefinirFornecedores.Location = new System.Drawing.Point(422, 395);
+            this.btnDefinirFornecedores.Location = new System.Drawing.Point(159, 458);
             this.btnDefinirFornecedores.Name = "btnDefinirFornecedores";
             this.btnDefinirFornecedores.Rotation = 0D;
-            this.btnDefinirFornecedores.Size = new System.Drawing.Size(204, 29);
+            this.btnDefinirFornecedores.Size = new System.Drawing.Size(467, 29);
             this.btnDefinirFornecedores.TabIndex = 9;
             this.btnDefinirFornecedores.Text = "Não definido";
             this.btnDefinirFornecedores.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.btnDefinirFornecedores.UseVisualStyleBackColor = false;
+            this.btnDefinirFornecedores.Visible = false;
             this.btnDefinirFornecedores.Click += new System.EventHandler(this.btnDefinirFornecedores_Click);
             // 
             // label9
@@ -137,19 +138,20 @@
             this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(309, 399);
+            this.label9.Location = new System.Drawing.Point(46, 462);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(107, 21);
             this.label9.TabIndex = 17;
             this.label9.Text = "Fornecedores:";
+            this.label9.Visible = false;
             // 
             // txtEstoque
             // 
             this.txtEstoque.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.txtEstoque.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtEstoque.Location = new System.Drawing.Point(422, 352);
+            this.txtEstoque.Location = new System.Drawing.Point(155, 403);
             this.txtEstoque.Name = "txtEstoque";
-            this.txtEstoque.Size = new System.Drawing.Size(204, 28);
+            this.txtEstoque.Size = new System.Drawing.Size(471, 28);
             this.txtEstoque.TabIndex = 8;
             this.txtEstoque.Visible = false;
             // 
@@ -158,7 +160,7 @@
             this.lblEstoqueRotulo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblEstoqueRotulo.AutoSize = true;
             this.lblEstoqueRotulo.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEstoqueRotulo.Location = new System.Drawing.Point(348, 355);
+            this.lblEstoqueRotulo.Location = new System.Drawing.Point(81, 406);
             this.lblEstoqueRotulo.Name = "lblEstoqueRotulo";
             this.lblEstoqueRotulo.Size = new System.Drawing.Size(68, 21);
             this.lblEstoqueRotulo.TabIndex = 16;
@@ -169,62 +171,142 @@
             // 
             this.txtTamanho.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTamanho.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtTamanho.Location = new System.Drawing.Point(422, 261);
+            this.txtTamanho.Location = new System.Drawing.Point(155, 310);
             this.txtTamanho.Name = "txtTamanho";
-            this.txtTamanho.Size = new System.Drawing.Size(204, 28);
+            this.txtTamanho.Size = new System.Drawing.Size(471, 28);
             this.txtTamanho.TabIndex = 6;
+            this.txtTamanho.Visible = false;
             // 
             // txtCor
             // 
             this.txtCor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.txtCor.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtCor.Location = new System.Drawing.Point(422, 309);
+            this.txtCor.Location = new System.Drawing.Point(155, 360);
             this.txtCor.Name = "txtCor";
-            this.txtCor.Size = new System.Drawing.Size(204, 28);
+            this.txtCor.Size = new System.Drawing.Size(471, 28);
             this.txtCor.TabIndex = 7;
+            this.txtCor.Visible = false;
             // 
             // label7
             // 
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(378, 308);
+            this.label7.Location = new System.Drawing.Point(111, 359);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(38, 21);
             this.label7.TabIndex = 13;
             this.label7.Text = "Cor:";
+            this.label7.Visible = false;
             // 
             // label6
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(274, 264);
+            this.label6.Location = new System.Drawing.Point(7, 313);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(142, 21);
             this.label6.TabIndex = 11;
             this.label6.Text = "Tamanho/Número:";
+            this.label6.Visible = false;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(278, 220);
+            this.label5.Location = new System.Drawing.Point(9, 259);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(81, 21);
             this.label5.TabIndex = 10;
             this.label5.Text = "Atributos";
+            this.label5.Visible = false;
             // 
             // btnCadastrar
             // 
             this.btnCadastrar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCadastrar.Location = new System.Drawing.Point(422, 445);
+            this.btnCadastrar.Location = new System.Drawing.Point(422, 530);
             this.btnCadastrar.Name = "btnCadastrar";
             this.btnCadastrar.Size = new System.Drawing.Size(204, 54);
             this.btnCadastrar.TabIndex = 10;
             this.btnCadastrar.Text = "Cadastrar produto";
             this.btnCadastrar.UseVisualStyleBackColor = true;
             this.btnCadastrar.Click += new System.EventHandler(this.btnCadastrar_Click);
+            // 
+            // cboMarca
+            // 
+            this.cboMarca.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboMarca.FormattingEnabled = true;
+            this.cboMarca.Location = new System.Drawing.Point(155, 146);
+            this.cboMarca.Name = "cboMarca";
+            this.cboMarca.Size = new System.Drawing.Size(471, 29);
+            this.cboMarca.TabIndex = 4;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(93, 149);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(60, 21);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Marca: ";
+            // 
+            // cboCategoria
+            // 
+            this.cboCategoria.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboCategoria.FormattingEnabled = true;
+            this.cboCategoria.Location = new System.Drawing.Point(155, 189);
+            this.cboCategoria.Name = "cboCategoria";
+            this.cboCategoria.Size = new System.Drawing.Size(471, 29);
+            this.cboCategoria.TabIndex = 5;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(65, 192);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(84, 21);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Categoria: ";
+            // 
+            // txtPrecoUnidade
+            // 
+            this.txtPrecoUnidade.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtPrecoUnidade.Location = new System.Drawing.Point(155, 101);
+            this.txtPrecoUnidade.Name = "txtPrecoUnidade";
+            this.txtPrecoUnidade.Size = new System.Drawing.Size(471, 28);
+            this.txtPrecoUnidade.TabIndex = 3;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(9, 104);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(140, 21);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Preço por unidade:";
+            // 
+            // txtNomeProduto
+            // 
+            this.txtNomeProduto.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtNomeProduto.Location = new System.Drawing.Point(155, 12);
+            this.txtNomeProduto.Name = "txtNomeProduto";
+            this.txtNomeProduto.Size = new System.Drawing.Size(471, 28);
+            this.txtNomeProduto.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(11, 15);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(138, 21);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Nome do produto:";
             // 
             // panel2
             // 
@@ -237,115 +319,8 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(268, 511);
+            this.panel2.Size = new System.Drawing.Size(268, 622);
             this.panel2.TabIndex = 8;
-            // 
-            // btnDesativarProduto
-            // 
-            this.btnDesativarProduto.Flip = FontAwesome.Sharp.FlipOrientation.Normal;
-            this.btnDesativarProduto.IconChar = FontAwesome.Sharp.IconChar.None;
-            this.btnDesativarProduto.IconColor = System.Drawing.Color.Black;
-            this.btnDesativarProduto.IconSize = 16;
-            this.btnDesativarProduto.Location = new System.Drawing.Point(44, 452);
-            this.btnDesativarProduto.Name = "btnDesativarProduto";
-            this.btnDesativarProduto.Rotation = 0D;
-            this.btnDesativarProduto.Size = new System.Drawing.Size(173, 40);
-            this.btnDesativarProduto.TabIndex = 14;
-            this.btnDesativarProduto.Text = "Desativar Produto";
-            this.btnDesativarProduto.UseVisualStyleBackColor = true;
-            this.btnDesativarProduto.Visible = false;
-            this.btnDesativarProduto.Click += new System.EventHandler(this.btnDesativarProduto_Click);
-            // 
-            // picFotoProduto
-            // 
-            this.picFotoProduto.Image = global::KadoshModas.Properties.Resources.icone_produto;
-            this.picFotoProduto.Location = new System.Drawing.Point(12, 12);
-            this.picFotoProduto.Name = "picFotoProduto";
-            this.picFotoProduto.Size = new System.Drawing.Size(238, 268);
-            this.picFotoProduto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picFotoProduto.TabIndex = 9;
-            this.picFotoProduto.TabStop = false;
-            // 
-            // cboMarca
-            // 
-            this.cboMarca.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboMarca.FormattingEnabled = true;
-            this.cboMarca.Location = new System.Drawing.Point(422, 143);
-            this.cboMarca.Name = "cboMarca";
-            this.cboMarca.Size = new System.Drawing.Size(204, 29);
-            this.cboMarca.TabIndex = 4;
-            // 
-            // label4
-            // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(360, 146);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(60, 21);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "Marca: ";
-            // 
-            // cboCategoria
-            // 
-            this.cboCategoria.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboCategoria.FormattingEnabled = true;
-            this.cboCategoria.Location = new System.Drawing.Point(422, 186);
-            this.cboCategoria.Name = "cboCategoria";
-            this.cboCategoria.Size = new System.Drawing.Size(204, 29);
-            this.cboCategoria.TabIndex = 5;
-            // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(332, 189);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(84, 21);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Categoria: ";
-            // 
-            // txtPrecoUnidade
-            // 
-            this.txtPrecoUnidade.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtPrecoUnidade.Location = new System.Drawing.Point(422, 98);
-            this.txtPrecoUnidade.Name = "txtPrecoUnidade";
-            this.txtPrecoUnidade.Size = new System.Drawing.Size(204, 28);
-            this.txtPrecoUnidade.TabIndex = 3;
-            // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(276, 101);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(140, 21);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Preço por unidade:";
-            // 
-            // txtNomeProduto
-            // 
-            this.txtNomeProduto.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtNomeProduto.Location = new System.Drawing.Point(422, 12);
-            this.txtNomeProduto.Name = "txtNomeProduto";
-            this.txtNomeProduto.Size = new System.Drawing.Size(204, 28);
-            this.txtNomeProduto.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(278, 15);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(138, 21);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Nome do produto:";
-            // 
-            // openFileDialogFoto
-            // 
-            this.openFileDialogFoto.FileName = "openFileDialog1";
-            this.openFileDialogFoto.Filter = "Arquivos de Imagem(*.jpg; *.jpeg; *.png; *.gif; *.bmp)|*.jpg; *.jpeg; *.png; *.gi" +
-    "f; *.bmp";
             // 
             // btnRemoverFoto
             // 
@@ -409,11 +384,45 @@
             this.btnTirarFoto.UseVisualStyleBackColor = false;
             this.btnTirarFoto.Visible = false;
             // 
+            // btnDesativarProduto
+            // 
+            this.btnDesativarProduto.Flip = FontAwesome.Sharp.FlipOrientation.Normal;
+            this.btnDesativarProduto.IconChar = FontAwesome.Sharp.IconChar.None;
+            this.btnDesativarProduto.IconColor = System.Drawing.Color.Black;
+            this.btnDesativarProduto.IconSize = 16;
+            this.btnDesativarProduto.Location = new System.Drawing.Point(44, 452);
+            this.btnDesativarProduto.Name = "btnDesativarProduto";
+            this.btnDesativarProduto.Rotation = 0D;
+            this.btnDesativarProduto.Size = new System.Drawing.Size(173, 40);
+            this.btnDesativarProduto.TabIndex = 14;
+            this.btnDesativarProduto.Text = "Desativar Produto";
+            this.btnDesativarProduto.UseVisualStyleBackColor = true;
+            this.btnDesativarProduto.Visible = false;
+            this.btnDesativarProduto.Click += new System.EventHandler(this.btnDesativarProduto_Click);
+            // 
+            // picFotoProduto
+            // 
+            this.picFotoProduto.Image = global::KadoshModas.Properties.Resources.icone_produto;
+            this.picFotoProduto.Location = new System.Drawing.Point(12, 12);
+            this.picFotoProduto.Name = "picFotoProduto";
+            this.picFotoProduto.Size = new System.Drawing.Size(238, 268);
+            this.picFotoProduto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picFotoProduto.TabIndex = 9;
+            this.picFotoProduto.TabStop = false;
+            // 
+            // openFileDialogFoto
+            // 
+            this.openFileDialogFoto.FileName = "openFileDialog1";
+            this.openFileDialogFoto.Filter = "Arquivos de Imagem(*.jpg; *.jpeg; *.png; *.gif; *.bmp)|*.jpg; *.jpeg; *.png; *.gi" +
+    "f; *.bmp";
+            // 
             // CadProduto
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(634, 511);
+            this.ClientSize = new System.Drawing.Size(918, 622);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panel2);
+            this.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MinimumSize = new System.Drawing.Size(650, 550);
             this.Name = "CadProduto";

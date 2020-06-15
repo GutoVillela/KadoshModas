@@ -35,12 +35,12 @@ namespace KadoshModas.DAL
 
         #region Métodos
         /// <summary>
-        /// Cadastra uma nova Parcela
+        /// Cadastra uma nova Parcela e forma assíncrona
         /// </summary>
         /// <param name="pDmoParcela">Objeto DmoParcela preenchido</param>
-        public void Cadastrar(DmoParcela pDmoParcela)
+        public async Task CadastrarAsync(DmoParcela pDmoParcela)
         {
-            SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (VENDA, PARCELA, VALOR_PARCELA, DESCONTO, VENCIMENTO, SITUACAO) VALUES (@VENDA, @PARCELA, @VALOR_PARCELA, @DESCONTO, @VENCIMENTO, @SITUACAO);", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (VENDA, PARCELA, VALOR_PARCELA, DESCONTO, VENCIMENTO, SITUACAO) VALUES (@VENDA, @PARCELA, @VALOR_PARCELA, @DESCONTO, @VENCIMENTO, @SITUACAO);", await conexao.ConectarAsync());
 
             cmd.Parameters.AddWithValue("@VENDA", pDmoParcela.Venda.IdVenda).SqlDbType = SqlDbType.Int;
             cmd.Parameters.AddWithValue("@PARCELA", pDmoParcela.Parcela).SqlDbType = SqlDbType.Int;
@@ -49,25 +49,25 @@ namespace KadoshModas.DAL
             cmd.Parameters.AddWithValue("@VENCIMENTO", pDmoParcela.Vencimento).SqlDbType = SqlDbType.Date;
             cmd.Parameters.AddWithValue("@SITUACAO", (int)  pDmoParcela.SituacaoParcela).SqlDbType = SqlDbType.Int;            
 
-            cmd.ExecuteNonQuery();
+            await cmd.ExecuteNonQueryAsync();
             conexao.Desconectar();
         }
 
         /// <summary>
-        /// Consulta todas as Parcelas de uma Venda específica
+        /// Consulta todas as Parcelas de uma Venda específica de forma assíncrona
         /// </summary>
         /// <param name="pIdVenda">Id da Venda</param>
         /// <returns>Lista de Parcelas da Venda</returns>
-        public List<DmoParcela> ConsultarParcelasDaVenda(int? pIdVenda)
+        public async Task<List<DmoParcela>> ConsultarParcelasDaVendaAsync(int? pIdVenda)
         {
-            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA + " WHERE VENDA = @VENDA ORDER BY PARCELA DESC", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA + " WHERE VENDA = @VENDA ORDER BY PARCELA DESC", await conexao.ConectarAsync());
             cmd.Parameters.AddWithValue("@VENDA", pIdVenda).SqlDbType = SqlDbType.Int;
 
-            SqlDataReader dataReader = cmd.ExecuteReader();
+            SqlDataReader dataReader = await cmd.ExecuteReaderAsync();
 
             List<DmoParcela> listaDeParcelas = new List<DmoParcela>();
 
-            while (dataReader.Read())
+            while (await dataReader.ReadAsync())
             {
                 DmoParcela parcela = new DmoParcela()
                 {
@@ -76,7 +76,7 @@ namespace KadoshModas.DAL
                     ValorParcela = float.Parse(dataReader["VALOR_PARCELA"].ToString()),
                     Desconto = string.IsNullOrEmpty(dataReader["DESCONTO"].ToString()) ? 0 : float.Parse(dataReader["DESCONTO"].ToString()),
                     Vencimento = DateTime.Parse(dataReader["VENCIMENTO"].ToString()),
-                    SituacaoParcela = (DmoParcela.SituacoesParcela)int.Parse(dataReader["SITUACAO"].ToString()),
+                    SituacaoParcela = (SituacaoParcela)int.Parse(dataReader["SITUACAO"].ToString()),
                     DataDeCriacao = DateTime.Parse(dataReader["DT_CRIACAO"].ToString()),
                     DataDeAtualizacao = DateTime.Parse(dataReader["DT_ATUALIZACAO"].ToString())
 
@@ -94,14 +94,14 @@ namespace KadoshModas.DAL
         }
         
         /// <summary>
-        /// Atualiza a Situação da Parcela de uma determinada Venda
+        /// Atualiza a Situação da Parcela de uma determinada Venda de forma assíncrona
         /// </summary>
         /// <param name="pIdVenda">ID da Venda</param>
         /// <param name="pNumParcela">Número da Parcela</param>
         /// <param name="pNovaSituacaoParcela">Nova Situação da Venda</param>
-        public void AtualizarSituacaoParcela (int pIdVenda, int pNumParcela, DmoParcela.SituacoesParcela pNovaSituacaoParcela, DateTime? pDataPagamento = null)
+        public async Task AtualizarSituacaoParcelaAsync (int pIdVenda, int pNumParcela, SituacaoParcela pNovaSituacaoParcela, DateTime? pDataPagamento = null)
         {
-            SqlCommand cmd = new SqlCommand(@"UPDATE " + NOME_TABELA + " SET SITUACAO = @SITUACAO, DT_PAGAMENTO = @DT_PAGAMENTO, DT_ATUALIZACAO = GETDATE() WHERE VENDA = @VENDA AND PARCELA = @PARCELA", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"UPDATE " + NOME_TABELA + " SET SITUACAO = @SITUACAO, DT_PAGAMENTO = @DT_PAGAMENTO, DT_ATUALIZACAO = GETDATE() WHERE VENDA = @VENDA AND PARCELA = @PARCELA", await conexao.ConectarAsync());
 
             cmd.Parameters.AddWithValue("@VENDA", pIdVenda).SqlDbType = SqlDbType.Int;
             cmd.Parameters.AddWithValue("@PARCELA", pNumParcela).SqlDbType = SqlDbType.Int;
@@ -112,7 +112,7 @@ namespace KadoshModas.DAL
             else
                 cmd.Parameters.AddWithValue("@DT_PAGAMENTO", DBNull.Value).SqlDbType = SqlDbType.DateTime;
 
-            cmd.ExecuteNonQuery();
+            await cmd.ExecuteNonQueryAsync();
             conexao.Desconectar();
         }
         #endregion

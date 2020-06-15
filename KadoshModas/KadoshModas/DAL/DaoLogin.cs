@@ -36,21 +36,20 @@ namespace KadoshModas.DAL
         #endregion
 
         #region Métodos
-
         /// <summary>
-        /// Veririca se usuário e senha existem na tabela TB_LOGIN na base de dados
+        /// Verifica se usuário e senha existem na tabela TB_LOGIN na base de dados de forma assíncrona.
         /// </summary>
         /// <param name="usuario">Usuário</param>
         /// <param name="senha">Senha</param>
         /// <returns>Retorna true caso usuário e senha existam na base, ou false caso não exista</returns>
-        public bool ValidarLogin(string usuario, string senha)
+        public  async Task<bool> ValidarLoginAsync(string usuario, string senha)
         {
             bool loginValido = false;
-            SqlCommand cmd = new SqlCommand("SELECT * FROM " + NOME_TABELA + " WHERE USUARIO = @USUARIO AND SENHA = @SENHA", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand("SELECT * FROM " + NOME_TABELA + " WHERE USUARIO = @USUARIO AND SENHA = @SENHA", await conexao.ConectarAsync());
             cmd.Parameters.AddWithValue("@USUARIO", usuario).SqlDbType = SqlDbType.VarChar;
             cmd.Parameters.AddWithValue("@SENHA", senha).SqlDbType = SqlDbType.VarChar;
 
-            SqlDataReader dr = cmd.ExecuteReader();
+            SqlDataReader dr = await cmd.ExecuteReaderAsync();
             if (dr.HasRows)
                 loginValido = true;
 

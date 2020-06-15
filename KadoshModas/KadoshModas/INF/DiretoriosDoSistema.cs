@@ -14,6 +14,14 @@ namespace KadoshModas.INF
     class DiretoriosDoSistema
     {
         /// <summary>
+        /// Diretório aonde serão gravados as informações de configuração do sistema (caso não exista, será criado e seu caminho retornado em uma string)
+        /// </summary>
+        public static string DIR_ARQUIVOS_DE_CONFIGURACAO
+        {
+            get { return Directory.CreateDirectory(Path.GetDirectoryName(Application.ExecutablePath) + "\\Config").FullName; }
+        }
+
+        /// <summary>
         /// Diretório aonde serão salvas as fotos dos Clientes (caso não exista, será criado e seu caminho retornado em uma string)
         /// </summary>
         public static string DIR_FOTOS_CLIENTES

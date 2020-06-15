@@ -49,9 +49,10 @@ namespace KadoshModas.UI
         #endregion
 
         #region Eventos
-        private void DefinirFornecedores_Load(object sender, EventArgs e)
+        private async void DefinirFornecedores_Load(object sender, EventArgs e)
         {
-            CarregarGrid(new BLL.BoFornecedor().Consultar());
+            this.Icon = Properties.Resources.ICONE_KADOSH_128X128;
+            CarregarGrid(await new BLL.BoFornecedor().ConsultarAsync());
         }
 
         private void dgvFornecedores_CellContentClick(object sender, DataGridViewCellEventArgs e)

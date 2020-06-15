@@ -20,7 +20,8 @@ namespace KadoshModas.DML
         {
             ItensDaVenda = new List<DmoItemDaVenda>();
             ParcelasDaVenda = new List<DmoParcela>();
-            Situacao = SituacoesVenda.EmAberto;
+            TipoPagamento = TipoPagamento.AVista;
+            Situacao = SituacaoVenda.EmAberto;
             
             //Inicializar Venda com Cliente Indefinido
             Cliente = new DmoCliente()
@@ -42,9 +43,14 @@ namespace KadoshModas.DML
         public DmoCliente Cliente { get; set; }
 
         /// <summary>
+        /// Tipo desta Venda
+        /// </summary>
+        public TipoPagamento TipoPagamento { get; set; }
+
+        /// <summary>
         /// Forma de pagamento para esta Venda
         /// </summary>
-        public FormasDePagamento FormaDePagamento { get; set; }
+        public FormaDePagamento FormaDePagamento { get; set; }
 
         /// <summary>
         /// Quantidade de parcelas para esta Venda
@@ -59,7 +65,7 @@ namespace KadoshModas.DML
         /// <summary>
         /// Entrada fornecida para esta Venda
         /// </summary>
-        public float Entrada { get; set; }
+        public double Entrada { get; set; }
 
         /// <summary>
         /// Juros aplicado no Total da compra em caso de pagamento a prazo para esta Venda
@@ -69,7 +75,17 @@ namespace KadoshModas.DML
         /// <summary>
         /// Situação da Venda
         /// </summary>
-        public SituacoesVenda Situacao { get; set; }
+        public SituacaoVenda Situacao { get; set; }
+
+        /// <summary>
+        /// Valor Total da Venda
+        /// </summary>
+        public double Total { get; set; }
+
+        /// <summary>
+        /// Valor Pago até o momento da Venda
+        /// </summary>
+        public double Pago { get; set; }
 
         /// <summary>
         /// Data em que a Venda foi realizada
@@ -91,37 +107,55 @@ namespace KadoshModas.DML
         /// </summary>
         public List<DmoParcela> ParcelasDaVenda { get; set; }
         #endregion
-
-        #region Enum
-        /// <summary>
-        /// Enum que define as formas de pagamento para Venda
-        /// </summary>
-        public enum FormasDePagamento
-        {
-            [Description("Dinheiro")]
-            Dinheiro,
-
-            [Description("Cartão de Débito")]
-            CartaoDeDebito,
-
-            [Description("Cartão de Crédito")]
-            CartaoDeCredito
-        }
-
-        /// <summary>
-        /// Enum que define as situações da Venda
-        /// </summary>
-        public enum SituacoesVenda
-        {
-            [Description("Em Aberto")]
-            EmAberto,
-
-            [Description("Concluído")]
-            Concluido,
-
-            [Description("Cancelado")]
-            Cancelado
-        }
-        #endregion
     }
+
+    #region Enum
+    /// <summary>
+    /// Enum que define os tipos de pagamento da Venda
+    /// </summary>
+    public enum TipoPagamento
+    {
+        [Description("À Vista")]
+        AVista,
+
+        [Description("Fiado")]
+        Fiado,
+
+        [Description("Parcelado")]
+        Parcelado,
+    }
+
+    /// <summary>
+    /// Enum que define as formas de pagamento para Venda
+    /// </summary>
+    public enum FormaDePagamento
+    {
+        [Description("Dinheiro")]
+        Dinheiro,
+
+        [Description("Cartão de Débito")]
+        CartaoDeDebito,
+
+        [Description("Cartão de Crédito")]
+        CartaoDeCredito,
+
+        [Description("Cheque")]
+        Cheque,
+    }
+
+    /// <summary>
+    /// Enum que define as situações da Venda
+    /// </summary>
+    public enum SituacaoVenda
+    {
+        [Description("Em Aberto")]
+        EmAberto,
+
+        [Description("Concluído")]
+        Concluido,
+
+        [Description("Cancelado")]
+        Cancelado
+    }
+    #endregion
 }

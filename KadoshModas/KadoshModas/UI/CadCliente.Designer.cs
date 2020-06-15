@@ -468,10 +468,11 @@
             // 
             // pnlConteudo
             // 
+            resources.ApplyResources(this.pnlConteudo, "pnlConteudo");
+            this.pnlConteudo.BackColor = System.Drawing.Color.Transparent;
             this.pnlConteudo.Controls.Add(this.panel1);
             this.pnlConteudo.Controls.Add(this.btnCadastrarCliente);
             this.pnlConteudo.Controls.Add(this.btnCancelar);
-            resources.ApplyResources(this.pnlConteudo, "pnlConteudo");
             this.pnlConteudo.Name = "pnlConteudo";
             // 
             // btnCadastrarCliente

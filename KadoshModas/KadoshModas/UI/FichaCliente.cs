@@ -21,7 +21,6 @@ namespace KadoshModas.UI
         {
             InitializeComponent();
             this.Cliente = pCliente;
-            CarregarCliente(this.Cliente);
         }
         #endregion
 
@@ -33,7 +32,12 @@ namespace KadoshModas.UI
         #endregion
 
         #region Métodos
-        private void CarregarCliente(DmoCliente pCliente)
+        /// <summary>
+        /// Preenche a tela com as informações do Cliente
+        /// </summary>
+        /// <param name="pCliente">Objeto DmoCliente Preenchido com as informações do Cliente</param>
+        /// <returns></returns>
+        private async Task CarregarClienteAsync(DmoCliente pCliente)
         {
             if (!string.IsNullOrEmpty(pCliente.UrlFoto))
                 picFotoCliente.Image = Image.FromFile(pCliente.UrlFoto);
@@ -46,11 +50,12 @@ namespace KadoshModas.UI
 
             txtNomeCliente.Text = pCliente.Nome;
             txtCPF.Text = string.IsNullOrEmpty(pCliente.CPF) ? "Não definido" : pCliente.CPF;
-            txtSexo.Text = DmoCliente.DescricaoEnum<DmoCliente.Sexos>(pCliente.Sexo);
+            txtSexo.Text = DmoCliente.DescricaoEnum<Sexo>(pCliente.Sexo);
             txtRua.Text = (pCliente.Endereco != null && !string.IsNullOrEmpty(pCliente.Endereco.Rua)) ? pCliente.Endereco.Rua : "Não cadastrado";
             txtBairro.Text = (pCliente.Endereco != null && !string.IsNullOrEmpty(pCliente.Endereco.Bairro)) ? pCliente.Endereco.Bairro : "Não cadastrado";
             txtCidade.Text = (pCliente.Endereco != null && !string.IsNullOrEmpty(pCliente.Endereco.Cidade.Nome)) ? pCliente.Endereco.Cidade.Nome : "Não cadastrado";
             txtCEP.Text = (pCliente.Endereco != null && !string.IsNullOrEmpty(pCliente.Endereco.CEP)) ? pCliente.Endereco.CEP : "00000-000";
+            txtNumero.Text = (pCliente.Endereco != null && !string.IsNullOrEmpty(pCliente.Endereco.CEP)) ? pCliente.Endereco.Numero : "Não cadastrado";
 
             //Telefones do Cliente
             if (pCliente.Telefones != null && pCliente.Telefones.Any())
@@ -68,7 +73,7 @@ namespace KadoshModas.UI
             }
 
             //Compras do Cliente
-            List<DmoVenda> comprasDoCliente = new BoVenda().ConsultarComprasDoCliente(pCliente.IdCliente);
+            List<DmoVenda> comprasDoCliente = await new BoVenda().ConsultarComprasDoClienteAsync(pCliente.IdCliente);
 
             if (comprasDoCliente.Any())
             {
@@ -88,10 +93,13 @@ namespace KadoshModas.UI
         #endregion
 
         #region Eventos
-        private void FichaCliente_Load(object sender, EventArgs e)
+        private async void FichaCliente_Load(object sender, EventArgs e)
         {
             //Formulário
+            this.Icon = Properties.Resources.ICONE_KADOSH_128X128;
             this.Size = INF.ParametrosDoSistema.TAMANHO_FORMULARIOS;
+
+            await CarregarClienteAsync(this.Cliente);
         }
 
         private void tbcFichaCliente_SelectedIndexChanged(object sender, EventArgs e)
@@ -103,19 +111,19 @@ namespace KadoshModas.UI
             }
         }
 
-        private void btnEditarCliente_Click(object sender, EventArgs e)
+        private async void btnEditarCliente_Click(object sender, EventArgs e)
         {
             new CadCliente(this.Cliente).ShowDialog();
-            CarregarCliente(Cliente);
+            await CarregarClienteAsync(Cliente);
         }
 
-        private void btnApagarCliente_Click(object sender, EventArgs e)
+        private async void btnApagarCliente_Click(object sender, EventArgs e)
         {
             if(MessageBox.Show("ATENÇÃO! Tem certeza que deseja excluir o Cliente?", "Confirmação de Exclusão de Cliente", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 try
                 {
-                    new BoCliente().DesativarCliente(int.Parse(Cliente.IdCliente.ToString()));
+                    await new BoCliente().DesativarClienteAsync(int.Parse(Cliente.IdCliente.ToString()));
                 }
                 catch(Exception erro)
                 {

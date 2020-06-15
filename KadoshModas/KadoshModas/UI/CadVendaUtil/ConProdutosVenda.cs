@@ -60,9 +60,10 @@ namespace KadoshModas.UI
         #endregion
 
         #region Eventos
-        private void ConProdutosVenda_Load(object sender, EventArgs e)
+        private async void ConProdutosVenda_Load(object sender, EventArgs e)
         {
-            CarregarGrid(new BoProduto().Consultar());
+            this.Icon = Properties.Resources.ICONE_KADOSH_128X128;
+            CarregarGrid(await new BoProduto().ConsultarAsync());
         }
 
         private void dgvProdutos_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)

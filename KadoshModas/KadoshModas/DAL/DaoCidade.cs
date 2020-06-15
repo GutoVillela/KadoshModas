@@ -38,20 +38,20 @@ namespace KadoshModas.DAL
 
         #region Métodos
         /// <summary>
-        /// Consulta todas as Cidades de um determinado Estado
+        /// Consulta todas as Cidades de um determinado Estado de forma assíncrona
         /// </summary>
         /// <param name="pIdEstado">Id do Estado</param>
         /// <returns>Retorna uma lista de DmoCidade com todas as Cidades do Estado especificado</returns>
-        public List<DmoCidade> ConsultarDoEstado(int pIdEstado)
+        public async Task<List<DmoCidade>> ConsultarDoEstadoAsync(int pIdEstado)
         {
-            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA + " C WHERE C.UF = @ESTADO", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA + " C WHERE C.UF = @ESTADO", await conexao.ConectarAsync());
             cmd.Parameters.AddWithValue("@ESTADO", pIdEstado).SqlDbType = SqlDbType.Int;
 
-            SqlDataReader dataReader = cmd.ExecuteReader();
+            SqlDataReader dataReader = await cmd.ExecuteReaderAsync();
 
             List<DmoCidade> listaDeCidades = new List<DmoCidade>();
 
-            while (dataReader.Read())
+            while (await dataReader.ReadAsync())
             {
                 DmoCidade cidade = new DmoCidade
                 {
@@ -71,18 +71,18 @@ namespace KadoshModas.DAL
         }
 
         /// <summary>
-        /// Consulta uma Cidade específica
+        /// Consulta uma Cidade específica de forma assíncrona
         /// </summary>
         /// <param name="pIdCidade">Id da Cidade</param>
         /// <returns>Retorna Cidade Preenchida</returns>
-        public DmoCidade ConsultarCidade(int pIdCidade)
+        public async Task<DmoCidade> ConsultarCidadeAsync(int pIdCidade)
         {
-            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA + " C WHERE C.ID_CIDADE = @ID_CIDADE", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA + " C WHERE C.ID_CIDADE = @ID_CIDADE", await conexao.ConectarAsync());
             cmd.Parameters.AddWithValue("@ID_CIDADE", pIdCidade).SqlDbType = SqlDbType.Int;
 
-            SqlDataReader dataReader = cmd.ExecuteReader();
+            SqlDataReader dataReader = await cmd.ExecuteReaderAsync();
 
-            dataReader.Read();
+            await dataReader.ReadAsync();
 
             DmoCidade cidade = new DmoCidade
             {

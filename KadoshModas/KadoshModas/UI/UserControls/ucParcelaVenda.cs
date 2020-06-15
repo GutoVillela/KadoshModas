@@ -37,27 +37,27 @@ namespace KadoshModas.UI.UserControls
                 lblNumeroParcela.Text = Parcela.Parcela.ToString();
                 lblValorParcela.Text = Parcela.ValorParcela.ToString("C");
                 lblVencimentoParcela.Text = Parcela.Vencimento.ToString("dd/MM/yyyy");
-                lblSituacaoParcela.Text = DmoBase.DescricaoEnum<DmoParcela.SituacoesParcela>(Parcela.SituacaoParcela);
+                lblSituacaoParcela.Text = DmoBase.DescricaoEnum<SituacaoParcela>(Parcela.SituacaoParcela);
 
                 switch (Parcela.SituacaoParcela)
                 {
-                    case DmoParcela.SituacoesParcela.EmAberto:
+                    case SituacaoParcela.EmAberto:
                         pnlSituacaoParcela.BackColor = Color.LightBlue;
                         break;
-                    case DmoParcela.SituacoesParcela.PagoSemAtraso:
+                    case SituacaoParcela.PagoSemAtraso:
                         if (Parcela.DataDoPagamento != null)
                             lblSituacaoParcela.Text += " em " + Parcela.DataDoPagamento.ToString();
                         pnlSituacaoParcela.BackColor = Color.LightGreen;
                         break;
-                    case DmoParcela.SituacoesParcela.PagoComAtraso:
+                    case SituacaoParcela.PagoComAtraso:
                         pnlSituacaoParcela.BackColor = Color.LightYellow;
                         break;
-                    case DmoParcela.SituacoesParcela.Cancelado:
+                    case SituacaoParcela.Cancelado:
                         pnlSituacaoParcela.BackColor = Color.LightPink;
                         break;
                 }
 
-                if(Parcela.SituacaoParcela == DmoParcela.SituacoesParcela.EmAberto)
+                if(Parcela.SituacaoParcela == SituacaoParcela.EmAberto)
                 {
                     btnMudarSituacaoParcela.IconChar = FontAwesome.Sharp.IconChar.HandHoldingUsd;
                 }
@@ -76,7 +76,7 @@ namespace KadoshModas.UI.UserControls
             this.Width = this.Parent.Width - SystemInformation.VerticalScrollBarWidth - 20;
         }
 
-        private void btnMudarSituacaoParcela_Click(object sender, EventArgs e)
+        private async void btnMudarSituacaoParcela_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show($"Confirmar pagamento da Parcela { Parcela.Parcela } no valor de { Parcela.ValorParcela.ToString("C") } no dia { DateTime.Today.ToLongDateString() }?", "Confirmar pagamento da Parcela", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) == DialogResult.Yes)
             {
@@ -85,13 +85,13 @@ namespace KadoshModas.UI.UserControls
                     DmoParcela parcelaPaga = Parcela;
 
                     if (DateTime.Today > Parcela.Vencimento)
-                        parcelaPaga.SituacaoParcela = DmoParcela.SituacoesParcela.PagoComAtraso;
+                        parcelaPaga.SituacaoParcela = SituacaoParcela.PagoComAtraso;
                     else
-                        parcelaPaga.SituacaoParcela = DmoParcela.SituacoesParcela.PagoSemAtraso;
+                        parcelaPaga.SituacaoParcela = SituacaoParcela.PagoSemAtraso;
 
                     parcelaPaga.DataDoPagamento = DateTime.Now;
 
-                    new BoParcela().AtualizarSituacaoParcela(int.Parse(Parcela.Venda.IdVenda.ToString()), Parcela.Parcela, parcelaPaga.SituacaoParcela, parcelaPaga.DataDoPagamento);
+                    await new BoParcela().AtualizarSituacaoParcelaAsync(int.Parse(Parcela.Venda.IdVenda.ToString()), Parcela.Parcela, parcelaPaga.SituacaoParcela, parcelaPaga.DataDoPagamento);
 
 
                     Parcela = parcelaPaga;

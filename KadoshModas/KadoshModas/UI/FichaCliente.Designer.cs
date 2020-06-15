@@ -28,8 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
             this.tbcFichaCliente = new System.Windows.Forms.TabControl();
+            this.tbpCompras = new System.Windows.Forms.TabPage();
+            this.btnCadNovaConta = new FontAwesome.Sharp.IconButton();
+            this.pnlCompras = new System.Windows.Forms.FlowLayoutPanel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.iconPictureBox1 = new FontAwesome.Sharp.IconPictureBox();
             this.tbpInformacoesPessoais = new System.Windows.Forms.TabPage();
             this.txtSexo = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -45,72 +51,139 @@
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.pnlTelefones = new System.Windows.Forms.FlowLayoutPanel();
-            this.txtNomeCliente = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtCPF = new System.Windows.Forms.MaskedTextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.tbpCompras = new System.Windows.Forms.TabPage();
-            this.pnlCompras = new System.Windows.Forms.FlowLayoutPanel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.iconPictureBox1 = new FontAwesome.Sharp.IconPictureBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.txtNomeCliente = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnApagarCliente = new FontAwesome.Sharp.IconButton();
             this.btnEditarCliente = new FontAwesome.Sharp.IconButton();
             this.picFotoCliente = new System.Windows.Forms.PictureBox();
-            this.panel1.SuspendLayout();
             this.tbcFichaCliente.SuspendLayout();
-            this.tbpInformacoesPessoais.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.tbpCompras.SuspendLayout();
             this.pnlCompras.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox1)).BeginInit();
+            this.tbpInformacoesPessoais.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picFotoCliente)).BeginInit();
             this.SuspendLayout();
             // 
-            // panel1
-            // 
-            this.panel1.AutoScroll = true;
-            this.panel1.Controls.Add(this.tbcFichaCliente);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.panel2);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.MaximumSize = new System.Drawing.Size(634, 511);
-            this.panel1.MinimumSize = new System.Drawing.Size(634, 511);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(634, 511);
-            this.panel1.TabIndex = 0;
-            // 
             // tbcFichaCliente
             // 
-            this.tbcFichaCliente.Controls.Add(this.tbpInformacoesPessoais);
+            this.tbcFichaCliente.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbcFichaCliente.Controls.Add(this.tbpCompras);
-            this.tbcFichaCliente.Location = new System.Drawing.Point(182, 12);
+            this.tbcFichaCliente.Controls.Add(this.tbpInformacoesPessoais);
+            this.tbcFichaCliente.Location = new System.Drawing.Point(186, 65);
             this.tbcFichaCliente.Name = "tbcFichaCliente";
             this.tbcFichaCliente.SelectedIndex = 0;
-            this.tbcFichaCliente.Size = new System.Drawing.Size(449, 487);
+            this.tbcFichaCliente.Size = new System.Drawing.Size(731, 557);
             this.tbcFichaCliente.TabIndex = 19;
             this.tbcFichaCliente.SelectedIndexChanged += new System.EventHandler(this.tbcFichaCliente_SelectedIndexChanged);
+            // 
+            // tbpCompras
+            // 
+            this.tbpCompras.Controls.Add(this.btnCadNovaConta);
+            this.tbpCompras.Controls.Add(this.pnlCompras);
+            this.tbpCompras.Location = new System.Drawing.Point(4, 25);
+            this.tbpCompras.Name = "tbpCompras";
+            this.tbpCompras.Padding = new System.Windows.Forms.Padding(3);
+            this.tbpCompras.Size = new System.Drawing.Size(723, 528);
+            this.tbpCompras.TabIndex = 1;
+            this.tbpCompras.Text = "Compras";
+            // 
+            // btnCadNovaConta
+            // 
+            this.btnCadNovaConta.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnCadNovaConta.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCadNovaConta.FlatAppearance.BorderSize = 0;
+            this.btnCadNovaConta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCadNovaConta.Flip = FontAwesome.Sharp.FlipOrientation.Normal;
+            this.btnCadNovaConta.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCadNovaConta.ForeColor = System.Drawing.Color.Black;
+            this.btnCadNovaConta.IconChar = FontAwesome.Sharp.IconChar.Edit;
+            this.btnCadNovaConta.IconColor = System.Drawing.Color.Black;
+            this.btnCadNovaConta.IconSize = 16;
+            this.btnCadNovaConta.Location = new System.Drawing.Point(6, 11);
+            this.btnCadNovaConta.Name = "btnCadNovaConta";
+            this.btnCadNovaConta.Rotation = 0D;
+            this.btnCadNovaConta.Size = new System.Drawing.Size(245, 30);
+            this.btnCadNovaConta.TabIndex = 3;
+            this.btnCadNovaConta.Text = "Adicionar conta na ficha";
+            this.btnCadNovaConta.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.btnCadNovaConta.UseVisualStyleBackColor = false;
+            // 
+            // pnlCompras
+            // 
+            this.pnlCompras.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlCompras.AutoScroll = true;
+            this.pnlCompras.Controls.Add(this.panel3);
+            this.pnlCompras.Location = new System.Drawing.Point(3, 47);
+            this.pnlCompras.Name = "pnlCompras";
+            this.pnlCompras.Size = new System.Drawing.Size(713, 467);
+            this.pnlCompras.TabIndex = 0;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.label10);
+            this.panel3.Controls.Add(this.label9);
+            this.panel3.Controls.Add(this.iconPictureBox1);
+            this.panel3.Location = new System.Drawing.Point(3, 3);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(696, 461);
+            this.panel3.TabIndex = 0;
+            // 
+            // label10
+            // 
+            this.label10.Font = new System.Drawing.Font("Microsoft Tai Le", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(313, 250);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(273, 87);
+            this.label10.TabIndex = 2;
+            this.label10.Text = "Parece que este cliente ainda não realizou nenhuma compra na loja.";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Tai Le", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(313, 219);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(79, 31);
+            this.label9.TabIndex = 1;
+            this.label9.Text = "Ops...";
+            // 
+            // iconPictureBox1
+            // 
+            this.iconPictureBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.iconPictureBox1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.iconPictureBox1.IconChar = FontAwesome.Sharp.IconChar.ShoppingBag;
+            this.iconPictureBox1.IconColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.iconPictureBox1.IconSize = 130;
+            this.iconPictureBox1.Location = new System.Drawing.Point(178, 212);
+            this.iconPictureBox1.Name = "iconPictureBox1";
+            this.iconPictureBox1.Size = new System.Drawing.Size(130, 130);
+            this.iconPictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.iconPictureBox1.TabIndex = 0;
+            this.iconPictureBox1.TabStop = false;
             // 
             // tbpInformacoesPessoais
             // 
             this.tbpInformacoesPessoais.Controls.Add(this.txtSexo);
             this.tbpInformacoesPessoais.Controls.Add(this.groupBox2);
             this.tbpInformacoesPessoais.Controls.Add(this.groupBox1);
-            this.tbpInformacoesPessoais.Controls.Add(this.txtNomeCliente);
             this.tbpInformacoesPessoais.Controls.Add(this.label1);
             this.tbpInformacoesPessoais.Controls.Add(this.txtCPF);
             this.tbpInformacoesPessoais.Controls.Add(this.label2);
             this.tbpInformacoesPessoais.Location = new System.Drawing.Point(4, 25);
             this.tbpInformacoesPessoais.Name = "tbpInformacoesPessoais";
             this.tbpInformacoesPessoais.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpInformacoesPessoais.Size = new System.Drawing.Size(441, 458);
+            this.tbpInformacoesPessoais.Size = new System.Drawing.Size(723, 528);
             this.tbpInformacoesPessoais.TabIndex = 0;
             this.tbpInformacoesPessoais.Text = "Informações Pessoais";
             this.tbpInformacoesPessoais.UseVisualStyleBackColor = true;
@@ -125,7 +198,7 @@
             this.txtSexo.ReadOnly = true;
             this.txtSexo.Size = new System.Drawing.Size(164, 21);
             this.txtSexo.TabIndex = 21;
-            this.txtSexo.Text = "10";
+            this.txtSexo.Text = "Feminino";
             // 
             // groupBox2
             // 
@@ -141,7 +214,7 @@
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Location = new System.Drawing.Point(11, 89);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(420, 100);
+            this.groupBox2.Size = new System.Drawing.Size(715, 134);
             this.groupBox2.TabIndex = 20;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Endereço";
@@ -172,7 +245,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(246, 20);
+            this.label5.Location = new System.Drawing.Point(497, 20);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(71, 21);
             this.label5.TabIndex = 11;
@@ -205,12 +278,12 @@
             this.txtNumero.BackColor = System.Drawing.Color.White;
             this.txtNumero.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtNumero.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold);
-            this.txtNumero.Location = new System.Drawing.Point(323, 20);
+            this.txtNumero.Location = new System.Drawing.Point(574, 20);
             this.txtNumero.Name = "txtNumero";
             this.txtNumero.ReadOnly = true;
-            this.txtNumero.Size = new System.Drawing.Size(91, 21);
+            this.txtNumero.Size = new System.Drawing.Size(125, 21);
             this.txtNumero.TabIndex = 12;
-            this.txtNumero.Text = "10";
+            this.txtNumero.Text = "Não cadastrado";
             // 
             // label6
             // 
@@ -227,7 +300,7 @@
             this.txtCEP.BackColor = System.Drawing.Color.White;
             this.txtCEP.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtCEP.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold);
-            this.txtCEP.Location = new System.Drawing.Point(292, 47);
+            this.txtCEP.Location = new System.Drawing.Point(543, 47);
             this.txtCEP.Name = "txtCEP";
             this.txtCEP.ReadOnly = true;
             this.txtCEP.Size = new System.Drawing.Size(122, 21);
@@ -250,7 +323,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(246, 47);
+            this.label7.Location = new System.Drawing.Point(497, 47);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(40, 21);
             this.label7.TabIndex = 15;
@@ -259,9 +332,9 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.pnlTelefones);
-            this.groupBox1.Location = new System.Drawing.Point(11, 195);
+            this.groupBox1.Location = new System.Drawing.Point(11, 229);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(420, 200);
+            this.groupBox1.Size = new System.Drawing.Size(715, 291);
             this.groupBox1.TabIndex = 19;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Telefones";
@@ -271,20 +344,8 @@
             this.pnlTelefones.AutoScroll = true;
             this.pnlTelefones.Location = new System.Drawing.Point(6, 23);
             this.pnlTelefones.Name = "pnlTelefones";
-            this.pnlTelefones.Size = new System.Drawing.Size(408, 174);
+            this.pnlTelefones.Size = new System.Drawing.Size(693, 245);
             this.pnlTelefones.TabIndex = 18;
-            // 
-            // txtNomeCliente
-            // 
-            this.txtNomeCliente.BackColor = System.Drawing.Color.White;
-            this.txtNomeCliente.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtNomeCliente.Font = new System.Drawing.Font("Microsoft Tai Le", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNomeCliente.Location = new System.Drawing.Point(6, 6);
-            this.txtNomeCliente.Name = "txtNomeCliente";
-            this.txtNomeCliente.ReadOnly = true;
-            this.txtNomeCliente.Size = new System.Drawing.Size(425, 35);
-            this.txtNomeCliente.TabIndex = 4;
-            this.txtNomeCliente.Text = "Nome do Cliente";
             // 
             // label1
             // 
@@ -318,78 +379,17 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "Sexo:";
             // 
-            // tbpCompras
+            // txtNomeCliente
             // 
-            this.tbpCompras.Controls.Add(this.pnlCompras);
-            this.tbpCompras.Location = new System.Drawing.Point(4, 22);
-            this.tbpCompras.Name = "tbpCompras";
-            this.tbpCompras.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpCompras.Size = new System.Drawing.Size(441, 461);
-            this.tbpCompras.TabIndex = 1;
-            this.tbpCompras.Text = "Compras";
-            // 
-            // pnlCompras
-            // 
-            this.pnlCompras.AutoScroll = true;
-            this.pnlCompras.Controls.Add(this.panel3);
-            this.pnlCompras.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlCompras.Location = new System.Drawing.Point(3, 3);
-            this.pnlCompras.Name = "pnlCompras";
-            this.pnlCompras.Size = new System.Drawing.Size(435, 455);
-            this.pnlCompras.TabIndex = 0;
-            // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.label10);
-            this.panel3.Controls.Add(this.label9);
-            this.panel3.Controls.Add(this.iconPictureBox1);
-            this.panel3.Location = new System.Drawing.Point(3, 3);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(429, 446);
-            this.panel3.TabIndex = 0;
-            // 
-            // label10
-            // 
-            this.label10.Font = new System.Drawing.Font("Microsoft Tai Le", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(153, 183);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(273, 87);
-            this.label10.TabIndex = 2;
-            this.label10.Text = "Parece que este cliente ainda não realizou nenhuma compra na loja.";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Tai Le", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(153, 152);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(79, 31);
-            this.label9.TabIndex = 1;
-            this.label9.Text = "Ops...";
-            // 
-            // iconPictureBox1
-            // 
-            this.iconPictureBox1.BackColor = System.Drawing.SystemColors.Control;
-            this.iconPictureBox1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.iconPictureBox1.IconChar = FontAwesome.Sharp.IconChar.ShoppingBag;
-            this.iconPictureBox1.IconColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.iconPictureBox1.IconSize = 130;
-            this.iconPictureBox1.Location = new System.Drawing.Point(18, 145);
-            this.iconPictureBox1.Name = "iconPictureBox1";
-            this.iconPictureBox1.Size = new System.Drawing.Size(130, 130);
-            this.iconPictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.iconPictureBox1.TabIndex = 0;
-            this.iconPictureBox1.TabStop = false;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Tai Le", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(206, 84);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(89, 23);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Endereço";
+            this.txtNomeCliente.BackColor = System.Drawing.SystemColors.Control;
+            this.txtNomeCliente.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtNomeCliente.Font = new System.Drawing.Font("Microsoft Tai Le", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNomeCliente.Location = new System.Drawing.Point(186, 12);
+            this.txtNomeCliente.Name = "txtNomeCliente";
+            this.txtNomeCliente.ReadOnly = true;
+            this.txtNomeCliente.Size = new System.Drawing.Size(720, 35);
+            this.txtNomeCliente.TabIndex = 4;
+            this.txtNomeCliente.Text = "Nome do Cliente";
             // 
             // panel2
             // 
@@ -400,7 +400,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(176, 511);
+            this.panel2.Size = new System.Drawing.Size(176, 622);
             this.panel2.TabIndex = 0;
             // 
             // btnApagarCliente
@@ -460,40 +460,37 @@
             // FichaCliente
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(634, 511);
-            this.Controls.Add(this.panel1);
+            this.ClientSize = new System.Drawing.Size(918, 622);
+            this.Controls.Add(this.tbcFichaCliente);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.txtNomeCliente);
             this.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "FichaCliente";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FichaCliente";
             this.Load += new System.EventHandler(this.FichaCliente_Load);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.tbcFichaCliente.ResumeLayout(false);
-            this.tbpInformacoesPessoais.ResumeLayout(false);
-            this.tbpInformacoesPessoais.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
             this.tbpCompras.ResumeLayout(false);
             this.pnlCompras.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iconPictureBox1)).EndInit();
+            this.tbpInformacoesPessoais.ResumeLayout(false);
+            this.tbpInformacoesPessoais.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picFotoCliente)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.PictureBox picFotoCliente;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtNomeCliente;
         private System.Windows.Forms.MaskedTextBox txtCPF;
@@ -521,5 +518,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
         private FontAwesome.Sharp.IconPictureBox iconPictureBox1;
+        private FontAwesome.Sharp.IconButton btnCadNovaConta;
     }
 }

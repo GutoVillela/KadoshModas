@@ -32,17 +32,17 @@ namespace KadoshModas.DAL
 
         #region Métodos
         /// <summary>
-        /// Consulta todos os Estados
+        /// Consulta todos os Estados de forma assíncrona
         /// </summary>
         /// <returns>Retorna uma lista de DmoEstado com todos os Estados da base</returns>
-        public List<DmoEstado> Consultar()
+        public async Task<List<DmoEstado>> ConsultarAsync()
         {
-            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA, conexao.Conectar());
-            SqlDataReader dataReader = cmd.ExecuteReader();
+            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA, await conexao.ConectarAsync());
+            SqlDataReader dataReader = await cmd.ExecuteReaderAsync();
 
             List<DmoEstado> listaDeEstados = new List<DmoEstado>();
 
-            while (dataReader.Read())
+            while (await dataReader.ReadAsync())
             {
                 DmoEstado estado = new DmoEstado
                 {

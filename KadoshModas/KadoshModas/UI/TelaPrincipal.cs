@@ -71,7 +71,7 @@ namespace KadoshModas.UI
         #region Eventos
         private void TelaPrincipal_Load(object sender, EventArgs e)
         {
-            this.Size = new Size { Height = 639, Width = 916 };
+            this.Icon = Properties.Resources.ICONE_KADOSH_128X128;
             AbrirFormulario(new VisaoGeral());
             //Definir funcionalidades de acordo com nível de permissao do Usuário
         }

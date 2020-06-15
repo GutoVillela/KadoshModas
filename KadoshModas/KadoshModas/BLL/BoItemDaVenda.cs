@@ -15,10 +15,10 @@ namespace KadoshModas.BLL
     {
         #region Métodos
         /// <summary>
-        /// Cadastra um Item Da Venda na base de dados
+        /// Cadastra um Item Da Venda na base de dados de forma assíncrona
         /// </summary>
         /// <param name="pItemDaVenda">Objeto DmoItemDaVenda preenchido</param>
-        public void Cadastrar(DmoItemDaVenda pItemDaVenda)
+        public async Task CadastrarAsync(DmoItemDaVenda pItemDaVenda)
         {
             if (pItemDaVenda == null)
                 throw new ArgumentNullException("O parâmetro pItemDaVenda é obrigatório e não pode ser nulo.");
@@ -29,24 +29,24 @@ namespace KadoshModas.BLL
             if (pItemDaVenda.Produto == null || pItemDaVenda.Produto.IdProduto == null)
                 throw new ArgumentException("A propriedade Produto de pItemDaVenda é obrigatória e deve conter um Id de Produto associado.");
 
-            new DaoItemDaVenda().Cadastrar(pItemDaVenda);
+            await new DaoItemDaVenda().CadastrarAsync(pItemDaVenda);
         }
 
         /// <summary>
-        /// Consulta todos os Itens da Venda de uma Venda específica
+        /// Consulta todos os Itens da Venda de uma Venda específica de forma assíncrona
         /// </summary>
         /// <param name="pIdVenda">Id da Venda</param>
         /// <returns>Lista de Itens da Venda</returns>
-        public List<DmoItemDaVenda> ConsultarItensDaVenda (int? pIdVenda)
+        public async Task<List<DmoItemDaVenda>> ConsultarItensDaVendaAsync(int? pIdVenda)
         {
             if (pIdVenda == null)
                 throw new ArgumentNullException("O parâmetro pIdVenda é obrigatório e não pode ser nulo.");
 
-            List <DmoItemDaVenda> itensDaVenda = new DaoItemDaVenda().ConsultarItensDaVenda(pIdVenda);
+            List <DmoItemDaVenda> itensDaVenda = await new DaoItemDaVenda().ConsultarItensDaVendaAsync(pIdVenda);
             
             foreach(DmoItemDaVenda item in itensDaVenda)
             {
-                item.Produto = new BoProduto().Consultar(int.Parse(item.Produto.IdProduto.ToString()));
+                item.Produto = await new BoProduto().ConsultarAsync(int.Parse(item.Produto.IdProduto.ToString()));
             }
 
             return itensDaVenda;

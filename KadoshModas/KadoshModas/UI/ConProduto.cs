@@ -84,10 +84,10 @@ namespace KadoshModas.UI
         /// <summary>
         /// Prepara o Ambiente Inicial do Formulário
         /// </summary>
-        private void MontarAmbienteInicial()
+        private async Task MontarAmbienteInicialAsync()
         {
             #region Carregas Produtos
-            List<DmoProduto> produtos = new BoProduto().Consultar();
+            List<DmoProduto> produtos = await new BoProduto().ConsultarAsync();
             CarregarProdutosNoPanel(produtos);
 
             if (produtos.Any())
@@ -99,7 +99,7 @@ namespace KadoshModas.UI
             #endregion
 
             #region Carregar Categorias
-            List<DmoCategoria> categorias = new BoCategoria().Consultar();
+            List<DmoCategoria> categorias = await new BoCategoria().ConsultarAsync();
 
             if (categorias.Any())
             {
@@ -113,7 +113,7 @@ namespace KadoshModas.UI
             #endregion
 
             #region Carregar Marcas
-            List<DmoMarca> marcas = new BoMarca().Consultar();
+            List<DmoMarca> marcas = await new BoMarca().ConsultarAsync();
 
             if (marcas.Any())
             {
@@ -131,37 +131,38 @@ namespace KadoshModas.UI
         /// <summary>
         /// Aplica os Filtros definidos em tela e busca os Produtos com base nos filtros definidos
         /// </summary>
-        private void AplicarFiltros()
+        private async Task AplicarFiltrosAsync()
         {
-            CarregarProdutosNoPanel(new BoProduto().Consultar(_filtroNome, _filtroPrecoMax, _filtroCodBarras, _filtroCategorias, _filtroMarcas, _filtroBuscaInativos));
+            CarregarProdutosNoPanel(await new BoProduto().ConsultarAsync(_filtroNome, _filtroPrecoMax, _filtroCodBarras, _filtroCategorias, _filtroMarcas, _filtroBuscaInativos));
         }
         #endregion
 
         #region Eventos
-        private void ConProduto_Load(object sender, EventArgs e)
+        private async void ConProduto_Load(object sender, EventArgs e)
         {
-            MontarAmbienteInicial();
+            this.Icon = Properties.Resources.ICONE_KADOSH_128X128;
+            await MontarAmbienteInicialAsync();
         }
 
-        private void btnBuscarTodos_Click(object sender, EventArgs e)
+        private async void btnBuscarTodos_Click(object sender, EventArgs e)
         {
-            MontarAmbienteInicial();
+            await MontarAmbienteInicialAsync();
         }
 
-        private void trbFiltroPreco_ValueChanged(object sender, EventArgs e)
+        private async void trbFiltroPreco_ValueChanged(object sender, EventArgs e)
         {
             lblFiltroPrecoMax.Text = trbFiltroPreco.Value.ToString("C");
             this._filtroPrecoMax = float.Parse(trbFiltroPreco.Value.ToString());
-            AplicarFiltros();
+            await AplicarFiltrosAsync();
         }
 
-        private void txtNomeProduto_TextChanged(object sender, EventArgs e)
+        private async void txtNomeProduto_TextChanged(object sender, EventArgs e)
         {
             _filtroNome = txtNomeProduto.Text.Trim();
-            AplicarFiltros();
+            await AplicarFiltrosAsync();
         }
 
-        private void cklCategorias_SelectedValueChanged(object sender, EventArgs e)
+        private async void cklCategorias_SelectedValueChanged(object sender, EventArgs e)
         {
             _filtroCategorias = new List<DmoCategoria>();
 
@@ -176,13 +177,13 @@ namespace KadoshModas.UI
                 }
             }
 
-            AplicarFiltros();
+            await AplicarFiltrosAsync();
         }
 
-        private void chkSomenteAtivos_CheckedChanged(object sender, EventArgs e)
+        private async void chkSomenteAtivos_CheckedChanged(object sender, EventArgs e)
         {
             _filtroBuscaInativos = !chkSomenteAtivos.Checked;
-            AplicarFiltros();
+            await AplicarFiltrosAsync();
         }
         #endregion
     }

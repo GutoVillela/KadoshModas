@@ -25,12 +25,12 @@ namespace KadoshModas.BLL
         }
 
         /// <summary>
-        /// Exclui todos os Atributos do Produto
+        /// Exclui todos os Atributos do Produto de forma assíncrona
         /// </summary>
         /// <param name="pIdProduto">ID do Produto</param>
-        public void ExcluirAtributosDoProduto(int pIdProduto)
+        public async Task ExcluirAtributosDoProdutoAsync(int pIdProduto)
         {
-            new DaoAtributosDoProduto().ExcluirAtributosDoProduto(pIdProduto);
+            await new DaoAtributosDoProduto().ExcluirAtributosDoProdutoAsync(pIdProduto);
         }
         #endregion
     }

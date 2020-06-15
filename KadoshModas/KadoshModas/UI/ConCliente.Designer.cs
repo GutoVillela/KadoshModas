@@ -32,6 +32,13 @@
             this.rbtCPF = new System.Windows.Forms.RadioButton();
             this.rbtNome = new System.Windows.Forms.RadioButton();
             this.pnlConCliente = new System.Windows.Forms.FlowLayoutPanel();
+            this.pnlPaginacaoBusca = new System.Windows.Forms.Panel();
+            this.btnUltimoPaginacao = new FontAwesome.Sharp.IconButton();
+            this.btnProximoPaginacao = new FontAwesome.Sharp.IconButton();
+            this.btnAnteriorPaginacao = new FontAwesome.Sharp.IconButton();
+            this.btnInicioPaginacao = new FontAwesome.Sharp.IconButton();
+            this.lblRegistros = new System.Windows.Forms.Label();
+            this.pnlPaginacaoBusca.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtConsulta
@@ -40,7 +47,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtConsulta.Location = new System.Drawing.Point(12, 45);
             this.txtConsulta.Name = "txtConsulta";
-            this.txtConsulta.Size = new System.Drawing.Size(610, 28);
+            this.txtConsulta.Size = new System.Drawing.Size(894, 28);
             this.txtConsulta.TabIndex = 1;
             this.txtConsulta.TextChanged += new System.EventHandler(this.txtConsulta_TextChanged);
             // 
@@ -77,15 +84,108 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlConCliente.AutoScroll = true;
-            this.pnlConCliente.Location = new System.Drawing.Point(12, 129);
+            this.pnlConCliente.BackColor = System.Drawing.Color.White;
+            this.pnlConCliente.Location = new System.Drawing.Point(12, 110);
             this.pnlConCliente.Name = "pnlConCliente";
-            this.pnlConCliente.Size = new System.Drawing.Size(610, 370);
+            this.pnlConCliente.Size = new System.Drawing.Size(894, 446);
             this.pnlConCliente.TabIndex = 3;
+            // 
+            // pnlPaginacaoBusca
+            // 
+            this.pnlPaginacaoBusca.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlPaginacaoBusca.Controls.Add(this.btnUltimoPaginacao);
+            this.pnlPaginacaoBusca.Controls.Add(this.btnProximoPaginacao);
+            this.pnlPaginacaoBusca.Controls.Add(this.btnAnteriorPaginacao);
+            this.pnlPaginacaoBusca.Controls.Add(this.btnInicioPaginacao);
+            this.pnlPaginacaoBusca.Controls.Add(this.lblRegistros);
+            this.pnlPaginacaoBusca.Location = new System.Drawing.Point(12, 562);
+            this.pnlPaginacaoBusca.Name = "pnlPaginacaoBusca";
+            this.pnlPaginacaoBusca.Size = new System.Drawing.Size(894, 30);
+            this.pnlPaginacaoBusca.TabIndex = 4;
+            // 
+            // btnUltimoPaginacao
+            // 
+            this.btnUltimoPaginacao.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnUltimoPaginacao.Flip = FontAwesome.Sharp.FlipOrientation.Normal;
+            this.btnUltimoPaginacao.IconChar = FontAwesome.Sharp.IconChar.AngleDoubleRight;
+            this.btnUltimoPaginacao.IconColor = System.Drawing.Color.Black;
+            this.btnUltimoPaginacao.IconSize = 20;
+            this.btnUltimoPaginacao.Location = new System.Drawing.Point(570, 3);
+            this.btnUltimoPaginacao.Name = "btnUltimoPaginacao";
+            this.btnUltimoPaginacao.Rotation = 0D;
+            this.btnUltimoPaginacao.Size = new System.Drawing.Size(100, 23);
+            this.btnUltimoPaginacao.TabIndex = 4;
+            this.btnUltimoPaginacao.Text = "Último";
+            this.btnUltimoPaginacao.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnUltimoPaginacao.UseVisualStyleBackColor = true;
+            this.btnUltimoPaginacao.Click += new System.EventHandler(this.btnUltimoPaginacao_Click);
+            // 
+            // btnProximoPaginacao
+            // 
+            this.btnProximoPaginacao.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnProximoPaginacao.Flip = FontAwesome.Sharp.FlipOrientation.Normal;
+            this.btnProximoPaginacao.IconChar = FontAwesome.Sharp.IconChar.AngleRight;
+            this.btnProximoPaginacao.IconColor = System.Drawing.Color.Black;
+            this.btnProximoPaginacao.IconSize = 20;
+            this.btnProximoPaginacao.Location = new System.Drawing.Point(464, 3);
+            this.btnProximoPaginacao.Name = "btnProximoPaginacao";
+            this.btnProximoPaginacao.Rotation = 0D;
+            this.btnProximoPaginacao.Size = new System.Drawing.Size(100, 23);
+            this.btnProximoPaginacao.TabIndex = 3;
+            this.btnProximoPaginacao.Text = "Próximo";
+            this.btnProximoPaginacao.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnProximoPaginacao.UseVisualStyleBackColor = true;
+            this.btnProximoPaginacao.Click += new System.EventHandler(this.btnProximoPaginacao_Click);
+            // 
+            // btnAnteriorPaginacao
+            // 
+            this.btnAnteriorPaginacao.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAnteriorPaginacao.Flip = FontAwesome.Sharp.FlipOrientation.Normal;
+            this.btnAnteriorPaginacao.IconChar = FontAwesome.Sharp.IconChar.AngleLeft;
+            this.btnAnteriorPaginacao.IconColor = System.Drawing.Color.Black;
+            this.btnAnteriorPaginacao.IconSize = 20;
+            this.btnAnteriorPaginacao.Location = new System.Drawing.Point(358, 3);
+            this.btnAnteriorPaginacao.Name = "btnAnteriorPaginacao";
+            this.btnAnteriorPaginacao.Rotation = 0D;
+            this.btnAnteriorPaginacao.Size = new System.Drawing.Size(100, 23);
+            this.btnAnteriorPaginacao.TabIndex = 2;
+            this.btnAnteriorPaginacao.Text = "Anterior";
+            this.btnAnteriorPaginacao.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnAnteriorPaginacao.UseVisualStyleBackColor = true;
+            this.btnAnteriorPaginacao.Click += new System.EventHandler(this.btnAnteriorPaginacao_Click);
+            // 
+            // btnInicioPaginacao
+            // 
+            this.btnInicioPaginacao.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnInicioPaginacao.Flip = FontAwesome.Sharp.FlipOrientation.Normal;
+            this.btnInicioPaginacao.IconChar = FontAwesome.Sharp.IconChar.AngleDoubleLeft;
+            this.btnInicioPaginacao.IconColor = System.Drawing.Color.Black;
+            this.btnInicioPaginacao.IconSize = 20;
+            this.btnInicioPaginacao.Location = new System.Drawing.Point(252, 3);
+            this.btnInicioPaginacao.Name = "btnInicioPaginacao";
+            this.btnInicioPaginacao.Rotation = 0D;
+            this.btnInicioPaginacao.Size = new System.Drawing.Size(100, 23);
+            this.btnInicioPaginacao.TabIndex = 1;
+            this.btnInicioPaginacao.Text = "Início";
+            this.btnInicioPaginacao.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnInicioPaginacao.UseVisualStyleBackColor = true;
+            this.btnInicioPaginacao.Click += new System.EventHandler(this.btnInicioPaginacao_Click);
+            // 
+            // lblRegistros
+            // 
+            this.lblRegistros.AutoSize = true;
+            this.lblRegistros.Location = new System.Drawing.Point(3, 4);
+            this.lblRegistros.Name = "lblRegistros";
+            this.lblRegistros.Size = new System.Drawing.Size(202, 21);
+            this.lblRegistros.TabIndex = 0;
+            this.lblRegistros.Text = "Exibindo registros de 0 a 10";
             // 
             // ConCliente
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(634, 511);
+            this.ClientSize = new System.Drawing.Size(918, 622);
+            this.Controls.Add(this.pnlPaginacaoBusca);
             this.Controls.Add(this.rbtCPF);
             this.Controls.Add(this.pnlConCliente);
             this.Controls.Add(this.rbtNome);
@@ -96,6 +196,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Consulta de Clientes";
             this.Load += new System.EventHandler(this.ConCliente_Load);
+            this.pnlPaginacaoBusca.ResumeLayout(false);
+            this.pnlPaginacaoBusca.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -106,5 +208,11 @@
         private System.Windows.Forms.RadioButton rbtCPF;
         private System.Windows.Forms.RadioButton rbtNome;
         private System.Windows.Forms.FlowLayoutPanel pnlConCliente;
+        private System.Windows.Forms.Panel pnlPaginacaoBusca;
+        private System.Windows.Forms.Label lblRegistros;
+        private FontAwesome.Sharp.IconButton btnUltimoPaginacao;
+        private FontAwesome.Sharp.IconButton btnProximoPaginacao;
+        private FontAwesome.Sharp.IconButton btnAnteriorPaginacao;
+        private FontAwesome.Sharp.IconButton btnInicioPaginacao;
     }
 }

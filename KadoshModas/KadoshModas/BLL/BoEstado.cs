@@ -14,12 +14,12 @@ namespace KadoshModas.BLL
     class BoEstado
     {
         /// <summary>
-        /// Consulta todos os Estados
+        /// Consulta todos os Estados de forma assíncrona
         /// </summary>
         /// <returns>Retorna uma lista de DmoEstado com todos os Estados da base</returns>
-        public List<DmoEstado> Consultar()
+        public async Task<List<DmoEstado>> ConsultarAsync()
         {
-            return new DaoEstado().Consultar();
+            return await new DaoEstado().ConsultarAsync();
         }
     }
 }

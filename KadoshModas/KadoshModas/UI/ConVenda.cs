@@ -35,7 +35,7 @@ namespace KadoshModas.UI
         /// </summary>
         private DateTime? _filtroDataFinal;
 
-        private List<DmoVenda.SituacoesVenda> _filtroSituacoes;
+        private List<SituacaoVenda> _filtroSituacoes;
         #endregion
 
         #region Métodos
@@ -64,46 +64,50 @@ namespace KadoshModas.UI
             }
         }
 
-        private void MontarAmbienteInicial()
+        /// <summary>
+        /// Monta o ambiente inicial
+        /// </summary>
+        private async Task MontarAmbienteInicialAsync()
         {
             #region Carregas Situacoes da Venda
             cklSituacoesVenda.Items.Clear();
-            foreach (DmoVenda.SituacoesVenda situacao in Enum.GetValues(typeof(DmoVenda.SituacoesVenda)))
+            foreach (SituacaoVenda situacao in Enum.GetValues(typeof(SituacaoVenda)))
             {
-                cklSituacoesVenda.Items.Add(DmoBase.DescricaoEnum<DmoVenda.SituacoesVenda>(situacao));
+                cklSituacoesVenda.Items.Add(DmoBase.DescricaoEnum<SituacaoVenda>(situacao));
                 cklSituacoesVenda.SetItemChecked(cklSituacoesVenda.Items.Count - 1, true);
             }
             #endregion
 
-            CarregarComprasNoPanel(new BoVenda().Consultar());
+            CarregarComprasNoPanel(await new BoVenda().ConsultarAsync());
         }
 
         /// <summary>
         /// Aplica os filtros definidos pelo usuário e carrega os resultado no Panel
         /// </summary>
-        private void AplicarFiltros()
+        private async Task AplicarFiltrosAsync()
         {
-            CarregarComprasNoPanel(new BoVenda().Consultar(null, _filtroSituacoes, _filtroDataInicial, _filtroDataFinal));
+            CarregarComprasNoPanel(await new BoVenda().ConsultarAsync(null, _filtroSituacoes, _filtroDataInicial, _filtroDataFinal));
         }
         #endregion
 
         #region Eventos
-        private void ConVenda_Load(object sender, EventArgs e)
+        private async void ConVenda_Load(object sender, EventArgs e)
         {
+            this.Icon = Properties.Resources.ICONE_KADOSH_128X128;
             this.Size = ParametrosDoSistema.TAMANHO_FORMULARIOS;
-            MontarAmbienteInicial();
+            await MontarAmbienteInicialAsync();
         }
 
-        private void cdrFiltroData_DateSelected(object sender, DateRangeEventArgs e)
+        private async void cdrFiltroData_DateSelected(object sender, DateRangeEventArgs e)
         {
             _filtroDataInicial = cdrFiltroData.SelectionRange.Start;
             _filtroDataFinal = cdrFiltroData.SelectionRange.End;
-            AplicarFiltros();
+            await AplicarFiltrosAsync();
         }
 
-        private void cklSituacoesVenda_SelectedValueChanged(object sender, EventArgs e)
+        private async void cklSituacoesVenda_SelectedValueChanged(object sender, EventArgs e)
         {
-            _filtroSituacoes = new List<DmoVenda.SituacoesVenda>();
+            _filtroSituacoes = new List<SituacaoVenda>();
 
             if (cklSituacoesVenda.CheckedItems.Count > 0)
             {
@@ -111,9 +115,9 @@ namespace KadoshModas.UI
                 {
                     if (cklSituacoesVenda.GetItemChecked(i))
                     {
-                        foreach (DmoVenda.SituacoesVenda situacao in Enum.GetValues(typeof(DmoVenda.SituacoesVenda)))
+                        foreach (SituacaoVenda situacao in Enum.GetValues(typeof(SituacaoVenda)))
                         {
-                            if(DmoBase.DescricaoEnum<DmoVenda.SituacoesVenda>(situacao) == cklSituacoesVenda.Items[i].ToString())
+                            if(DmoBase.DescricaoEnum<SituacaoVenda>(situacao) == cklSituacoesVenda.Items[i].ToString())
                             {
                                 _filtroSituacoes.Add(situacao);
                                 break;
@@ -123,12 +127,12 @@ namespace KadoshModas.UI
                 }
             }
 
-            AplicarFiltros();
+            await AplicarFiltrosAsync();
         }
 
-        private void btnBuscarTodos_Click(object sender, EventArgs e)
+        private async void btnBuscarTodos_Click(object sender, EventArgs e)
         {
-            CarregarComprasNoPanel(new BoVenda().Consultar());
+            CarregarComprasNoPanel(await new BoVenda().ConsultarAsync());
         }
         #endregion
     }

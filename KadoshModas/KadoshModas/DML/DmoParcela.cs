@@ -26,12 +26,12 @@ namespace KadoshModas.DML
         /// <summary>
         /// Valor da Parcela
         /// </summary>
-        public float ValorParcela { get; set; }
+        public double ValorParcela { get; set; }
 
         /// <summary>
         /// Desconto da Parcela
         /// </summary>
-        public float Desconto { get; set; }
+        public double Desconto { get; set; }
 
         /// <summary>
         /// Vencimento da Parcela
@@ -41,27 +41,29 @@ namespace KadoshModas.DML
         /// <summary>
         /// Situação da Parcela
         /// </summary>
-        public SituacoesParcela SituacaoParcela { get; set; }
+        public SituacaoParcela SituacaoParcela { get; set; }
 
         /// <summary>
         /// Data do Pagamento da Parcela
         /// </summary>
         public DateTime? DataDoPagamento { get; set; }
         #endregion
-
-        public enum SituacoesParcela
-        {
-            [Description("Em aberto")]
-            EmAberto,
-
-            [Description("Parcela Paga Sem Atraso")]
-            PagoSemAtraso,
-
-            [Description("Parcela Paga Com Atraso")]
-            PagoComAtraso,
-
-            [Description("Parcela Cancelada")]
-            Cancelado,
-        }
     }
+
+    #region Enum
+    public enum SituacaoParcela
+    {
+        [Description("Em aberto")]
+        EmAberto,
+
+        [Description("Parcela Paga Sem Atraso")]
+        PagoSemAtraso,
+
+        [Description("Parcela Paga Com Atraso")]
+        PagoComAtraso,
+
+        [Description("Parcela Cancelada")]
+        Cancelado,
+    }
+    #endregion
 }

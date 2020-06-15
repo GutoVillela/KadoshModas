@@ -38,10 +38,10 @@ namespace KadoshModas.DAL
 
         #region Métodos
         /// <summary>
-        /// Cadastra um novo Item Da Venda 
+        /// Cadastra um novo Item Da Venda de forma assíncrona
         /// </summary>
         /// <param name="pItemDaVenda">Objeto DmoItemDaVenda preenchido</param>
-        public void Cadastrar(DmoItemDaVenda pItemDaVenda)
+        public async Task CadastrarAsync(DmoItemDaVenda pItemDaVenda)
         {
 
             if (pItemDaVenda == null)
@@ -53,32 +53,32 @@ namespace KadoshModas.DAL
             if (pItemDaVenda.Produto == null || pItemDaVenda.Produto.IdProduto == null)
                 throw new ArgumentException("A propriedade Produto de pItemDaVenda é obrigatória e deve conter um Id de Produto associado.");
 
-            SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (VENDA, PRODUTO, QUANTIDADE, VALOR_ITEM) VALUES (@VENDA, @PRODUTO, @QUANTIDADE, @VALOR_ITEM);", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (VENDA, PRODUTO, QUANTIDADE, VALOR_ITEM) VALUES (@VENDA, @PRODUTO, @QUANTIDADE, @VALOR_ITEM);", await conexao.ConectarAsync());
 
             cmd.Parameters.AddWithValue("@VENDA", pItemDaVenda.Venda.IdVenda).SqlDbType = SqlDbType.Int;
             cmd.Parameters.AddWithValue("@PRODUTO", pItemDaVenda.Produto.IdProduto).SqlDbType = SqlDbType.Int;
             cmd.Parameters.AddWithValue("@QUANTIDADE", pItemDaVenda.Quantidade).SqlDbType = SqlDbType.Int;
             cmd.Parameters.AddWithValue("@VALOR_ITEM", pItemDaVenda.Valor).SqlDbType = SqlDbType.SmallMoney;
 
-            cmd.ExecuteNonQuery();
+            await cmd.ExecuteNonQueryAsync();
             conexao.Desconectar();
         }
 
         /// <summary>
-        /// Consulta todos os Itens da Venda de uma Venda específica
+        /// Consulta todos os Itens da Venda de uma Venda específica de forma assíncrona
         /// </summary>
         /// <param name="pIdVenda">Id da Venda</param>
         /// <returns>Lista de Itens da Venda</returns>
-        public List<DmoItemDaVenda> ConsultarItensDaVenda(int? pIdVenda)
+        public async Task<List<DmoItemDaVenda>> ConsultarItensDaVendaAsync(int? pIdVenda)
         {
-            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA + " WHERE VENDA = @VENDA", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA + " WHERE VENDA = @VENDA", await conexao.ConectarAsync());
             cmd.Parameters.AddWithValue("@VENDA", pIdVenda).SqlDbType = SqlDbType.Int;
 
-            SqlDataReader dataReader = cmd.ExecuteReader();
+            SqlDataReader dataReader = await cmd.ExecuteReaderAsync();
 
             List<DmoItemDaVenda> listaDeItensDaVenda = new List<DmoItemDaVenda>();
 
-            while (dataReader.Read())
+            while (await dataReader.ReadAsync())
             {
                 DmoItemDaVenda itemDaVenda = new DmoItemDaVenda();
                 itemDaVenda.Venda = new DmoVenda() { IdVenda = int.Parse(dataReader["VENDA"].ToString()) };

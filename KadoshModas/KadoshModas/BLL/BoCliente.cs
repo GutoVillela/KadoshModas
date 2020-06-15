@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -15,31 +16,32 @@ namespace KadoshModas.BLL
     /// </summary>
     class BoCliente
     {
+
         /// <summary>
-        /// Cadastra um cliente na base de dados
+        /// Cadastra um cliente na base de dados de forma assíncrona
         /// </summary>
         /// <param name="pDmoCliente">Objeto DmoCliente preenchido com pelo menos o Nome do cliente</param>
         /// <returns>Retorna true em caso de sucesso ou false caso algum erro tenha ocorrido</returns>
-        public bool Cadastrar(DmoCliente pDmoCliente)
+        public async Task<bool> CadastrarAsync(DmoCliente pDmoCliente)
         {
             int? idClienteCadastrado;
 
             #region Cadastro do Endereço
             if (pDmoCliente.Endereco != null)
             {
-                pDmoCliente.Endereco.IdEndereco = new BoEndereco().Cadastrar(pDmoCliente.Endereco);
+                pDmoCliente.Endereco.IdEndereco = await new BoEndereco().CadastrarAsync(pDmoCliente.Endereco);
             }
             #endregion
 
             #region Cadastro do Cliente
-            idClienteCadastrado = new DaoCliente().Cadastrar(pDmoCliente);
+            idClienteCadastrado = await new DaoCliente().CadastrarAsync(pDmoCliente);
             #endregion
 
             if (idClienteCadastrado != null)
             {
                 //Copiar imagem para pasta e recuperar nova URL
                 if (!string.IsNullOrEmpty(pDmoCliente.UrlFoto))
-                    AtualizarFoto(SalvarFotoERecuperarUrl(pDmoCliente.UrlFoto, "FC_" + idClienteCadastrado + ".jpg"), idClienteCadastrado);
+                    await AtualizarFotoAsync(await SalvarFotoERecuperarUrlAsync(pDmoCliente.UrlFoto, "FC_" + idClienteCadastrado + ".jpg"), idClienteCadastrado);
 
                 #region Cadastro de telefones
                 if (pDmoCliente.Telefones != null && pDmoCliente.Telefones.Any())
@@ -61,7 +63,7 @@ namespace KadoshModas.BLL
                     foreach (DmoTelefoneDoCliente telefone in pDmoCliente.Telefones)
                     {
                         telefone.Cliente = new DmoCliente { IdCliente = idClienteCadastrado };
-                        new BoTelefoneDoCliente().Cadastrar(telefone);
+                        await new BoTelefoneDoCliente().CadastrarAsync(telefone);
                     }
                 }
                 #endregion
@@ -75,97 +77,121 @@ namespace KadoshModas.BLL
         }
 
         /// <summary>
-        /// Consulta todos os clientes na base de dados
+        /// Consulta todos os clientes de forma assíncrona
         /// </summary>
+        /// <param name="pIdCliente">Se informado busca o Cliente exato pelo Id</param>
+        /// <param name="pNome">Se informado, filtra a busca por Nome do Cliente que inicia com os caracteres informados</param>
+        /// <param name="pEmail">Se informado, filtra a busca pelo Email que inicia com os caracteres informados</param>
+        /// <param name="pCpf">Se informado, filtra a busca pelo CPF que inicia com os caracteres informados</param>
+        /// <param name="pSexo">Se informado, filtra a busca pelo Sexo informado</param>
         /// <param name="pBuscarClienteIndefinido">Define se busca retornará o Cliente Indefinido</param>
-        /// <param name="pBuscaClientesDesativados">Define se busca retornará Clientes Desativados</param>
-        /// <returns>Retorna uma lista de objetos DmoCliente com todos os clientes da base</returns>
-        public List<DmoCliente> Consultar(bool pBuscarClienteIndefinido, bool pBuscaClientesDesativados = false)
+        /// <param name="pBuscaClientesDesativados">Define se busca retornará Clientes desativados</param>
+        /// <param name="pAPartirDoRegistro">Se fornecido, inicia  a busca a partir do registro fornecido</param>
+        /// <param name="pAteORegistro">Se fornecido, busca até o registro fornecido</param>
+        /// <returns>Retorna uma lista de DmoCliente com todos os clientes da base</returns>
+        public async Task<List<DmoCliente>> ConsultarAsync(int? pIdCliente = null, string pNome = null, string pEmail = null, string pCpf = null, Sexo? pSexo = null, bool pBuscarClienteIndefinido = true, bool pBuscaClientesDesativados = false, uint? pAPartirDoRegistro = null, uint? pAteORegistro = null)
         {
-            List <DmoCliente> listaDeClientes = new DaoCliente().Consultar(pBuscarClienteIndefinido, pBuscaClientesDesativados);
+            List<DmoCliente> listaDeClientes = await new DaoCliente().ConsultarAsync(pIdCliente, pNome, pEmail, pCpf, pSexo, pBuscarClienteIndefinido, pBuscaClientesDesativados, pAPartirDoRegistro, pAteORegistro);
 
             for(int i = 0; i < listaDeClientes.Count; i++)
             {
                 //Buscar Endereço do Cliente
                 if (listaDeClientes[i].Endereco != null)
-                    listaDeClientes[i].Endereco = new BoEndereco().ConsultarEnderecoPorId(int.Parse(listaDeClientes[i].Endereco.IdEndereco.ToString()));
+                    listaDeClientes[i].Endereco = await new BoEndereco().ConsultarEnderecoPorIdAsync(int.Parse(listaDeClientes[i].Endereco.IdEndereco.ToString()));
 
                 //Buscar Lista de Telefones do Cliente
-                listaDeClientes[i].Telefones = new DaoCliente().ConsultarTelefonesDoCliente(int.Parse(listaDeClientes[i].IdCliente.ToString()));
+                listaDeClientes[i].Telefones = await new DaoCliente().ConsultarTelefonesDoClienteAsync(int.Parse(listaDeClientes[i].IdCliente.ToString()));
             }
 
             return listaDeClientes;
         }
 
         /// <summary>
-        /// Consulta um Cliente específico por ID
+        /// Consulta um Cliente específico por ID de forma assíncrona
         /// </summary>
         /// <param name="pIdCliente">ID do Cliente</param>
         /// <param name="pBuscaClientesDesativados">Define se busca retornará Clientes Desativados</param>
         /// <returns>Retorna um Cliente específico</returns>
-        public DmoCliente ConsultarClientePorId(int pIdCliente, bool pBuscaClientesDesativados = false)
+        public async Task<DmoCliente> ConsultarClientePorIdAsync(int pIdCliente, bool pBuscaClientesDesativados = false)
         {
-            DmoCliente cliente = new DaoCliente().ConsultarClientePorId(pIdCliente, pBuscaClientesDesativados);
-            
+            List<DmoCliente> clientes = await new DaoCliente().ConsultarAsync(pIdCliente, null, null, null, null, true, pBuscaClientesDesativados);
+            DmoCliente cliente = clientes.FirstOrDefault();
+
+            if (cliente == null)
+                return null;
+
             //Buscar Endereço do Cliente
             if (cliente.Endereco != null)
-                cliente.Endereco = new BoEndereco().ConsultarEnderecoPorId(int.Parse(cliente.Endereco.IdEndereco.ToString()));
+                cliente.Endereco = await new BoEndereco().ConsultarEnderecoPorIdAsync(int.Parse(cliente.Endereco.IdEndereco.ToString()));
 
             //Buscar Lista de Telefones do Cliente
-            cliente.Telefones = new DaoCliente().ConsultarTelefonesDoCliente(int.Parse(cliente.IdCliente.ToString()));
+            cliente.Telefones = await new DaoCliente().ConsultarTelefonesDoClienteAsync(int.Parse(cliente.IdCliente.ToString()));
 
             return cliente;
         }
 
         /// <summary>
-        /// Consulta todos os clientes cujo nomes iniciam com o termo informado
+        /// Consulta todos os clientes cujo nomes iniciam com o termo informado de forma assíncrona
         /// </summary>
-        /// <param name="nome">Nome a ser buscado</param>
+        /// <param name="pNome">Nome a ser buscado</param>
         /// <returns>Retorna uma lista de DmoCliente com todos os clientes da base</returns>
-        public List<DmoCliente> Consultar(string nome)
+        public async Task<List<DmoCliente>> ConsultarAsync(string pNome)
         {
-            return new DaoCliente().Consultar(nome);
+            return await new DaoCliente().ConsultarAsync(null, pNome);
         }
 
         /// <summary>
-        /// Salva a foto passada por parâmetro na pasta de Fotos de Clientes e recupera a nova URL
+        /// Salva a foto passada por parâmetro na pasta de Fotos de Clientes e recupera a nova URL de forma assíncrona
         /// </summary>
         /// <param name="pUrlFoto">URL da foto de origem</param>
         /// <param name="pNomeNovaFoto">Novo do novo arquivo com extensão</param>
         /// <returns>Retorna uma string com nova URL da Foto do Cliente</returns>
-        private string SalvarFotoERecuperarUrl(string pUrlFoto, string pNomeNovaFoto)
+        private async Task<string> SalvarFotoERecuperarUrlAsync(string pUrlFoto, string pNomeNovaFoto)
         {
-            string diretorioImagem = INF.DiretoriosDoSistema.DIR_FOTOS_CLIENTES + "\\" + pNomeNovaFoto;
+            string diretorioDestinoImagem = INF.DiretoriosDoSistema.DIR_FOTOS_CLIENTES + "\\" + pNomeNovaFoto;
 
             try
             {
-                File.Copy(pUrlFoto, diretorioImagem, true);
+                using (Stream fotoOrigem = File.Open(pUrlFoto, FileMode.Open))
+                {
+                    using (Stream fotoDestino = File.Create(diretorioDestinoImagem))
+                    {
+                        await fotoOrigem.CopyToAsync(fotoDestino);
+                    }
+                }
             }
             catch
             {
-                diretorioImagem = INF.DiretoriosDoSistema.DIR_FOTOS_CLIENTES + "\\F" + pNomeNovaFoto;
-                File.Copy(pUrlFoto, diretorioImagem, true);
+                diretorioDestinoImagem = INF.DiretoriosDoSistema.DIR_FOTOS_CLIENTES + "\\F" + pNomeNovaFoto;
+                
+                using (Stream fotoOrigem = File.Open(pUrlFoto, FileMode.Open))
+                {
+                    using (Stream fotoDestino = File.Create(diretorioDestinoImagem))
+                    {
+                        await fotoOrigem.CopyToAsync(fotoDestino);
+                    }
+                }
             }
 
-            return diretorioImagem;
+            return diretorioDestinoImagem;
         }
 
         /// <summary>
-        /// Atualiza a Url da Foto do Cliente na base de dados
+        /// Atualiza a Url da Foto do Cliente na base de dados de forma assíncrona
         /// </summary>
         /// <param name="pNovaUrlFoto">URL da novo foto</param>
         /// <param name="pIdCliente">Id do Cliente</param>
         /// <returns>Retorna true em caso de sucesso ou false em caso de erro</returns>
-        public bool AtualizarFoto(string pNovaUrlFoto, int? pIdCliente)
+        public async Task<bool> AtualizarFotoAsync(string pNovaUrlFoto, int? pIdCliente)
         {
-            return new DaoCliente().AtualizarFoto(pNovaUrlFoto, pIdCliente);
+            return await new DaoCliente().AtualizarFotoAsync(pNovaUrlFoto, pIdCliente);
         }
 
         /// <summary>
-        /// Atualiza o Cliente
+        /// Atualiza o Cliente de forma assíncrona
         /// </summary>
         /// <param name="cliente">Objeto DmoCliente preenchido com pelo menos o Nome e ID do Cliente</param>
-        public void Atualizar(DmoCliente pDmoCliente)
+        public async Task AtualizarAsync(DmoCliente pDmoCliente)
         {
             if (pDmoCliente == null || pDmoCliente.IdCliente == null)
                 throw new ArgumentException("O parâmetro pDmoCliente não pode ser nulo e deve conter um ID do Cliente válido.");
@@ -173,21 +199,21 @@ namespace KadoshModas.BLL
             if (pDmoCliente.Endereco != null)
             {
                 if(pDmoCliente.Endereco.IdEndereco != null)
-                    new BoEndereco().Atualizar(pDmoCliente.Endereco);
+                    await new BoEndereco().AtualizarAsync(pDmoCliente.Endereco);
                 else
-                    pDmoCliente.Endereco.IdEndereco = new BoEndereco().Cadastrar(pDmoCliente.Endereco);
+                    pDmoCliente.Endereco.IdEndereco = await new BoEndereco().CadastrarAsync(pDmoCliente.Endereco);
             }
 
-            new DaoCliente().Atualizar(pDmoCliente);
+            await new DaoCliente().AtualizarAsync(pDmoCliente);
 
 
             //Copiar imagem para pasta e recuperar nova URL
             if (!string.IsNullOrEmpty(pDmoCliente.UrlFoto))
-                AtualizarFoto(SalvarFotoERecuperarUrl(pDmoCliente.UrlFoto, "FC_" + pDmoCliente.IdCliente + ".jpg"), pDmoCliente.IdCliente);
+                await AtualizarFotoAsync(await SalvarFotoERecuperarUrlAsync(pDmoCliente.UrlFoto, "FC_" + pDmoCliente.IdCliente + ".jpg"), pDmoCliente.IdCliente);
 
 
             // Excluir e recadastrar Telefones
-            ExcluirTelefonesDoCliente(int.Parse(pDmoCliente.IdCliente.ToString()));
+            await ExcluirTelefonesDoClienteAsync(int.Parse(pDmoCliente.IdCliente.ToString()));
 
             if (pDmoCliente.Telefones != null && pDmoCliente.Telefones.Any())
             {
@@ -207,28 +233,43 @@ namespace KadoshModas.BLL
                 foreach (DmoTelefoneDoCliente telefone in pDmoCliente.Telefones)
                 {
                     telefone.Cliente = pDmoCliente;
-                    new BoTelefoneDoCliente().Cadastrar(telefone);
+                    await new BoTelefoneDoCliente().CadastrarAsync(telefone);
                 }
             }
 
         }
 
         /// <summary>
-        /// Excluir todos os Telefones relacionados ao Cliente
+        /// Excluir todos os Telefones relacionados ao Cliente de forma assíncrona
         /// </summary>
         /// <param name="pIdCliente">Id do Cliente</param>
-        private void ExcluirTelefonesDoCliente(int pIdCliente)
+        private async Task ExcluirTelefonesDoClienteAsync(int pIdCliente)
         {
-            new DaoTelefone().ExcluirTelefonesDoCliente(pIdCliente);
+            await new DaoTelefone().ExcluirTelefonesDoClienteAsync(pIdCliente);
         }
 
         /// <summary>
-        /// Desativa o Cliente
+        /// Desativa o Cliente de forma assíncrona
         /// </summary>
         /// <param name="pIdCliente">Id do Cliente</param>
-        public void DesativarCliente(int pIdCliente)
+        public async Task DesativarClienteAsync(int pIdCliente)
         {
-            new DaoCliente().DesativarCliente(pIdCliente);
+            await new DaoCliente().DesativarClienteAsync(pIdCliente);
+        }
+
+        /// <summary>
+        /// Conta a quantidade de Clientes que correspondem à busca no banco de dados de Forma assíncrona
+        /// <param name="pNome">Se informado, filtra a busca por Nome do Cliente que inicia com os caracteres informados</param>
+        /// <param name="pEmail">Se informado, filtra a busca pelo Email que inicia com os caracteres informados</param>
+        /// <param name="pCpf">Se informado, filtra a busca pelo CPF que inicia com os caracteres informados</param>
+        /// <param name="pSexo">Se informado, filtra a busca pelo Sexo informado</param>
+        /// <param name="pBuscarClienteIndefinido">Define se busca retornará o Cliente Indefinido</param>
+        /// <param name="pBuscaClientesDesativados">Define se busca retornará Clientes desativados</param>
+        /// </summary>
+        /// <returns>Retorno a quantidade de clientes encontrados que atendem aos critérios de busca</returns>
+        public async Task<int> ContarClientesAsync(string pNome = null, string pEmail = null, string pCpf = null, Sexo? pSexo = null, bool pBuscarClienteIndefinido = true, bool pBuscaClientesDesativados = false)
+        {
+            return await new DaoCliente().ContarClientesAsync(pNome, pEmail, pCpf, pSexo, pBuscarClienteIndefinido, pBuscaClientesDesativados);
         }
 
         /// <summary>

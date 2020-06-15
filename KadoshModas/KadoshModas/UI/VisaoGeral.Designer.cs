@@ -81,7 +81,7 @@
             this.btnVendasDaSemana.Rotation = 0D;
             this.btnVendasDaSemana.Size = new System.Drawing.Size(130, 50);
             this.btnVendasDaSemana.TabIndex = 3;
-            this.btnVendasDaSemana.Text = "200";
+            this.btnVendasDaSemana.Text = "?";
             this.btnVendasDaSemana.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnVendasDaSemana.UseVisualStyleBackColor = false;
             // 
@@ -150,7 +150,7 @@
             this.btnVendasEmAberto.Rotation = 0D;
             this.btnVendasEmAberto.Size = new System.Drawing.Size(130, 50);
             this.btnVendasEmAberto.TabIndex = 3;
-            this.btnVendasEmAberto.Text = "200";
+            this.btnVendasEmAberto.Text = "?";
             this.btnVendasEmAberto.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnVendasEmAberto.UseVisualStyleBackColor = false;
             // 
@@ -219,7 +219,7 @@
             this.btnClientesInadimplentes.Rotation = 0D;
             this.btnClientesInadimplentes.Size = new System.Drawing.Size(130, 50);
             this.btnClientesInadimplentes.TabIndex = 3;
-            this.btnClientesInadimplentes.Text = "200";
+            this.btnClientesInadimplentes.Text = "?";
             this.btnClientesInadimplentes.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnClientesInadimplentes.UseVisualStyleBackColor = false;
             // 
@@ -327,8 +327,8 @@
             // VisaoGeral
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(634, 511);
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(918, 622);
             this.Controls.Add(this.btnAtalhoConProd);
             this.Controls.Add(this.btnAtalhoConCliente);
             this.Controls.Add(this.btnAtalhoCadVenda);

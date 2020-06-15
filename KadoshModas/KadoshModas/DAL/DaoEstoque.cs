@@ -35,16 +35,16 @@ namespace KadoshModas.DAL
 
         #region Métodos
         /// <summary>
-        /// Cadastra um novo Estoque 
+        /// Cadastra um novo Estoque de forma assíncrona
         /// </summary>
         /// <param name="pDmoEstoque">Objeto DmoEstoque preenchido</param>
         /// <returns>Retorna o Id do Estoque cadastrado. Em caso de erro retorna null</returns>
-        public int? Cadastrar(DmoEstoque pDmoEstoque)
+        public async Task<int?> CadastrarAsync(DmoEstoque pDmoEstoque)
         {
             if(pDmoEstoque.Produto == null || pDmoEstoque.Produto.IdProduto == null)
                 throw new ArgumentException("A propriedade Produto de pDmoEstoque deve estar preenchida com um ID de Produto");
 
-            SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (PRODUTO, QUANTIDADE, MINIMO) VALUES (@PRODUTO, @QUANTIDADE, @MINIMO);", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (PRODUTO, QUANTIDADE, MINIMO) VALUES (@PRODUTO, @QUANTIDADE, @MINIMO);", await conexao.ConectarAsync());
             cmd.Parameters.AddWithValue("@PRODUTO", pDmoEstoque.Produto.IdProduto).SqlDbType = SqlDbType.Int;
 
             if (pDmoEstoque.Quantidade <= 0)
@@ -57,27 +57,27 @@ namespace KadoshModas.DAL
             else
                 cmd.Parameters.AddWithValue("@MINIMO", pDmoEstoque.Minimo).SqlDbType = SqlDbType.Int;
 
-            cmd.ExecuteNonQuery();
+            await cmd.ExecuteNonQueryAsync();
             conexao.Desconectar();
 
-            return ConsultarUltimoId();
+            return await ConsultarUltimoIdAsync();
         }
 
         
 
         /// <summary>
-        /// Consulta o último Id de Estoque cadastrado na base
+        /// Consulta o último Id de Estoque cadastrado na base de forma assíncrona
         /// </summary>
         /// <returns>Retorno último Id de Estoque cadastrado na base. Em caso de erro retorna null</returns>
-        private int? ConsultarUltimoId()
+        private async Task<int?> ConsultarUltimoIdAsync()
         {
             try
             {
-                SqlCommand cmd = new SqlCommand("SELECT MAX(ID_ESTOQUE) AS ID FROM " + NOME_TABELA, conexao.Conectar());
+                SqlCommand cmd = new SqlCommand("SELECT MAX(ID_ESTOQUE) AS ID FROM " + NOME_TABELA, await conexao.ConectarAsync());
 
-                SqlDataReader dr = cmd.ExecuteReader();
+                SqlDataReader dr = await cmd.ExecuteReaderAsync();
 
-                dr.Read();
+                await dr.ReadAsync();
 
                 return int.Parse(dr[0].ToString());
 

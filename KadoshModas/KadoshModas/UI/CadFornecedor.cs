@@ -23,13 +23,13 @@ namespace KadoshModas.UI
         /// <summary>
         /// Monta o ambiente inicial da tela
         /// </summary>
-        private void MontarAmbienteInicial()
+        private async Task MontarAmbienteInicialAsync()
         {
             //Formulário
             this.Size = INF.ParametrosDoSistema.TAMANHO_FORMULARIOS;
 
             //ComboBox de Estados
-            List<DmoEstado> estados = new BoEstado().Consultar();
+            List<DmoEstado> estados = await new BoEstado().ConsultarAsync();
             cboEstado.DataSource = estados;
             cboEstado.DisplayMember = "Nome";
             cboEstado.ValueMember = "IdEstado";
@@ -52,7 +52,7 @@ namespace KadoshModas.UI
         /// <summary>
         /// Efetua o Cadastro do Fornecedor
         /// </summary>
-        private void CadastrarFornecedor()
+        private async Task CadastrarFornecedorAsync()
         {
             if (string.IsNullOrEmpty(txtNomeFornecedor.Text.Trim()))
             {
@@ -117,7 +117,7 @@ namespace KadoshModas.UI
                 // Efetuar cadastro
                 try
                 {
-                    fornecedor.IdFornecedor = new BoFornecedor().Cadastrar(fornecedor);
+                    fornecedor.IdFornecedor = await new BoFornecedor().CadastrarAsync(fornecedor);
 
                     if (fornecedor.IdFornecedor == null)
                         throw new Exception("Não foi possível cadastrar o Fornecedor! Tente novamente mais tarde.");
@@ -135,14 +135,15 @@ namespace KadoshModas.UI
         #endregion
 
         #region Eventos
-        private void CadFornecedor_Load(object sender, EventArgs e)
+        private async void CadFornecedor_Load(object sender, EventArgs e)
         {
-            MontarAmbienteInicial();
+            this.Icon = Properties.Resources.ICONE_KADOSH_128X128;
+            await MontarAmbienteInicialAsync();
         }
 
-        private void cboEstado_SelectedIndexChanged(object sender, EventArgs e)
+        private async void cboEstado_SelectedIndexChanged(object sender, EventArgs e)
         {
-            List<DmoCidade> cidades = new BoCidade().ConsultarDoEstado(((DmoEstado)cboEstado.SelectedItem).IdEstado);
+            List<DmoCidade> cidades = await new BoCidade().ConsultarDoEstadoAsync(((DmoEstado)cboEstado.SelectedItem).IdEstado);
             cboCidade.DataSource = cidades;
             cboCidade.DisplayMember = "Nome";
             cboCidade.ValueMember = "IdCidade";
@@ -151,9 +152,9 @@ namespace KadoshModas.UI
                 cboCidade.SelectedItem = cidades.Find(c => c.Nome == "São Paulo");
         }
 
-        private void btnCadastrar_Click(object sender, EventArgs e)
+        private async void btnCadastrar_Click(object sender, EventArgs e)
         {
-            CadastrarFornecedor();
+            await CadastrarFornecedorAsync();
         }
 
         private void txtCNPJ_Enter(object sender, EventArgs e)

@@ -43,12 +43,13 @@ namespace KadoshModas.UI
         #endregion
 
         #region Eventos
-        private void CadMarca_Load(object sender, EventArgs e)
+        private async void CadMarca_Load(object sender, EventArgs e)
         {
-            CarregarMarcasNaGrid(new BoMarca().Consultar());
+            this.Icon = Properties.Resources.ICONE_KADOSH_128X128;
+            CarregarMarcasNaGrid(await new BoMarca().ConsultarAsync());
         }
 
-        private void btnCadMarca_Click(object sender, EventArgs e)
+        private async void btnCadMarca_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtMarca.Text.Trim()))
             {
@@ -58,9 +59,9 @@ namespace KadoshModas.UI
             {
                 try
                 {
-                    new BoMarca().Cadastrar(new DML.DmoMarca() { Nome = txtMarca.Text.Trim() });
+                    await new BoMarca().CadastrarAsync(new DML.DmoMarca() { Nome = txtMarca.Text.Trim() });
                     MessageBox.Show("Marca Cadastrada com Sucesso", "Marca cadastrada", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    CarregarMarcasNaGrid(new BoMarca().Consultar());
+                    CarregarMarcasNaGrid(await new BoMarca().ConsultarAsync());
                 }
                 catch (Exception erro)
                 {
@@ -70,12 +71,12 @@ namespace KadoshModas.UI
             }
         }
 
-        private void txtFiltroMarca_TextChanged(object sender, EventArgs e)
+        private async void txtFiltroMarca_TextChanged(object sender, EventArgs e)
         {
-            CarregarMarcasNaGrid(new BoMarca().Consultar(txtFiltroMarca.Text.Trim()));
+            CarregarMarcasNaGrid(await new BoMarca().ConsultarAsync(txtFiltroMarca.Text.Trim()));
         }
 
-        private void dgvMarcas_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        private async void dgvMarcas_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             DmoMarca marcaAntesDaEdicao = (DmoMarca) dgvMarcas.Rows[e.RowIndex].Tag;
             DmoMarca marcaEditada = (DmoMarca) marcaAntesDaEdicao.Clone();
@@ -90,7 +91,7 @@ namespace KadoshModas.UI
             {
                 try
                 {
-                    new BoMarca().Atualizar(marcaEditada, marcaAntesDaEdicao.Nome);
+                    await new BoMarca().AtualizarAsync(marcaEditada, marcaAntesDaEdicao.Nome);
                     MessageBox.Show("Categoria atualizada com sucesso!", "Categoria atualizada com sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     dgvMarcas.Rows[e.RowIndex].Tag = marcaEditada;
                 }

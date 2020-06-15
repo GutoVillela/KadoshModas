@@ -38,13 +38,13 @@ namespace KadoshModas.DAL
 
         #region Métodos
         /// <summary>
-        /// Cadastra um novo Produto
+        /// Cadastra um novo Produto de forma assíncrona
         /// </summary>
         /// <param name="pDmoProduto">Objeto DmoProduto preenchido</param>
         /// <returns>Retorna o Id do Produto cadastrado. Em caso de erro retorna null</returns>
-        public int? Cadastrar(DmoProduto pDmoProduto)
+        public async Task<int?> CadastrarAsync(DmoProduto pDmoProduto)
         {
-            SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (NOME, PRECO, CODIGO_DE_BARRA, URL_FOTO, CATEGORIA, MARCA) VALUES (@NOME, @PRECO, @CODIGO_DE_BARRA, @URL_FOTO, @CATEGORIA, @MARCA);", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (NOME, PRECO, CODIGO_DE_BARRA, URL_FOTO, CATEGORIA, MARCA) VALUES (@NOME, @PRECO, @CODIGO_DE_BARRA, @URL_FOTO, @CATEGORIA, @MARCA);", await conexao.ConectarAsync());
             cmd.Parameters.AddWithValue("@NOME", pDmoProduto.Nome).SqlDbType = SqlDbType.VarChar;
             cmd.Parameters.AddWithValue("@PRECO", pDmoProduto.Preco).SqlDbType = SqlDbType.SmallMoney;
 
@@ -68,14 +68,14 @@ namespace KadoshModas.DAL
             else
                 cmd.Parameters.AddWithValue("@MARCA", pDmoProduto.Marca.Nome).SqlDbType = SqlDbType.VarChar;
 
-            cmd.ExecuteNonQuery();
+            await cmd.ExecuteNonQueryAsync();
             conexao.Desconectar();
 
-            return ConsultarUltimoId();
+            return await ConsultarUltimoIdAsync();
         }
 
         /// <summary>
-        /// Consulta todos os Produtos
+        /// Consulta todos os Produtos de forma assíncrona
         /// </summary>
         /// <param name="pNome">Se fornecido, busca os Produtos com Nomes que INICIAM com a cadeia de caracteres fornecida</param>
         /// <param name="pPrecoMax">Se fornecido, busca os Produtos com preço ATÉ o valor fornecido</param>
@@ -84,9 +84,9 @@ namespace KadoshModas.DAL
         /// <param name="pMarcas">Se fornecido, busca os Produtos DENTRO das Marcas fornecidas</param>
         /// <param name="pBuscaInativos">Define se a busca retornará Produtos Inativos</param>
         /// <returns>Retorna uma lista de DmoProduto com todos os Produtos cadastrados na base de dados</returns>
-        public List<DmoProduto> Consultar(string pNome = null, float? pPrecoMax = null, string pCodBarras = null, List<DmoCategoria> pCategorias = null, List<DmoMarca> pMarcas = null, bool pBuscaInativos = false)
+        public async Task<List<DmoProduto>> ConsultarAsync(string pNome = null, float? pPrecoMax = null, string pCodBarras = null, List<DmoCategoria> pCategorias = null, List<DmoMarca> pMarcas = null, bool pBuscaInativos = false)
         {
-            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA, conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA, await conexao.ConectarAsync());
 
             #region Filtros
             if (!string.IsNullOrEmpty(pNome))
@@ -173,12 +173,14 @@ namespace KadoshModas.DAL
 
                 cmd.CommandText += " ATIVO = 1";
             }
+
+            cmd.CommandText += " ORDER BY NOME";
             #endregion
 
-            SqlDataReader dataReader = cmd.ExecuteReader();
+            SqlDataReader dataReader = await cmd.ExecuteReaderAsync();
             List<DmoProduto> listaDeProdutos = new List<DmoProduto>();
 
-            while (dataReader.Read())
+            while (await dataReader.ReadAsync())
             {
                 DmoProduto produto = new DmoProduto
                 {
@@ -203,18 +205,18 @@ namespace KadoshModas.DAL
         }
 
         /// <summary>
-        /// Consulta um Produto específico por Id
+        /// Consulta um Produto específico por Id de forma assíncrona
         /// </summary>
         /// <param name="pIdProduto">ID do Produto</param>
         /// <returns>Retorna um Produto específico</returns>
-        public DmoProduto Consultar(int pIdProduto)
+        public async Task<DmoProduto> ConsultarAsync(int pIdProduto)
         {
-            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA + " WHERE ID_PRODUTO = @ID_PRODUTO;", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA + " WHERE ID_PRODUTO = @ID_PRODUTO;", await conexao.ConectarAsync());
             cmd.Parameters.AddWithValue("@ID_PRODUTO", pIdProduto).SqlDbType = SqlDbType.Int;
 
-            SqlDataReader dataReader = cmd.ExecuteReader();
+            SqlDataReader dataReader = await cmd.ExecuteReaderAsync();
 
-            dataReader.Read();
+            await dataReader.ReadAsync();
             
             DmoProduto produto = new DmoProduto
             {
@@ -235,12 +237,12 @@ namespace KadoshModas.DAL
         }
 
         /// <summary>
-        /// Atualiza o Produto
+        /// Atualiza o Produto de forma assíncrona
         /// </summary>
         /// <param name="pProduto">Objeto DmoProduto com informações do Produto e ID do Produto a ser atualizado</param>
-        public void Atualizar(DmoProduto pProduto)
+        public async Task AtualizarAsync(DmoProduto pProduto)
         {
-            SqlCommand cmd = new SqlCommand(@"UPDATE " + NOME_TABELA + " SET NOME = @NOME, PRECO = @PRECO, CODIGO_DE_BARRA = @CODIGO_DE_BARRA, URL_FOTO = @URL_FOTO, CATEGORIA = @CATEGORIA, MARCA = @MARCA WHERE ID_PRODUTO = @ID_PRODUTO", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"UPDATE " + NOME_TABELA + " SET NOME = @NOME, PRECO = @PRECO, CODIGO_DE_BARRA = @CODIGO_DE_BARRA, URL_FOTO = @URL_FOTO, CATEGORIA = @CATEGORIA, MARCA = @MARCA WHERE ID_PRODUTO = @ID_PRODUTO", await conexao.ConectarAsync());
 
             cmd.Parameters.AddWithValue("@ID_PRODUTO", pProduto.IdProduto).SqlDbType = SqlDbType.Int;
             cmd.Parameters.AddWithValue("@NOME", pProduto.Nome).SqlDbType = SqlDbType.VarChar;
@@ -266,37 +268,37 @@ namespace KadoshModas.DAL
             else
                 cmd.Parameters.AddWithValue("@MARCA", pProduto.Marca.Nome).SqlDbType = SqlDbType.VarChar;
 
-            cmd.ExecuteNonQuery();
+            await cmd.ExecuteNonQueryAsync();
             conexao.Desconectar();
         }
 
         /// <summary>
-        /// Desativa o Produto
+        /// Desativa o Produto de forma assíncrona
         /// </summary>
         /// <param name="pIdProduto">ID do Produto</param>
-        public void DesativarProduto(int pIdProduto)
+        public async Task DesativarProdutoAsync(int pIdProduto)
         {
-            SqlCommand cmd = new SqlCommand(@"UPDATE " + NOME_TABELA + " SET ATIVO = 0 WHERE ID_PRODUTO = @ID_PRODUTO", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"UPDATE " + NOME_TABELA + " SET ATIVO = 0 WHERE ID_PRODUTO = @ID_PRODUTO", await conexao.ConectarAsync());
 
             cmd.Parameters.AddWithValue("@ID_PRODUTO", pIdProduto).SqlDbType = SqlDbType.Int;
             
-            cmd.ExecuteNonQuery();
+            await cmd.ExecuteNonQueryAsync();
             conexao.Desconectar();
         }
 
         /// <summary>
-        /// Consulta o último Id de Produto cadastrado na base
+        /// Consulta o último Id de Produto cadastrado na base de forma assíncrona
         /// </summary>
         /// <returns>Retorno último Id de Produto cadastrado na base. Em caso de erro retorna null</returns>
-        public int? ConsultarUltimoId()
+        public async Task<int?> ConsultarUltimoIdAsync()
         {
             try
             {
-                SqlCommand cmd = new SqlCommand("SELECT MAX(ID_PRODUTO) AS ID FROM " + NOME_TABELA, conexao.Conectar());
+                SqlCommand cmd = new SqlCommand("SELECT MAX(ID_PRODUTO) AS ID FROM " + NOME_TABELA, await conexao.ConectarAsync());
 
                 SqlDataReader dr = cmd.ExecuteReader();
 
-                dr.Read();
+                await dr.ReadAsync();
 
                 return int.Parse(dr[0].ToString());
 
@@ -308,22 +310,22 @@ namespace KadoshModas.DAL
         }
 
         /// <summary>
-        /// Atualiza a Url da Foto do Produto na base de dados
+        /// Atualiza a Url da Foto do Produto na base de dados de forma assíncrona
         /// </summary>
         /// <param name="pNovaUrlFoto">URL da novo foto</param>
         /// <param name="pIdProduto">Id do Produto</param>
         /// <returns>Retorna true em caso de sucesso ou false em caso de erro</returns>
-        public bool AtualizarFoto(string pNovaUrlFoto, int? pIdProduto)
+        public async Task<bool> AtualizarFotoAsync(string pNovaUrlFoto, int? pIdProduto)
         {
             if (string.IsNullOrEmpty(pNovaUrlFoto) || pIdProduto == null)
                 throw new ArgumentException("Os parâmetros pNovaUrlFoto e pIdProduto não podem ser nulos");
             try
             {
-                SqlCommand cmd = new SqlCommand(@"UPDATE " + NOME_TABELA + " SET URL_FOTO = @URL_FOTO WHERE ID_PRODUTO = @ID_PRODUTO", conexao.Conectar());
+                SqlCommand cmd = new SqlCommand(@"UPDATE " + NOME_TABELA + " SET URL_FOTO = @URL_FOTO WHERE ID_PRODUTO = @ID_PRODUTO", await conexao.ConectarAsync());
                 cmd.Parameters.AddWithValue("@URL_FOTO", pNovaUrlFoto).SqlDbType = SqlDbType.VarChar;
                 cmd.Parameters.AddWithValue("@ID_PRODUTO", pIdProduto).SqlDbType = SqlDbType.Int;
 
-                cmd.ExecuteNonQuery();
+                await cmd.ExecuteNonQueryAsync();
                 conexao.Desconectar();
 
                 return true;

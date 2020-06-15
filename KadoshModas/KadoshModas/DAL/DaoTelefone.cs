@@ -13,7 +13,7 @@ namespace KadoshModas.DAL
     {
         #region Construtor
         /// <summary>
-        /// Inicializa um objeto de conexão com o banco de dados
+        /// Inicializa um objeto de conexão com o banco de dados.
         /// </summary>
         public DaoTelefone()
         {
@@ -35,13 +35,13 @@ namespace KadoshModas.DAL
 
         #region Métodos
         /// <summary>
-        /// Cadastra um novo Telefone na base de dados
+        /// Cadastra um novo Telefone na base de dados de forma assíncrona.
         /// </summary>
         /// <param name="dmoTelefone">Objeto DmoTelefone preenchido</param>
         /// <returns></returns>
-        public int? Cadastrar(DmoTelefone dmoTelefone)
+        public async Task<int?> CadastrarAsync(DmoTelefone dmoTelefone)
         {
-            SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (DDD, NUMERO, TIPO_TELEFONE, FALAR_COM) VALUES (@DDD, @NUMERO, @TIPO_TELEFONE, @FALAR_COM)", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (DDD, NUMERO, TIPO_TELEFONE, FALAR_COM) VALUES (@DDD, @NUMERO, @TIPO_TELEFONE, @FALAR_COM)", await conexao.ConectarAsync());
             cmd.Parameters.AddWithValue("@DDD", dmoTelefone.DDD).SqlDbType = SqlDbType.Char;
             cmd.Parameters.AddWithValue("@NUMERO", dmoTelefone.Numero).SqlDbType = SqlDbType.Char;
             cmd.Parameters.AddWithValue("@TIPO_TELEFONE", (int) dmoTelefone.TipoDeTelefone).SqlDbType = SqlDbType.Int;
@@ -51,29 +51,29 @@ namespace KadoshModas.DAL
             else
                 cmd.Parameters.AddWithValue("@FALAR_COM", dmoTelefone.FalarCom).SqlDbType = SqlDbType.VarChar;
 
-            cmd.ExecuteNonQuery();
+            await cmd.ExecuteNonQueryAsync();
             conexao.Desconectar();
 
-            return ConsultarUltimoId();
+            return await ConsultarUltimoIdAsync();
         }
 
         /// <summary>
-        /// Consulta o ID de um Telefone na base de dados.
+        /// Consulta o ID de um Telefone na base de dados de forma assíncrona.
         /// </summary>
         /// <param name="pDDD">DDD do Telefone</param>
         /// <param name="pNumero">Número do Telefone</param>
         /// <returns>Retorna o ID do Telefone. Caso o Telefone não exista, retorna null.</returns>
-        public int? ConsultaIdTelefone(string pDDD, string pNumero)
+        public async Task<int?> ConsultaIdTelefoneAsync(string pDDD, string pNumero)
         {
             try
             {
-                SqlCommand cmd = new SqlCommand("SELECT ID_TELEFONE FROM " + NOME_TABELA + " WHERE DDD = @DDD AND NUMERO = @NUMERO", conexao.Conectar());
+                SqlCommand cmd = new SqlCommand("SELECT ID_TELEFONE FROM " + NOME_TABELA + " WHERE DDD = @DDD AND NUMERO = @NUMERO", await conexao.ConectarAsync());
                 cmd.Parameters.AddWithValue("@DDD", pDDD).SqlDbType = SqlDbType.Char;
                 cmd.Parameters.AddWithValue("@NUMERO", pNumero).SqlDbType = SqlDbType.Char;
 
-                SqlDataReader dr = cmd.ExecuteReader();
+                SqlDataReader dr = await cmd.ExecuteReaderAsync();
 
-                dr.Read();
+                await dr.ReadAsync();
 
                 return int.Parse(dr[0].ToString());
             }
@@ -84,46 +84,46 @@ namespace KadoshModas.DAL
         }
 
         /// <summary>
-        /// Exlcuir o Telefone especificado
+        /// Exclui o Telefone especificado de forma assíncrona.
         /// </summary>
         /// <param name="pIdTelefone">Id do Telefone</param>
-        public void Excluir(int pIdTelefone)
+        public async Task ExcluirAsync(int pIdTelefone)
         {
-            SqlCommand cmd = new SqlCommand(@"DELETE FROM " + NOME_TABELA + " WHERE ID_TELEFONE = @ID_TELEFONE;", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"DELETE FROM " + NOME_TABELA + " WHERE ID_TELEFONE = @ID_TELEFONE;", await conexao.ConectarAsync());
             cmd.Parameters.AddWithValue("@ID_TELEFONE", pIdTelefone).SqlDbType = SqlDbType.Int;
 
-            cmd.ExecuteNonQuery();
+            await cmd.ExecuteNonQueryAsync();
             conexao.Desconectar();
         }
 
         /// <summary>
-        /// Excluir todos os Telefones relacionados ao Cliente
+        /// Excluir todos os Telefones relacionados ao Cliente de forma assíncrona.
         /// </summary>
         /// <param name="pIdCliente">Id do Cliente</param>
-        public void ExcluirTelefonesDoCliente(int pIdCliente)
+        public async Task ExcluirTelefonesDoClienteAsync(int pIdCliente)
         {
-            SqlCommand cmd = new SqlCommand(@"DELETE FROM " + NOME_TABELA + " WHERE ID_TELEFONE IN (SELECT TELEFONE FROM TB_TELEFONES_DO_CLIENTE WHERE CLIENTE = @CLIENTE)", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"DELETE FROM " + NOME_TABELA + " WHERE ID_TELEFONE IN (SELECT TELEFONE FROM TB_TELEFONES_DO_CLIENTE WHERE CLIENTE = @CLIENTE)", await conexao.ConectarAsync());
             cmd.Parameters.AddWithValue("@CLIENTE", pIdCliente).SqlDbType = SqlDbType.Int;
 
-            cmd.ExecuteNonQuery();
+            await cmd.ExecuteNonQueryAsync();
             conexao.Desconectar();
 
         }
 
 
         /// <summary>
-        /// Consulta o último Id de Telefone cadastrado na base
+        /// Consulta o último Id de Telefone cadastrado na base de forma assíncrona.
         /// </summary>
         /// <returns>Retorno último Id de cliente cadastrado na base. Em caso de erro retorna null</returns>
-        private int? ConsultarUltimoId()
+        private async Task<int?> ConsultarUltimoIdAsync()
     {
         try
         {
-            SqlCommand cmd = new SqlCommand("SELECT MAX(ID_TELEFONE) AS ID FROM " + NOME_TABELA, conexao.Conectar());
+            SqlCommand cmd = new SqlCommand("SELECT MAX(ID_TELEFONE) AS ID FROM " + NOME_TABELA, await conexao.ConectarAsync());
 
-            SqlDataReader dr = cmd.ExecuteReader();
+            SqlDataReader dr = await cmd.ExecuteReaderAsync();
 
-            dr.Read();
+            await dr.ReadAsync();
 
             return int.Parse(dr[0].ToString());
 

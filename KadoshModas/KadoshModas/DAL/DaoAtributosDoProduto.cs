@@ -42,7 +42,7 @@ namespace KadoshModas.DAL
         /// </summary>
         /// <param name="pDmoAtributosDoProduto">Objeto DmoAtributosDoProduto preenchido</param>
         /// <returns>Retorna true em caso de sucesso ou false em caso de erro</returns>
-        public bool Cadastrar(DmoAtributosDoProduto pDmoAtributosDoProduto)
+        public async Task<bool> CadastrarAsync(DmoAtributosDoProduto pDmoAtributosDoProduto)
         {
             if (pDmoAtributosDoProduto.Atributo == null || pDmoAtributosDoProduto.Produto == null)
                 throw new ArgumentNullException("As propriedades Atributo e Produto em pDmoAtributosDoProduto não podem ser nulas");
@@ -55,12 +55,12 @@ namespace KadoshModas.DAL
 
             try
             {
-                SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (PRODUTO, ATRIBUTO, VALOR) VALUES (@PRODUTO, @ATRIBUTO, @VALOR);", conexao.Conectar());
+                SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (PRODUTO, ATRIBUTO, VALOR) VALUES (@PRODUTO, @ATRIBUTO, @VALOR);", await conexao.ConectarAsync());
                 cmd.Parameters.AddWithValue("@PRODUTO", pDmoAtributosDoProduto.Produto.IdProduto).SqlDbType = SqlDbType.Int;
                 cmd.Parameters.AddWithValue("@ATRIBUTO", pDmoAtributosDoProduto.Atributo.IdAtributo).SqlDbType = SqlDbType.Int;
                 cmd.Parameters.AddWithValue("@VALOR", pDmoAtributosDoProduto.Valor).SqlDbType = SqlDbType.VarChar;
 
-                cmd.ExecuteNonQuery();
+                await cmd.ExecuteNonQueryAsync();
                 conexao.Desconectar();
 
                 return true;
@@ -73,15 +73,15 @@ namespace KadoshModas.DAL
         }
 
         /// <summary>
-        /// Exclui todos os Atributos do Produto
+        /// Exclui todos os Atributos do Produto de forma assíncrona
         /// </summary>
         /// <param name="pIdProduto">ID do Produto</param>
-        public void ExcluirAtributosDoProduto(int pIdProduto)
+        public async Task ExcluirAtributosDoProdutoAsync(int pIdProduto)
         {
-            SqlCommand cmd = new SqlCommand(@"DELETE FROM " + NOME_TABELA + " WHERE PRODUTO = @PRODUTO", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"DELETE FROM " + NOME_TABELA + " WHERE PRODUTO = @PRODUTO", await conexao.ConectarAsync());
             cmd.Parameters.AddWithValue("@PRODUTO", pIdProduto).SqlDbType = SqlDbType.Int;
 
-            cmd.ExecuteNonQuery();
+            await cmd.ExecuteNonQueryAsync();
             conexao.Desconectar();
         }
         #endregion

@@ -30,6 +30,9 @@
         {
             this.tbcDetalhesVenda = new System.Windows.Forms.TabControl();
             this.tbpDetalhesVenda = new System.Windows.Forms.TabPage();
+            this.btnPagarValor = new FontAwesome.Sharp.IconButton();
+            this.lblDetalhesPagamento = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.lblNomeDoCliente = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -66,11 +69,14 @@
             this.tbcDetalhesVenda.Location = new System.Drawing.Point(0, 0);
             this.tbcDetalhesVenda.Name = "tbcDetalhesVenda";
             this.tbcDetalhesVenda.SelectedIndex = 0;
-            this.tbcDetalhesVenda.Size = new System.Drawing.Size(634, 541);
+            this.tbcDetalhesVenda.Size = new System.Drawing.Size(784, 661);
             this.tbcDetalhesVenda.TabIndex = 0;
             // 
             // tbpDetalhesVenda
             // 
+            this.tbpDetalhesVenda.Controls.Add(this.btnPagarValor);
+            this.tbpDetalhesVenda.Controls.Add(this.lblDetalhesPagamento);
+            this.tbpDetalhesVenda.Controls.Add(this.label9);
             this.tbpDetalhesVenda.Controls.Add(this.lblNomeDoCliente);
             this.tbpDetalhesVenda.Controls.Add(this.label5);
             this.tbpDetalhesVenda.Controls.Add(this.label3);
@@ -83,10 +89,52 @@
             this.tbpDetalhesVenda.Location = new System.Drawing.Point(4, 28);
             this.tbpDetalhesVenda.Name = "tbpDetalhesVenda";
             this.tbpDetalhesVenda.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpDetalhesVenda.Size = new System.Drawing.Size(626, 509);
+            this.tbpDetalhesVenda.Size = new System.Drawing.Size(776, 629);
             this.tbpDetalhesVenda.TabIndex = 0;
             this.tbpDetalhesVenda.Text = "Detalhes da Venda";
             this.tbpDetalhesVenda.UseVisualStyleBackColor = true;
+            // 
+            // btnPagarValor
+            // 
+            this.btnPagarValor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPagarValor.BackColor = System.Drawing.Color.DarkGreen;
+            this.btnPagarValor.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnPagarValor.FlatAppearance.BorderSize = 0;
+            this.btnPagarValor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPagarValor.Flip = FontAwesome.Sharp.FlipOrientation.Normal;
+            this.btnPagarValor.ForeColor = System.Drawing.Color.White;
+            this.btnPagarValor.IconChar = FontAwesome.Sharp.IconChar.HandHoldingUsd;
+            this.btnPagarValor.IconColor = System.Drawing.Color.GreenYellow;
+            this.btnPagarValor.IconSize = 24;
+            this.btnPagarValor.Location = new System.Drawing.Point(550, 202);
+            this.btnPagarValor.Name = "btnPagarValor";
+            this.btnPagarValor.Rotation = 0D;
+            this.btnPagarValor.Size = new System.Drawing.Size(218, 27);
+            this.btnPagarValor.TabIndex = 11;
+            this.btnPagarValor.Text = "Informar pagamento";
+            this.btnPagarValor.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.btnPagarValor.UseVisualStyleBackColor = false;
+            this.btnPagarValor.Click += new System.EventHandler(this.btnPagarValor_Click);
+            // 
+            // lblDetalhesPagamento
+            // 
+            this.lblDetalhesPagamento.AutoSize = true;
+            this.lblDetalhesPagamento.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblDetalhesPagamento.Location = new System.Drawing.Point(3, 169);
+            this.lblDetalhesPagamento.Name = "lblDetalhesPagamento";
+            this.lblDetalhesPagamento.Size = new System.Drawing.Size(470, 19);
+            this.lblDetalhesPagamento.TabIndex = 10;
+            this.lblDetalhesPagamento.Text = "Total da Venda: R$ 100,00 - Pago até agora: R$50 - Falta pagar: R$ 50";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Tai Le", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(2, 142);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(124, 27);
+            this.label9.TabIndex = 9;
+            this.label9.Text = "Pagamento";
             // 
             // lblNomeDoCliente
             // 
@@ -110,7 +158,8 @@
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(421, 472);
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.Location = new System.Drawing.Point(571, 580);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(197, 19);
             this.label3.TabIndex = 6;
@@ -119,9 +168,10 @@
             // 
             // label4
             // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Tai Le", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(416, 445);
+            this.label4.Location = new System.Drawing.Point(566, 553);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(202, 27);
             this.label4.TabIndex = 5;
@@ -129,8 +179,9 @@
             // 
             // lblFormaDePagamento
             // 
+            this.lblFormaDePagamento.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblFormaDePagamento.AutoSize = true;
-            this.lblFormaDePagamento.Location = new System.Drawing.Point(9, 472);
+            this.lblFormaDePagamento.Location = new System.Drawing.Point(9, 580);
             this.lblFormaDePagamento.Name = "lblFormaDePagamento";
             this.lblFormaDePagamento.Size = new System.Drawing.Size(152, 19);
             this.lblFormaDePagamento.TabIndex = 4;
@@ -138,9 +189,10 @@
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Tai Le", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(8, 445);
+            this.label1.Location = new System.Drawing.Point(8, 553);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(222, 27);
             this.label1.TabIndex = 3;
@@ -150,7 +202,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Tai Le", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(3, 141);
+            this.label2.Location = new System.Drawing.Point(2, 200);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(158, 27);
             this.label2.TabIndex = 2;
@@ -158,6 +210,9 @@
             // 
             // lstItensDaVenda
             // 
+            this.lstItensDaVenda.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lstItensDaVenda.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.chQuantidade,
             this.chProduto,
@@ -165,9 +220,9 @@
             this.chDesconto});
             this.lstItensDaVenda.FullRowSelect = true;
             this.lstItensDaVenda.HideSelection = false;
-            this.lstItensDaVenda.Location = new System.Drawing.Point(7, 171);
+            this.lstItensDaVenda.Location = new System.Drawing.Point(7, 235);
             this.lstItensDaVenda.Name = "lstItensDaVenda";
-            this.lstItensDaVenda.Size = new System.Drawing.Size(613, 258);
+            this.lstItensDaVenda.Size = new System.Drawing.Size(763, 298);
             this.lstItensDaVenda.TabIndex = 1;
             this.lstItensDaVenda.UseCompatibleStateImageBehavior = false;
             this.lstItensDaVenda.View = System.Windows.Forms.View.Details;
@@ -200,7 +255,7 @@
             this.pnlSituacaoVenda.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlSituacaoVenda.Location = new System.Drawing.Point(3, 3);
             this.pnlSituacaoVenda.Name = "pnlSituacaoVenda";
-            this.pnlSituacaoVenda.Size = new System.Drawing.Size(620, 80);
+            this.pnlSituacaoVenda.Size = new System.Drawing.Size(770, 80);
             this.pnlSituacaoVenda.TabIndex = 0;
             // 
             // lblSituacaoVenda
@@ -210,7 +265,7 @@
             this.lblSituacaoVenda.ForeColor = System.Drawing.Color.White;
             this.lblSituacaoVenda.Location = new System.Drawing.Point(0, 0);
             this.lblSituacaoVenda.Name = "lblSituacaoVenda";
-            this.lblSituacaoVenda.Size = new System.Drawing.Size(620, 44);
+            this.lblSituacaoVenda.Size = new System.Drawing.Size(770, 44);
             this.lblSituacaoVenda.TabIndex = 1;
             this.lblSituacaoVenda.Text = "Situação da Venda";
             this.lblSituacaoVenda.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -222,7 +277,7 @@
             this.lblTotalVenda.ForeColor = System.Drawing.Color.White;
             this.lblTotalVenda.Location = new System.Drawing.Point(0, 43);
             this.lblTotalVenda.Name = "lblTotalVenda";
-            this.lblTotalVenda.Size = new System.Drawing.Size(620, 37);
+            this.lblTotalVenda.Size = new System.Drawing.Size(770, 37);
             this.lblTotalVenda.TabIndex = 0;
             this.lblTotalVenda.Text = "R$ 100,00";
             this.lblTotalVenda.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -238,13 +293,14 @@
             this.tbpParcelas.Location = new System.Drawing.Point(4, 22);
             this.tbpParcelas.Name = "tbpParcelas";
             this.tbpParcelas.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpParcelas.Size = new System.Drawing.Size(626, 515);
+            this.tbpParcelas.Size = new System.Drawing.Size(776, 635);
             this.tbpParcelas.TabIndex = 1;
             this.tbpParcelas.Text = "Parcelas";
             this.tbpParcelas.UseVisualStyleBackColor = true;
             // 
             // btnQuitarParcelas
             // 
+            this.btnQuitarParcelas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnQuitarParcelas.BackColor = System.Drawing.Color.DarkGreen;
             this.btnQuitarParcelas.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnQuitarParcelas.FlatAppearance.BorderSize = 0;
@@ -254,7 +310,7 @@
             this.btnQuitarParcelas.IconChar = FontAwesome.Sharp.IconChar.HandHoldingUsd;
             this.btnQuitarParcelas.IconColor = System.Drawing.Color.GreenYellow;
             this.btnQuitarParcelas.IconSize = 20;
-            this.btnQuitarParcelas.Location = new System.Drawing.Point(400, 84);
+            this.btnQuitarParcelas.Location = new System.Drawing.Point(550, 84);
             this.btnQuitarParcelas.Name = "btnQuitarParcelas";
             this.btnQuitarParcelas.Rotation = 0D;
             this.btnQuitarParcelas.Size = new System.Drawing.Size(218, 27);
@@ -304,24 +360,28 @@
             // 
             // pnlParcelas
             // 
+            this.pnlParcelas.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlParcelas.AutoScroll = true;
             this.pnlParcelas.BackColor = System.Drawing.Color.Transparent;
             this.pnlParcelas.Location = new System.Drawing.Point(8, 117);
             this.pnlParcelas.Name = "pnlParcelas";
             this.pnlParcelas.Padding = new System.Windows.Forms.Padding(10);
-            this.pnlParcelas.Size = new System.Drawing.Size(610, 384);
+            this.pnlParcelas.Size = new System.Drawing.Size(760, 456);
             this.pnlParcelas.TabIndex = 0;
             // 
             // DetalhesVenda
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(634, 541);
+            this.ClientSize = new System.Drawing.Size(784, 661);
             this.Controls.Add(this.tbcDetalhesVenda);
             this.Font = new System.Drawing.Font("Microsoft Tai Le", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "DetalhesVenda";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Detalhes da Venda";
+            this.Load += new System.EventHandler(this.DetalhesVenda_Load);
             this.tbcDetalhesVenda.ResumeLayout(false);
             this.tbpDetalhesVenda.ResumeLayout(false);
             this.tbpDetalhesVenda.PerformLayout();
@@ -358,5 +418,8 @@
         private FontAwesome.Sharp.IconButton btnQuitarParcelas;
         private System.Windows.Forms.Label lblNomeDoCliente;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblDetalhesPagamento;
+        private System.Windows.Forms.Label label9;
+        private FontAwesome.Sharp.IconButton btnPagarValor;
     }
 }

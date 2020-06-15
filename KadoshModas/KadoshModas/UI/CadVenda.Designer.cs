@@ -58,7 +58,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 69);
+            this.label1.Location = new System.Drawing.Point(12, 75);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 21);
             this.label1.TabIndex = 0;
@@ -67,16 +67,16 @@
             // dtpDataVenda
             // 
             this.dtpDataVenda.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuBar;
-            this.dtpDataVenda.Location = new System.Drawing.Point(83, 12);
+            this.dtpDataVenda.Location = new System.Drawing.Point(83, 17);
             this.dtpDataVenda.Name = "dtpDataVenda";
-            this.dtpDataVenda.Size = new System.Drawing.Size(332, 28);
+            this.dtpDataVenda.Size = new System.Drawing.Size(456, 28);
             this.dtpDataVenda.TabIndex = 20;
             this.dtpDataVenda.ValueChanged += new System.EventHandler(this.dtpDataVenda_ValueChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 18);
+            this.label2.Location = new System.Drawing.Point(12, 23);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(45, 21);
             this.label2.TabIndex = 21;
@@ -84,8 +84,9 @@
             // 
             // label3
             // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(464, 18);
+            this.label3.Location = new System.Drawing.Point(748, 23);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(80, 21);
             this.label3.TabIndex = 27;
@@ -93,9 +94,10 @@
             // 
             // lblNumeroVenda
             // 
+            this.lblNumeroVenda.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblNumeroVenda.AutoSize = true;
             this.lblNumeroVenda.Font = new System.Drawing.Font("Microsoft Tai Le", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNumeroVenda.Location = new System.Drawing.Point(550, 13);
+            this.lblNumeroVenda.Location = new System.Drawing.Point(834, 18);
             this.lblNumeroVenda.Name = "lblNumeroVenda";
             this.lblNumeroVenda.Size = new System.Drawing.Size(72, 27);
             this.lblNumeroVenda.TabIndex = 28;
@@ -104,6 +106,9 @@
             // dgvItensDaVenda
             // 
             this.dgvItensDaVenda.AllowUserToAddRows = false;
+            this.dgvItensDaVenda.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvItensDaVenda.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvItensDaVenda.BackgroundColor = System.Drawing.SystemColors.ControlLight;
             this.dgvItensDaVenda.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -113,10 +118,10 @@
             this.Quantidade,
             this.Preco,
             this.Subtotal});
-            this.dgvItensDaVenda.Location = new System.Drawing.Point(6, 59);
+            this.dgvItensDaVenda.Location = new System.Drawing.Point(10, 68);
             this.dgvItensDaVenda.Name = "dgvItensDaVenda";
             this.dgvItensDaVenda.RowHeadersVisible = false;
-            this.dgvItensDaVenda.Size = new System.Drawing.Size(594, 198);
+            this.dgvItensDaVenda.Size = new System.Drawing.Size(878, 261);
             this.dgvItensDaVenda.TabIndex = 29;
             this.dgvItensDaVenda.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvItensDaVenda_CellEndEdit);
             // 
@@ -153,7 +158,7 @@
             // 
             this.lblTotalVenda.AutoSize = true;
             this.lblTotalVenda.Font = new System.Drawing.Font("Microsoft Tai Le", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotalVenda.Location = new System.Drawing.Point(94, 378);
+            this.lblTotalVenda.Location = new System.Drawing.Point(94, 461);
             this.lblTotalVenda.Name = "lblTotalVenda";
             this.lblTotalVenda.Size = new System.Drawing.Size(111, 34);
             this.lblTotalVenda.TabIndex = 32;
@@ -163,7 +168,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Tai Le", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(17, 382);
+            this.label6.Location = new System.Drawing.Point(17, 465);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(71, 30);
             this.label6.TabIndex = 31;
@@ -171,22 +176,27 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.txtAddProduto);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.btnAddProduto);
             this.groupBox1.Controls.Add(this.dgvItensDaVenda);
-            this.groupBox1.Location = new System.Drawing.Point(16, 109);
+            this.groupBox1.Location = new System.Drawing.Point(12, 123);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(606, 267);
+            this.groupBox1.Size = new System.Drawing.Size(894, 335);
             this.groupBox1.TabIndex = 34;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Itens da Venda";
             // 
             // txtAddProduto
             // 
+            this.txtAddProduto.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAddProduto.Location = new System.Drawing.Point(160, 25);
             this.txtAddProduto.Name = "txtAddProduto";
-            this.txtAddProduto.Size = new System.Drawing.Size(286, 28);
+            this.txtAddProduto.Size = new System.Drawing.Size(574, 28);
             this.txtAddProduto.TabIndex = 35;
             // 
             // label7
@@ -200,6 +210,7 @@
             // 
             // btnAddProduto
             // 
+            this.btnAddProduto.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddProduto.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.btnAddProduto.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAddProduto.FlatAppearance.BorderSize = 0;
@@ -209,7 +220,7 @@
             this.btnAddProduto.IconChar = FontAwesome.Sharp.IconChar.CartPlus;
             this.btnAddProduto.IconColor = System.Drawing.Color.MidnightBlue;
             this.btnAddProduto.IconSize = 16;
-            this.btnAddProduto.Location = new System.Drawing.Point(452, 25);
+            this.btnAddProduto.Location = new System.Drawing.Point(740, 25);
             this.btnAddProduto.Name = "btnAddProduto";
             this.btnAddProduto.Rotation = 0D;
             this.btnAddProduto.Size = new System.Drawing.Size(148, 28);
@@ -222,6 +233,7 @@
             // 
             // btnCancelarVenda
             // 
+            this.btnCancelarVenda.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnCancelarVenda.BackColor = System.Drawing.Color.Red;
             this.btnCancelarVenda.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCancelarVenda.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -231,7 +243,7 @@
             this.btnCancelarVenda.IconChar = FontAwesome.Sharp.IconChar.Times;
             this.btnCancelarVenda.IconColor = System.Drawing.Color.DarkRed;
             this.btnCancelarVenda.IconSize = 30;
-            this.btnCancelarVenda.Location = new System.Drawing.Point(16, 429);
+            this.btnCancelarVenda.Location = new System.Drawing.Point(16, 519);
             this.btnCancelarVenda.Name = "btnCancelarVenda";
             this.btnCancelarVenda.Padding = new System.Windows.Forms.Padding(10);
             this.btnCancelarVenda.Rotation = 0D;
@@ -245,6 +257,7 @@
             // 
             // btnFecharVenda
             // 
+            this.btnFecharVenda.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnFecharVenda.BackColor = System.Drawing.Color.ForestGreen;
             this.btnFecharVenda.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnFecharVenda.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -254,7 +267,7 @@
             this.btnFecharVenda.IconChar = FontAwesome.Sharp.IconChar.CashRegister;
             this.btnFecharVenda.IconColor = System.Drawing.Color.DarkGreen;
             this.btnFecharVenda.IconSize = 30;
-            this.btnFecharVenda.Location = new System.Drawing.Point(407, 429);
+            this.btnFecharVenda.Location = new System.Drawing.Point(691, 519);
             this.btnFecharVenda.Name = "btnFecharVenda";
             this.btnFecharVenda.Padding = new System.Windows.Forms.Padding(10);
             this.btnFecharVenda.Rotation = 0D;
@@ -268,6 +281,8 @@
             // 
             // btnDefinirCliente
             // 
+            this.btnDefinirCliente.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDefinirCliente.BackColor = System.Drawing.Color.DarkRed;
             this.btnDefinirCliente.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDefinirCliente.FlatAppearance.BorderSize = 0;
@@ -279,10 +294,10 @@
             this.btnDefinirCliente.IconColor = System.Drawing.Color.LightPink;
             this.btnDefinirCliente.IconSize = 24;
             this.btnDefinirCliente.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnDefinirCliente.Location = new System.Drawing.Point(83, 65);
+            this.btnDefinirCliente.Location = new System.Drawing.Point(83, 71);
             this.btnDefinirCliente.Name = "btnDefinirCliente";
             this.btnDefinirCliente.Rotation = 0D;
-            this.btnDefinirCliente.Size = new System.Drawing.Size(492, 29);
+            this.btnDefinirCliente.Size = new System.Drawing.Size(777, 29);
             this.btnDefinirCliente.TabIndex = 19;
             this.btnDefinirCliente.Text = "Não definido";
             this.btnDefinirCliente.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
@@ -292,6 +307,7 @@
             // 
             // btnRemoverCliente
             // 
+            this.btnRemoverCliente.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRemoverCliente.BackColor = System.Drawing.Color.DarkRed;
             this.btnRemoverCliente.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRemoverCliente.FlatAppearance.BorderSize = 0;
@@ -300,7 +316,7 @@
             this.btnRemoverCliente.IconChar = FontAwesome.Sharp.IconChar.UserSlash;
             this.btnRemoverCliente.IconColor = System.Drawing.Color.White;
             this.btnRemoverCliente.IconSize = 20;
-            this.btnRemoverCliente.Location = new System.Drawing.Point(581, 65);
+            this.btnRemoverCliente.Location = new System.Drawing.Point(866, 71);
             this.btnRemoverCliente.Name = "btnRemoverCliente";
             this.btnRemoverCliente.Rotation = 0D;
             this.btnRemoverCliente.Size = new System.Drawing.Size(40, 29);
@@ -312,7 +328,7 @@
             // CadVenda
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(634, 511);
+            this.ClientSize = new System.Drawing.Size(918, 622);
             this.Controls.Add(this.btnRemoverCliente);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.lblTotalVenda);
@@ -326,7 +342,7 @@
             this.Controls.Add(this.btnDefinirCliente);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MinimumSize = new System.Drawing.Size(650, 550);
+            this.MinimumSize = new System.Drawing.Size(934, 661);
             this.Name = "CadVenda";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Cadastro de Vendas";

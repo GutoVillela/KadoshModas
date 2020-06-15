@@ -13,23 +13,23 @@ namespace KadoshModas.BLL
     /// </summary>
     class BoTelefoneDoCliente
     {
-        #region Métodos]
+        #region Métodos
         /// <summary>
-        /// Cadastra um Telefone na base de dados e o associa como um Telefone do Cliente
+        /// Cadastra um Telefone na base de dados e o associa como um Telefone do Cliente de forma assíncrona
         /// </summary>
         /// <param name="pDmoTelefoneDoCliente">Objeto DmoTelefoneDoCliente preenchido</param>
         /// <returns>Retorna true em caso de sucesso e false em caso de erro</returns>
-        public bool Cadastrar(DmoTelefoneDoCliente pDmoTelefoneDoCliente)
+        public async Task<bool> CadastrarAsync(DmoTelefoneDoCliente pDmoTelefoneDoCliente)
         {
-            pDmoTelefoneDoCliente.IdTelefone = new BoTelefone().ConsultaIdTelefone(pDmoTelefoneDoCliente.DDD, pDmoTelefoneDoCliente.Numero);
+            pDmoTelefoneDoCliente.IdTelefone = await new BoTelefone().ConsultaIdTelefoneAsync(pDmoTelefoneDoCliente.DDD, pDmoTelefoneDoCliente.Numero);
 
             if(pDmoTelefoneDoCliente.IdTelefone == null)
-                pDmoTelefoneDoCliente.IdTelefone = new DaoTelefone().Cadastrar(pDmoTelefoneDoCliente);
+                pDmoTelefoneDoCliente.IdTelefone = await new DaoTelefone().CadastrarAsync(pDmoTelefoneDoCliente);
 
             if (pDmoTelefoneDoCliente.IdTelefone == null)
                 return false;
 
-            return new DaoTelefoneDoCliente().Cadastrar(pDmoTelefoneDoCliente);
+            return await new DaoTelefoneDoCliente().CadastrarAsync(pDmoTelefoneDoCliente);
         }
         #endregion
     }

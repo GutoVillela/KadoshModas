@@ -42,14 +42,15 @@ namespace KadoshModas.UI
         #endregion
 
         #region Eventos
-        private void ConFornecedor_Load(object sender, EventArgs e)
+        private async void ConFornecedor_Load(object sender, EventArgs e)
         {
-            CarregarFornecedoresNaGrid(new BoFornecedor().Consultar());
+            this.Icon = Properties.Resources.ICONE_KADOSH_128X128;
+            CarregarFornecedoresNaGrid(await new BoFornecedor().ConsultarAsync());
         }
 
-        private void txtFiltroFornecedor_TextChanged(object sender, EventArgs e)
+        private async void txtFiltroFornecedor_TextChanged(object sender, EventArgs e)
         {
-            CarregarFornecedoresNaGrid(new BoFornecedor().Consultar(txtFiltroFornecedor.Text.Trim()));
+            CarregarFornecedoresNaGrid(await new BoFornecedor().ConsultarAsync(txtFiltroFornecedor.Text.Trim()));
         }
         #endregion
     }

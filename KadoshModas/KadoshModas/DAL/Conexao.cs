@@ -19,42 +19,15 @@ namespace KadoshModas.DAL
         /// </summary>
         public Conexao()
         {
-            string stringDeConexao = @"Server="+ this._server + ";Initial Catalog=" + this._nomeBD + ";Integrated Security=true";
+            string stringDeConexao = Properties.Settings.Default.StringDeConexaoKadosh;
+            
+            if(string.IsNullOrEmpty(stringDeConexao))
+                stringDeConexao = System.Configuration.ConfigurationManager.ConnectionStrings["BD_KADOSH"].ConnectionString;
+
             this._conexao = new SqlConnection(stringDeConexao);
         }
 
-        #region Atributos para Conexão
-        /// <summary>
-        /// Server do banco de dados
-        /// </summary>
-        private readonly string _server = @"(localdb)\MSSQLLocalDb";
-
-        /// <summary>
-        /// Nome do banco de dados
-        /// </summary>
-        private readonly string _nomeBD = "BD_KADOSH";
-        #endregion
-
         private SqlConnection _conexao;
-
-        /// <summary>
-        /// Abre a conexão com o Banco de Dados
-        /// </summary>
-        /// <returns>Retorna conexão aberta. Retorna null em caso de erro</returns>
-        public SqlConnection Conectar()
-        {
-            try
-            {
-                if (this._conexao.State != ConnectionState.Open)
-                    this._conexao.Open();
-
-                return this._conexao;
-            }
-            catch
-            {
-                return null;
-            }
-        }
 
         /// <summary>
         /// Abre a conexão com o Banco de Dados de forma assícrona
@@ -102,14 +75,14 @@ namespace KadoshModas.DAL
         {
             bool retorno = false;
 
-            using (var conn = new SqlConnection(@"Server=" + this._server + ";Database=master;Trusted_Connection=True;"))
+            string stringDeConexao = System.Configuration.ConfigurationManager.ConnectionStrings["master"].ConnectionString;
+            using (var conn = new SqlConnection(stringDeConexao))
             {
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT 1 FROM SYS.DATABASES WHERE NAME LIKE @NOME_BD";
-                    cmd.Parameters.AddWithValue("@NOME_BD", this._nomeBD).SqlDbType = SqlDbType.VarChar;
-                        
+                    cmd.CommandText = "SELECT 1 FROM SYS.DATABASES WHERE NAME LIKE 'BD_KADOSH'";
+
                     var valor = cmd.ExecuteScalar();
 
                     if (valor != null && valor != DBNull.Value && Convert.ToInt32(valor).Equals(1))

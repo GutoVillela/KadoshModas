@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.pnlVendas = new System.Windows.Forms.FlowLayoutPanel();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.pnlNenhumaVenda = new System.Windows.Forms.Panel();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -54,33 +53,22 @@
             // 
             // pnlVendas
             // 
-            this.pnlVendas.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlVendas.AutoScroll = true;
             this.pnlVendas.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.pnlVendas.Controls.Add(this.panel2);
             this.pnlVendas.Controls.Add(this.pnlNenhumaVenda);
             this.pnlVendas.Location = new System.Drawing.Point(246, 4);
             this.pnlVendas.Name = "pnlVendas";
-            this.pnlVendas.Size = new System.Drawing.Size(382, 507);
+            this.pnlVendas.Size = new System.Drawing.Size(671, 606);
             this.pnlVendas.TabIndex = 0;
-            // 
-            // panel2
-            // 
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 3);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(200, 0);
-            this.panel2.TabIndex = 0;
             // 
             // pnlNenhumaVenda
             // 
             this.pnlNenhumaVenda.Controls.Add(this.label10);
             this.pnlNenhumaVenda.Controls.Add(this.label9);
             this.pnlNenhumaVenda.Controls.Add(this.iconPictureBox1);
-            this.pnlNenhumaVenda.Location = new System.Drawing.Point(3, 9);
+            this.pnlNenhumaVenda.Location = new System.Drawing.Point(3, 3);
             this.pnlNenhumaVenda.Name = "pnlNenhumaVenda";
-            this.pnlNenhumaVenda.Size = new System.Drawing.Size(373, 486);
+            this.pnlNenhumaVenda.Size = new System.Drawing.Size(657, 548);
             this.pnlNenhumaVenda.TabIndex = 1;
             // 
             // label10
@@ -138,11 +126,12 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(240, 511);
+            this.panel1.Size = new System.Drawing.Size(240, 622);
             this.panel1.TabIndex = 20;
             // 
             // btnBuscarTodos
             // 
+            this.btnBuscarTodos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnBuscarTodos.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.btnBuscarTodos.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnBuscarTodos.FlatAppearance.BorderSize = 0;
@@ -153,7 +142,7 @@
             this.btnBuscarTodos.IconChar = FontAwesome.Sharp.IconChar.Search;
             this.btnBuscarTodos.IconColor = System.Drawing.SystemColors.ControlDark;
             this.btnBuscarTodos.IconSize = 30;
-            this.btnBuscarTodos.Location = new System.Drawing.Point(18, 449);
+            this.btnBuscarTodos.Location = new System.Drawing.Point(12, 560);
             this.btnBuscarTodos.Name = "btnBuscarTodos";
             this.btnBuscarTodos.Rotation = 0D;
             this.btnBuscarTodos.Size = new System.Drawing.Size(211, 50);
@@ -246,7 +235,7 @@
             // ConVenda
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(634, 511);
+            this.ClientSize = new System.Drawing.Size(918, 622);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pnlVendas);
             this.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -274,7 +263,6 @@
         private System.Windows.Forms.FlowLayoutPanel pnlVendas;
         private System.Windows.Forms.MonthCalendar cdrFiltroData;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel pnlNenhumaVenda;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;

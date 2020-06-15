@@ -25,13 +25,25 @@ namespace KadoshModas.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Black")]
-        public global::System.Drawing.Color CorPrincipal {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string StringDeConexaoKadosh {
             get {
-                return ((global::System.Drawing.Color)(this["CorPrincipal"]));
+                return ((string)(this["StringDeConexaoKadosh"]));
             }
             set {
-                this["CorPrincipal"] = value;
+                this["StringDeConexaoKadosh"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string StringDeConexaoMaster {
+            get {
+                return ((string)(this["StringDeConexaoMaster"]));
+            }
+            set {
+                this["StringDeConexaoMaster"] = value;
             }
         }
     }

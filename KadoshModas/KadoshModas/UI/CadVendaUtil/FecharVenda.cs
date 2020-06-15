@@ -37,11 +37,6 @@ namespace KadoshModas.UI
         private DmoVenda Venda { get; set; }
 
         /// <summary>
-        /// Propriedade utilizada como valor total da Venda
-        /// </summary>
-        private float Total { get; set; }
-
-        /// <summary>
         /// Propriedade estática que define se a Venda foi concluída com sucesso
         /// </summary>
         public static SituacoesVenda SituacaoVenda { get; set; }
@@ -81,21 +76,21 @@ namespace KadoshModas.UI
             }
 
             total -= total * (Venda.Desconto / 100);
-            this.Total = total;
+            Venda.Total = total;
             lblTotal.Text = total.ToString("C");
 
             //Atualizar entrada
             Venda.Entrada = string.IsNullOrEmpty(txtEntrada.Text) ? 0f : int.Parse(txtEntrada.Text.Replace(",", "."));
-
-            if(Venda.Entrada >= total)
+            
+            if (Venda.Entrada >= total)
             {
-                float novaEntrada = float.Parse(Math.Round(Convert.ToDouble((total / 2f).ToString())).ToString()); // Nova entrada será metade do valor total arredondado
+                double novaEntrada = Math.Round(Venda.Total / 2f); // Nova entrada será metade do valor total arredondado
                 MessageBox.Show($"Entrada não pode ser maior ou igual o Total da Venda! A entrada será alterada para {novaEntrada:C}", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtEntrada.Text = novaEntrada.ToString().Replace(".", ",");
                 Venda.Entrada = novaEntrada;
-
             }
 
+            Venda.Pago = Venda.Entrada;
             lblEntrada.Text = Venda.Entrada.ToString("C");
 
             //Atualizar parcelas
@@ -105,7 +100,7 @@ namespace KadoshModas.UI
                 {
                     Venda.ParcelasDaVenda = new List<DmoParcela>();
                     Venda.QtdParcelas = uint.Parse(qtdParcelas.ToString());
-                    float valorDaParcela = (Total - Venda.Entrada) / Venda.QtdParcelas;
+                    double valorDaParcela = (Venda.Total - Venda.Entrada) / Venda.QtdParcelas;
 
                     for (int i = 1; i <= Venda.QtdParcelas; i++)
                     {
@@ -113,7 +108,7 @@ namespace KadoshModas.UI
                         {
                             Parcela = i,
                             ValorParcela = valorDaParcela,
-                            SituacaoParcela = DmoParcela.SituacoesParcela.EmAberto,
+                            SituacaoParcela = SituacaoParcela.EmAberto,
                             Vencimento = DateTime.Now.AddMonths(i),
                             Desconto = 0
                         });
@@ -131,9 +126,9 @@ namespace KadoshModas.UI
         {
             if(float.TryParse(txtValorPago.Text, out float valorPago))
             {
-                if (valorPago > Total)
+                if (valorPago > Venda.Total)
                 {
-                    lblTroco.Text = (valorPago - Total).ToString("C");
+                    lblTroco.Text = (valorPago - Venda.Total).ToString("C");
                     return;
                 }
             }
@@ -145,18 +140,20 @@ namespace KadoshModas.UI
         #region Eventos
         private void FecharVenda_Load(object sender, EventArgs e)
         {
-            cboFormaDePagamento.DataSource = new BindingSource(DmoVenda.DescricoesEnum<DmoVenda.FormasDePagamento>().OrderBy(key => key.Value), null);
+            this.Icon = Properties.Resources.ICONE_KADOSH_128X128;
+
+            cboFormaDePagamento.DataSource = new BindingSource(DmoVenda.DescricoesEnum<FormaDePagamento>().OrderBy(key => key.Value), null);
             cboFormaDePagamento.DisplayMember = "Key";
 
-            Venda.FormaDePagamento = DmoVenda.FormasDePagamento.Dinheiro;
+            Venda.FormaDePagamento = FormaDePagamento.Dinheiro;
             Venda.QtdParcelas = 1;
         }
 
         private void cboFormaDePagamento_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Venda.FormaDePagamento = (DmoVenda.FormasDePagamento)((KeyValuePair<string, int>)cboFormaDePagamento.SelectedValue).Value;
+            Venda.FormaDePagamento = (FormaDePagamento)((KeyValuePair<string, int>)cboFormaDePagamento.SelectedValue).Value;
             
-            lblValorPagoRotulo.Visible = txtValorPago.Visible = lblTrocoRotulo.Visible = lblTroco.Visible = Venda.FormaDePagamento == DmoVenda.FormasDePagamento.Dinheiro && !rbtAPrazo.Checked;
+            lblValorPagoRotulo.Visible = txtValorPago.Visible = lblTrocoRotulo.Visible = lblTroco.Visible = Venda.FormaDePagamento == FormaDePagamento.Dinheiro && !rbtAPrazo.Checked;
         }
 
         private void rbtAPrazo_CheckedChanged(object sender, EventArgs e)
@@ -166,7 +163,7 @@ namespace KadoshModas.UI
 
             lblPrazoEm.Visible = lblPrazoVezes.Visible = cboQtdParcelas.Visible = lblParcelasRotulo.Visible = lblParcelas.Visible = lblEntradaRotulo.Visible = txtEntrada.Visible = lblEntrada.Visible = rbtAPrazo.Checked;
 
-            lblValorPagoRotulo.Visible = txtValorPago.Visible = lblTrocoRotulo.Visible = lblTroco.Visible = Venda.FormaDePagamento == DmoVenda.FormasDePagamento.Dinheiro && !rbtAPrazo.Checked;
+            lblValorPagoRotulo.Visible = txtValorPago.Visible = lblTrocoRotulo.Visible = lblTroco.Visible = Venda.FormaDePagamento == FormaDePagamento.Dinheiro && !rbtAPrazo.Checked;
         }
 
         private void cboQtdParcelas_SelectedIndexChanged(object sender, EventArgs e)
@@ -194,20 +191,27 @@ namespace KadoshModas.UI
             AtualizarTotal();
         }
 
-        private void btnFecharVenda_Click(object sender, EventArgs e)
+        private async void btnFecharVenda_Click(object sender, EventArgs e)
         {
             try
             {
-                if (rbtAPrazo.Checked)
+                if (rbtAVista.Checked)
                 {
-                    Venda.Situacao = DmoVenda.SituacoesVenda.EmAberto;
+                    Venda.Situacao = DML.SituacaoVenda.Concluido;
+                    Venda.TipoPagamento = TipoPagamento.AVista;
                 }
-                else if (rbtAVista.Checked)
+                else if (rbtFiado.Checked)
                 {
-                    Venda.Situacao = DmoVenda.SituacoesVenda.Concluido;
+                    Venda.Situacao = DML.SituacaoVenda.EmAberto;
+                    Venda.TipoPagamento = TipoPagamento.Fiado;
+                }
+                else if (rbtAPrazo.Checked)
+                {
+                    Venda.Situacao = DML.SituacaoVenda.EmAberto;
+                    Venda.TipoPagamento = TipoPagamento.Parcelado;
                 }
 
-                new BoVenda().Cadastrar(Venda);
+                await new BoVenda().CadastrarAsync(Venda);
                 MessageBox.Show("Venda concluída com sucesso!", "Fechamento de Venda", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 FecharVenda.SituacaoVenda = SituacoesVenda.Sucesso;
                 this.Close();
@@ -274,5 +278,10 @@ namespace KadoshModas.UI
             AtualizarTotal();
         }
         #endregion
+
+        private void rbtFiado_CheckedChanged(object sender, EventArgs e)
+        {
+            lblEntradaRotulo.Visible = txtEntrada.Visible = lblEntrada.Visible = rbtFiado.Checked;
+        }
     }
 }

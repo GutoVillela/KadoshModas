@@ -36,9 +36,9 @@ namespace KadoshModas.UI.UserControls
 
                 lblData.Text = Venda.DataDeCriacao.ToString("dd/MM/yyyy");
                 lblValor.Text = new BoVenda().TotalDaVenda(Venda).ToString("C");
-                lblSituacao.Text = DmoVenda.DescricaoEnum<DmoVenda.SituacoesVenda>(Venda.Situacao);
+                lblSituacao.Text = DmoVenda.DescricaoEnum<SituacaoVenda>(Venda.Situacao);
 
-                if (Venda.Situacao != DmoVenda.SituacoesVenda.Concluido)
+                if (Venda.Situacao != SituacaoVenda.Concluido)
                     btnDetalhesVenda.BackColor = Color.DarkBlue;
             }
         }

@@ -161,29 +161,29 @@ namespace KadoshModas.UI
         /// Efetua o Cadastro do Produto
         /// </summary>
         /// <param name="pProduto">Objeto DmoProduto com informações do Produto para Cadastro</param>
-        private void CadastrarProduto(DmoProduto pProduto)
+        private async Task CadastrarProdutoAsync(DmoProduto pProduto)
         {
             //Efetuar cadastro do produto
-            pProduto.IdProduto = new BoProduto().Cadastrar(produto);
+            pProduto.IdProduto = await new BoProduto().CadastrarAsync(produto);
 
             if (pProduto.IdProduto != null)
             {
                 MessageBox.Show("Produto cadastrado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                //Estoque
-                DmoEstoque estoque = new DmoEstoque
-                {
-                    Produto = produto,
-                    Quantidade = string.IsNullOrEmpty(txtEstoque.Text.Trim()) ? 0 : int.Parse(txtEstoque.Text.Trim()),
-                    Minimo = 0
-                };
+                ////Estoque
+                //DmoEstoque estoque = new DmoEstoque
+                //{
+                //    Produto = produto,
+                //    Quantidade = string.IsNullOrEmpty(txtEstoque.Text.Trim()) ? 0 : int.Parse(txtEstoque.Text.Trim()),
+                //    Minimo = 0
+                //};
 
-                if (new BoEstoque().Cadastrar(estoque) != null)
-                {
-                    MessageBox.Show("Estoque cadastrado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                    MessageBox.Show("Erro ao cadastrar um estoque para o produto!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //if (new BoEstoque().Cadastrar(estoque) != null)
+                //{
+                //    MessageBox.Show("Estoque cadastrado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //}
+                //else
+                //    MessageBox.Show("Erro ao cadastrar um estoque para o produto!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
             else
@@ -194,11 +194,11 @@ namespace KadoshModas.UI
         /// Efetua a Atualização do Produto
         /// </summary>
         /// <param name="pProduto">Objeto DmoProduto com informações do Produto para Atualizar</param>
-        private void AtualizarProduto(DmoProduto pProduto)
+        private async Task AtualizarProdutoAsync(DmoProduto pProduto)
         {
             try
             {
-                new BoProduto().Atualizar(pProduto);
+                await new BoProduto().AtualizarAsync(pProduto);
                 MessageBox.Show("Produto alterado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
@@ -210,22 +210,39 @@ namespace KadoshModas.UI
         #endregion
 
         #region Eventos
-        private void CadProduto_Load(object sender, EventArgs e)
+        private async void CadProduto_Load(object sender, EventArgs e)
         {
+            this.Icon = Properties.Resources.ICONE_KADOSH_128X128;
+
             //ComboBox de Marcas
-            List<DmoMarca> marcas = new BoMarca().Consultar();
-            cboMarca.DataSource = marcas;
+            List<DmoMarca> marcas = await new BoMarca().ConsultarAsync();
+
+            foreach (DmoMarca marca in marcas)
+            {
+                cboMarca.Items.Add(marca);
+            }
+
             cboMarca.DisplayMember = "Nome";
             cboMarca.ValueMember = "Nome";
 
+            cboMarca.Items.Insert(0, "Nenhuma marca");
+            cboMarca.SelectedIndex = 0;
+
             //ComboBox de Categorias
-            List<DmoCategoria> categorias = new BoCategoria().Consultar();
-            cboCategoria.DataSource = categorias;
+            List<DmoCategoria> categorias = await new BoCategoria().ConsultarAsync();
+
+            foreach(DmoCategoria categoria in categorias)
+            {
+                cboCategoria.Items.Add(categoria);
+            }
+
             cboCategoria.DisplayMember = "Nome";
             cboCategoria.ValueMember = "Nome";
+            cboCategoria.Items.Insert(0, "Nenhuma categoria");
+            cboCategoria.SelectedIndex = 0;
         }
 
-        private void btnCadastrar_Click(object sender, EventArgs e)
+        private async void btnCadastrar_Click(object sender, EventArgs e)
         {
             //Críticas
             if (string.IsNullOrEmpty(txtNomeProduto.Text.Trim()))
@@ -245,9 +262,9 @@ namespace KadoshModas.UI
             produto.CodigoDeBarra = txtCodigoDeBarras.Text.Trim();
             produto.Preco = float.Parse(txtPrecoUnidade.Text.Trim());
 
-            if(cboCategoria.SelectedIndex != -1)
+            if(cboCategoria.SelectedIndex != -1 && cboCategoria.SelectedIndex != 0)
                 produto.Categoria = new DmoCategoria { Nome = cboCategoria.SelectedValue.ToString() };
-            if(cboMarca.SelectedIndex != -1)
+            if(cboMarca.SelectedIndex != -1 && cboMarca.SelectedIndex != 0)
                 produto.Marca = new DmoMarca { Nome = cboMarca.SelectedValue.ToString() };
 
             if (UsuarioEscolheuFotoProduto)
@@ -284,9 +301,9 @@ namespace KadoshModas.UI
             try
             {
                 if (_funcaoFormulario == FuncaoFormulario.Cadastrar)
-                    CadastrarProduto(produto);
+                    await CadastrarProdutoAsync(produto);
                 else if(_funcaoFormulario == FuncaoFormulario.Alterar)
-                    AtualizarProduto(produto);
+                    await AtualizarProdutoAsync(produto);
             }
             catch (Exception erro)
             {
@@ -320,11 +337,11 @@ namespace KadoshModas.UI
                 FornecedoresDefinidos = true;
         }
 
-        private void btnDesativarProduto_Click(object sender, EventArgs e)
+        private async void btnDesativarProduto_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Tem certeza que deseja excluir o Produto? ", "Confirmar exclusão do produto", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                new BoProduto().DesativarProduto(int.Parse(produto.IdProduto.ToString()));
+                await new BoProduto().DesativarProdutoAsync(int.Parse(produto.IdProduto.ToString()));
                 this.Close();
             }
         }

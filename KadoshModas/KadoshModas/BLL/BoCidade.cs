@@ -14,22 +14,22 @@ namespace KadoshModas.BLL
     class BoCidade
     {
         /// <summary>
-        /// Consulta todas as Cidades de um determinado Estado
+        /// Consulta todas as Cidades de um determinado Estado de forma assíncrona
         /// </summary>
         /// <returns>Retorna uma lista de DmoCidade com todas as Cidades do Estado especificado</returns>
-        public List<DmoCidade> ConsultarDoEstado(int pIdEstado)
+        public async Task<List<DmoCidade>> ConsultarDoEstadoAsync(int pIdEstado)
         {
-            return new DaoCidade().ConsultarDoEstado(pIdEstado);
+            return await new DaoCidade().ConsultarDoEstadoAsync(pIdEstado);
         }
 
         /// <summary>
-        /// Consulta uma Cidade específica
+        /// Consulta uma Cidade específica de forma assíncrona
         /// </summary>
         /// <param name="pIdCidade">Id da Cidade</param>
         /// <returns>Retorna Cidade Preenchida</returns>
-        public DmoCidade ConsultarCidade(int pIdCidade)
+        public async Task<DmoCidade> ConsultarCidadeAsync(int pIdCidade)
         {
-            return new DaoCidade().ConsultarCidade(pIdCidade);
+            return await new DaoCidade().ConsultarCidadeAsync(pIdCidade);
         }
     }
 }

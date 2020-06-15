@@ -8,11 +8,26 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>KadoshModas</RootNamespace>
     <AssemblyName>KadoshModas</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\gusta\Desktop\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,11 +48,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Resources\ICONE_KADOSH_128X128.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>icone_kadosh.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FontAwesome.Sharp, Version=5.12.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -50,6 +66,7 @@
       <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -119,6 +136,11 @@
     <Compile Include="DML\DmoVenda.cs" />
     <Compile Include="INF\DiretoriosDoSistema.cs" />
     <Compile Include="INF\ParametrosDoSistema.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="UI\AltCliente.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -221,6 +243,18 @@
     <Compile Include="UI\DetalhesVenda.Designer.cs">
       <DependentUpon>DetalhesVenda.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\DetalhesVendaUtil\InformarPagamento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\DetalhesVendaUtil\InformarPagamento.Designer.cs">
+      <DependentUpon>InformarPagamento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogos\AlertaPersonalizado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Dialogos\AlertaPersonalizado.Designer.cs">
+      <DependentUpon>AlertaPersonalizado.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\FichaCliente.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -270,6 +304,12 @@
     </Compile>
     <Compile Include="UI\UserControls\ucTelefone.Designer.cs">
       <DependentUpon>ucTelefone.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Util\ConfigStringDeConexao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Util\ConfigStringDeConexao.Designer.cs">
+      <DependentUpon>ConfigStringDeConexao.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\VisaoGeral.cs">
       <SubType>Form</SubType>
@@ -322,8 +362,17 @@
     <EmbeddedResource Include="UI\ConVenda.resx">
       <DependentUpon>ConVenda.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\ConVendaUtil\ConClienteUtil.resx">
+      <DependentUpon>ConClienteUtil.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\DetalhesVenda.resx">
       <DependentUpon>DetalhesVenda.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\DetalhesVendaUtil\InformarPagamento.resx">
+      <DependentUpon>InformarPagamento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Dialogos\AlertaPersonalizado.resx">
+      <DependentUpon>AlertaPersonalizado.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\FichaCliente.resx">
       <DependentUpon>FichaCliente.cs</DependentUpon>
@@ -333,14 +382,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="UI\TelaPrincipal.resx">
       <DependentUpon>TelaPrincipal.cs</DependentUpon>
     </EmbeddedResource>
@@ -358,6 +402,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\UserControls\ucTelefone.resx">
       <DependentUpon>ucTelefone.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Util\ConfigStringDeConexao.resx">
+      <DependentUpon>ConfigStringDeConexao.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\VisaoGeral.resx">
       <DependentUpon>VisaoGeral.cs</DependentUpon>
@@ -384,6 +431,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icone_kadosh.ico" />
+    <None Include="Resources\ICONE_KADOSH_128X128.ico" />
+    <None Include="Resources\ICONE_KADOSH_GRANDE.ico" />
+    <None Include="Resources\ICONE_KADOSH.png" />
     <None Include="Resources\retangulo_vermelho_claro.png" />
     <None Include="Resources\retangulo_verde_claro.png" />
     <None Include="Resources\retangulo_azul_claro.png" />
@@ -396,6 +446,18 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UI\CadClienteUtil\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.8">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.8 %28x86 e x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

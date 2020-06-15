@@ -78,6 +78,8 @@
             // 
             // btnBuscarTodos
             // 
+            this.btnBuscarTodos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.btnBuscarTodos.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.btnBuscarTodos.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnBuscarTodos.FlatAppearance.BorderSize = 0;
@@ -100,6 +102,9 @@
             // 
             // panel4
             // 
+            this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel4.AutoScroll = true;
             this.panel4.BackColor = System.Drawing.Color.White;
             this.panel4.Controls.Add(this.chkSomenteAtivos);
@@ -113,7 +118,6 @@
             this.panel4.Controls.Add(this.cklCategorias);
             this.panel4.Controls.Add(this.label3);
             this.panel4.Controls.Add(this.trbFiltroPreco);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(0, 49);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(256, 394);

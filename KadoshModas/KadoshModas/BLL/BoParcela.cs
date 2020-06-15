@@ -15,18 +15,18 @@ namespace KadoshModas.BLL
     class BoParcela
     {
         /// <summary>
-        /// Cadastra uma nova Parcela
+        /// Cadastra uma nova Parcela de forma assíncrona
         /// </summary>
         /// <param name="pDmoParcela">Objeto DmoParcela preenchido</param>
         /// <returns>Retorna true em caso de sucesso e false em caso de erro</returns>
-        public bool Cadastrar(DmoParcela pDmoParcela)
+        public async Task<bool> CadastrarAsync(DmoParcela pDmoParcela)
         {
             try
             {
                 if (pDmoParcela.Venda == null || pDmoParcela.Venda.IdVenda == null)
                     throw new ArgumentException("A propriedade Venda de pDmoParcela é obrigatória e deve conter um Id de Venda associado.");
 
-                new DaoParcela().Cadastrar(pDmoParcela);
+                await new DaoParcela().CadastrarAsync(pDmoParcela);
                 return true;
             }
             catch
@@ -36,36 +36,38 @@ namespace KadoshModas.BLL
         }
 
         /// <summary>
-        /// Consulta todas as Parcelas de uma Venda específica
+        /// Consulta todas as Parcelas de uma Venda específica de forma assíncrona
         /// </summary>
         /// <param name="pIdVenda">Id da Venda</param>
         /// <returns>Lista de Parcelas da Venda</returns>
-        public List<DmoParcela> ConsultarParcelasDaVenda(int? pIdVenda)
+        public async Task<List<DmoParcela>> ConsultarParcelasDaVendaAsync(int? pIdVenda)
         {
-            return new DaoParcela().ConsultarParcelasDaVenda(pIdVenda);
+            return await new DaoParcela().ConsultarParcelasDaVendaAsync(pIdVenda);
         }
 
         /// <summary>
-        /// Atualiza a Situação da Parcela de uma determinada Venda
+        /// Atualiza a Situação da Parcela de uma determinada Venda de forma assíncrona
         /// </summary>
         /// <param name="pIdVenda">ID da Venda</param>
         /// <param name="pNumParcela">Número da Parcela</param>
         /// <param name="pNovaSituacaoParcela">Nova Situação da Venda</param>
-        public void AtualizarSituacaoParcela(int pIdVenda, int pNumParcela, DmoParcela.SituacoesParcela pNovaSituacaoParcela, DateTime? pDataPagamento = null)
+        public async Task AtualizarSituacaoParcelaAsync(int pIdVenda, int pNumParcela, SituacaoParcela pNovaSituacaoParcela, DateTime? pDataPagamento = null)
         {
-            if(pDataPagamento.HasValue)
-                new DaoParcela().AtualizarSituacaoParcela(pIdVenda, pNumParcela, pNovaSituacaoParcela, pDataPagamento);
+            if (pDataPagamento.HasValue)
+            {
+                await new DaoParcela().AtualizarSituacaoParcelaAsync(pIdVenda, pNumParcela, pNovaSituacaoParcela, pDataPagamento);
+            }
             else
-                new DaoParcela().AtualizarSituacaoParcela(pIdVenda, pNumParcela, pNovaSituacaoParcela);
+                await new DaoParcela().AtualizarSituacaoParcelaAsync(pIdVenda, pNumParcela, pNovaSituacaoParcela);
 
             // Quitar Venda em caso de todas as Parcelas terem sido pagas
-            if(pNovaSituacaoParcela == DmoParcela.SituacoesParcela.PagoComAtraso || pNovaSituacaoParcela == DmoParcela.SituacoesParcela.PagoSemAtraso)
+            if(pNovaSituacaoParcela == SituacaoParcela.PagoComAtraso || pNovaSituacaoParcela == SituacaoParcela.PagoSemAtraso)
             {
-                List<DmoParcela> parcelasDaVenda = new BoParcela().ConsultarParcelasDaVenda(pIdVenda);
+                List<DmoParcela> parcelasDaVenda = await new BoParcela().ConsultarParcelasDaVendaAsync(pIdVenda);
 
-                if(!parcelasDaVenda.Any(p => p.SituacaoParcela == DmoParcela.SituacoesParcela.EmAberto))
+                if(!parcelasDaVenda.Any(p => p.SituacaoParcela == SituacaoParcela.EmAberto))
                 {
-                    new BoVenda().AtualizarSituacaoVenda(pIdVenda, DmoVenda.SituacoesVenda.Concluido);
+                    await new BoVenda().AtualizarSituacaoVendaAsync(pIdVenda, SituacaoVenda.Concluido);
                 }
             }
         }

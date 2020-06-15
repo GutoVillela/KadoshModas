@@ -43,7 +43,7 @@ namespace KadoshModas.UI
         #endregion
 
         #region Eventos
-        private void btnCadCategoria_Click(object sender, EventArgs e)
+        private async void btnCadCategoria_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtCategoria.Text.Trim()))
             {
@@ -53,9 +53,9 @@ namespace KadoshModas.UI
             {
                 try
                 {
-                    new BoCategoria().Cadastrar(new DML.DmoCategoria() { Nome = txtCategoria.Text.Trim() });
+                    await new BoCategoria().CadastrarAsync(new DML.DmoCategoria() { Nome = txtCategoria.Text.Trim() });
                     MessageBox.Show("Categoria Cadastrada com Sucesso", "Categoria cadastrada", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    CarregarCategoriasNaGrid(new BoCategoria().Consultar());
+                    CarregarCategoriasNaGrid(await new BoCategoria().ConsultarAsync());
                 }
                 catch (Exception erro)
                 {
@@ -65,17 +65,18 @@ namespace KadoshModas.UI
             }
         }
 
-        private void CadCategoria_Load(object sender, EventArgs e)
+        private async void CadCategoria_Load(object sender, EventArgs e)
         {
-            CarregarCategoriasNaGrid(new BoCategoria().Consultar());
+            this.Icon = Properties.Resources.ICONE_KADOSH_128X128;
+            CarregarCategoriasNaGrid(await new BoCategoria().ConsultarAsync());
         }
 
-        private void txtFiltroCategoria_TextChanged(object sender, EventArgs e)
+        private async void txtFiltroCategoria_TextChanged(object sender, EventArgs e)
         {
-            CarregarCategoriasNaGrid(new BoCategoria().Consultar(txtFiltroCategoria.Text.Trim()));
+            CarregarCategoriasNaGrid(await new BoCategoria().ConsultarAsync(txtFiltroCategoria.Text.Trim()));
         }
 
-        private void dgvCategorias_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        private async void dgvCategorias_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             DmoCategoria categoriaAntesDaEdicao = (DmoCategoria)dgvCategorias.Rows[e.RowIndex].Tag;
             DmoCategoria categoriaEditada = (DmoCategoria) categoriaAntesDaEdicao.Clone();
@@ -90,7 +91,7 @@ namespace KadoshModas.UI
             {
                 try
                 {
-                    new BoCategoria().Atualizar(categoriaEditada, categoriaAntesDaEdicao.Nome);
+                    await new BoCategoria().AtualizarAsync(categoriaEditada, categoriaAntesDaEdicao.Nome);
                     MessageBox.Show("Categoria atualizada com sucesso!", "Categoria atualizada com sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     dgvCategorias.Rows[e.RowIndex].Tag = categoriaEditada;
                 }

@@ -15,10 +15,10 @@ namespace KadoshModas.BLL
     {
         #region Métodos
         /// <summary>
-        /// Cadastra uma Venda na base de dados
+        /// Cadastra uma Venda na base de dados de forma assíncrona
         /// </summary>
         /// <param name="pVenda">Objeto DmoVenda preenchido</param>
-        public void Cadastrar(DmoVenda pVenda)
+        public async Task CadastrarAsync(DmoVenda pVenda)
         {
             #region Cadastro da Venda
             if (pVenda == null)
@@ -31,14 +31,14 @@ namespace KadoshModas.BLL
                 throw new ArgumentException("É obrigatório pelo menos um Item da Venda associado à propriedade ItensDaVenda para cadastrar esta Venda.");
 
             
-            pVenda.IdVenda = new DaoVenda().Cadastrar(pVenda);
+            pVenda.IdVenda = await new DaoVenda().CadastrarAsync(pVenda);
             #endregion
 
             #region Cadastro dos Itens da Venda
             foreach (DmoItemDaVenda itemDaVenda in pVenda.ItensDaVenda)
             {
                 itemDaVenda.Venda = pVenda;
-                new BoItemDaVenda().Cadastrar(itemDaVenda);
+                await new BoItemDaVenda().CadastrarAsync(itemDaVenda);
             }
             #endregion
 
@@ -48,33 +48,33 @@ namespace KadoshModas.BLL
                 foreach(DmoParcela parcela in pVenda.ParcelasDaVenda)
                 {
                     parcela.Venda = pVenda;
-                    new BoParcela().Cadastrar(parcela);
+                    await new BoParcela().CadastrarAsync(parcela);
                 }
             }
             #endregion
         }
 
         /// <summary>
-        /// Consulta todas as Vendas Cadastradas
+        /// Consulta todas as Vendas Cadastradas de forma assíncrona
         /// </summary>
         /// <param name="pClientes">Se fornecido, retorna somente Vendas dos Clientes fornecidos</param>
         /// <param name="pSituacoesVendas">Se fornecido, retorna somente Vendas COM as Situações fornecidas</param>
         /// <param name="pDataInicial">Se fornecido, retorna somente Vendas A PARTIR da Data Inicial fornecida</param>
         /// <param name="pDataFinal">Se fornecido, retorna somente Vendas ATÉ a Data Final fornecida</param>
         /// <returns>Retorna uma lista de Vendas</returns>
-        public List<DmoVenda> Consultar(List<DmoCliente> pClientes = null, List<DmoVenda.SituacoesVenda> pSituacoesVendas = null, DateTime? pDataInicial = null, DateTime? pDataFinal = null)
+        public async Task<List<DmoVenda>> ConsultarAsync(List<DmoCliente> pClientes = null, List<SituacaoVenda> pSituacoesVendas = null, DateTime? pDataInicial = null, DateTime? pDataFinal = null)
         {
-            List<DmoVenda> vendas = new DaoVenda().Consultar(pClientes, pSituacoesVendas, pDataInicial, pDataFinal);
+            List<DmoVenda> vendas = await new DaoVenda().ConsultarAsync(pClientes, pSituacoesVendas, pDataInicial, pDataFinal);
 
             foreach (DmoVenda compra in vendas)
             {
-                compra.Cliente = new BoCliente().ConsultarClientePorId(int.Parse(compra.Cliente.IdCliente.ToString()));
+                compra.Cliente = await new BoCliente().ConsultarClientePorIdAsync(int.Parse(compra.Cliente.IdCliente.ToString()));
 
-                compra.ItensDaVenda = new BoItemDaVenda().ConsultarItensDaVenda(compra.IdVenda);
+                compra.ItensDaVenda = await new BoItemDaVenda().ConsultarItensDaVendaAsync(compra.IdVenda);
 
                 if (compra.QtdParcelas > 0)
                 {
-                    compra.ParcelasDaVenda = new BoParcela().ConsultarParcelasDaVenda(compra.IdVenda);
+                    compra.ParcelasDaVenda = await new BoParcela().ConsultarParcelasDaVendaAsync(compra.IdVenda);
                 }
 
             }
@@ -83,40 +83,39 @@ namespace KadoshModas.BLL
         }
 
         /// <summary>
-        /// Consulta todas as Vendas associadas ao Cliente
+        /// Consulta todas as Vendas associadas ao Cliente de forma assíncrona
         /// </summary>
         /// <param name="pIdCliente">Id do Cliente</param>
         /// <returns>Retorna uma lista de Vendas</returns>
-        public List<DmoVenda> ConsultarComprasDoCliente(int? pIdCliente)
+        public async Task<List<DmoVenda>> ConsultarComprasDoClienteAsync(int? pIdCliente)
         {
             if (pIdCliente == null)
                 throw new ArgumentException("O parâmetro pIdCliente é obrigatório e deve ser preenchido com um ID de Cliente válido.");
 
-            List<DmoVenda> comprasDoCliente = new DaoVenda().ConsultarComprasDoCliente(pIdCliente);
 
-            foreach(DmoVenda compra in comprasDoCliente)
-            {
-                compra.Cliente = new BoCliente().ConsultarClientePorId(int.Parse(compra.Cliente.IdCliente.ToString()));
-
-                compra.ItensDaVenda = new BoItemDaVenda().ConsultarItensDaVenda(compra.IdVenda);
-                
-                if(compra.QtdParcelas > 0)
-                {
-                    compra.ParcelasDaVenda = new BoParcela().ConsultarParcelasDaVenda(compra.IdVenda);
-                }
-            }
+            List<DmoVenda> comprasDoCliente = await ConsultarAsync(new List<DmoCliente>() { new DmoCliente() { IdCliente = pIdCliente } });
 
             return comprasDoCliente;
         }
 
         /// <summary>
-        /// Atualiza a Situação da Venda
+        /// Atualiza a Situação da Venda de forma assíncrona
         /// </summary>
         /// <param name="pIdVenda">ID da Venda para Atualizar</param>
         /// <param name="pNovaSituacaoVenda">Nova Situação da Venda</param>
-        public void AtualizarSituacaoVenda(int pIdVenda, DmoVenda.SituacoesVenda pNovaSituacaoVenda)
+        public async Task AtualizarSituacaoVendaAsync(int pIdVenda, SituacaoVenda pNovaSituacaoVenda)
         {
-            new DaoVenda().AtualizarSituacaoVenda(pIdVenda, pNovaSituacaoVenda);
+            await new DaoVenda().AtualizarSituacaoVendaAsync(pIdVenda, pNovaSituacaoVenda);
+        }
+
+        /// <summary>
+        /// Atualiza o Valor Pago da Venda de forma assíncrona
+        /// </summary>
+        /// <param name="pIdVenda">ID da Venda válido</param>
+        /// <param name="pPago">Novo valor Pago</param>
+        public async Task AtualizarValorPagoAsync(int pIdVenda, double pPago)
+        {
+            await new DaoVenda().AtualizarValorPagoAsync(pIdVenda, pPago);
         }
 
         /// <summary>
@@ -139,12 +138,12 @@ namespace KadoshModas.BLL
         }
 
         /// <summary>
-        /// Busca quantas Vendas existem atualmente cadastradas
+        /// Busca quantas Vendas existem atualmente cadastradas de forma assíncrona
         /// </summary>
         /// <returns>Retorna quantidade de Vendas cadastradas</returns>
-        public int ContarVendas()
+        public async Task<int> ContarVendasAsync()
         {
-            return new DaoVenda().ContarVendas();
+            return await new DaoVenda().ContarVendasAsync();
         }
         #endregion
     }

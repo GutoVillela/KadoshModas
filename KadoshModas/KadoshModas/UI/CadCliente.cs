@@ -113,14 +113,14 @@ namespace KadoshModas.UI
         #endregion
 
         #region Métodos
-        private void MontarAmbienteInicial()
+        private async Task MontarAmbienteInicialAsync()
         {
             //Formulário
             this.Size = INF.ParametrosDoSistema.TAMANHO_FORMULARIOS;
 
             //Panels das etapas e de conteúdo
             pnlConteudo.Location = new Point { X = 0, Y = 0 };
-            pnlConteudo.Dock = DockStyle.Fill;
+            //pnlConteudo.Dock = DockStyle.Top;
             pnlConteudo.Controls.Add(pnlCadCliEtapa1);
             pnlConteudo.Controls.Add(pnlCadCliEtapa2);
             pnlConteudo.Controls.Add(pnlCadCliEtapa3);
@@ -129,7 +129,7 @@ namespace KadoshModas.UI
             pnlCadCliEtapa3.Dock = DockStyle.Top;
             
             //ComboBox de Estados
-            List<DmoEstado> estados = new BoEstado().Consultar();
+            List<DmoEstado> estados = await new BoEstado().ConsultarAsync();
             cboEstado.DataSource = estados;
             cboEstado.DisplayMember = "Nome";
             cboEstado.ValueMember = "IdEstado";
@@ -152,9 +152,9 @@ namespace KadoshModas.UI
             txtNomeCliente.Text = pDmoCliente.Nome;
             txtCpf.Text = pDmoCliente.CPF;
 
-            if (pDmoCliente.Sexo == DmoCliente.Sexos.Feminino)
+            if (pDmoCliente.Sexo == Sexo.Feminino)
                 rdbSexoFeminino.Checked = true;
-            else if(pDmoCliente.Sexo == DmoCliente.Sexos.Masculino)
+            else if(pDmoCliente.Sexo == Sexo.Masculino)
                 rdbSexoMasculino.Checked = true;
 
             //Endereço
@@ -324,9 +324,9 @@ namespace KadoshModas.UI
             }
 
             if (rdbSexoFeminino.Checked)
-                cliente.Sexo = DmoCliente.Sexos.Feminino;
+                cliente.Sexo = Sexo.Feminino;
             else if (rdbSexoMasculino.Checked)
-                cliente.Sexo = DmoCliente.Sexos.Masculino;
+                cliente.Sexo = Sexo.Masculino;
 
             //Endereço
             if (!string.IsNullOrEmpty(txtRua.Text.Trim()))
@@ -394,9 +394,9 @@ namespace KadoshModas.UI
         /// <summary>
         /// Cadastra o Cliente com as informações preenchidas nas etapas de cadastro
         /// </summary>
-        private void CadastrarCliente()
+        private async Task CadastrarClienteAsync()
         {
-            if (new BoCliente().Cadastrar(cliente))
+            if (await new BoCliente().CadastrarAsync(cliente))
             {
                 MessageBox.Show("Cliente cadastrado com sucesso", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 cadastroFinalizado = true;
@@ -414,11 +414,11 @@ namespace KadoshModas.UI
         /// <summary>
         /// Altera o Cliente com as informações preenchidas nas etapas de cadastro
         /// </summary>
-        private void AlterarCliente()
+        private async Task AlterarClienteAsync()
         {
             try
             {
-                new BoCliente().Atualizar(cliente);
+                await new BoCliente().AtualizarAsync(cliente);
                 MessageBox.Show("Cliente alterado com sucesso.", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 cadastroFinalizado = true;
                 if (_funcaoFormulario == FuncaoFormulario.Alterar)
@@ -470,17 +470,17 @@ namespace KadoshModas.UI
             lstTelefones.Visible = chkMaisNumeros.Checked;
         }
 
-        private void btnCadastrarCliente_Click(object sender, EventArgs e)
+        private async void btnCadastrarCliente_Click(object sender, EventArgs e)
         {
             if(EtapaAtual == EtapaDeCadastro.Foto)
             {
                 if (this._funcaoFormulario == FuncaoFormulario.Cadastrar)
                 {
-                    CadastrarCliente();
+                    await CadastrarClienteAsync();
                 }
                 else if (this._funcaoFormulario == FuncaoFormulario.Alterar)
                 {
-                    AlterarCliente();
+                    await AlterarClienteAsync();
                 }
             }
             else
@@ -499,14 +499,15 @@ namespace KadoshModas.UI
             }
         }
 
-        private void CadCliente_Load(object sender, EventArgs e)
+        private async void CadCliente_Load(object sender, EventArgs e)
         {
-            MontarAmbienteInicial();
+            this.Icon = Properties.Resources.ICONE_KADOSH_128X128;
+            await MontarAmbienteInicialAsync();
         }
 
-        private void cboEstado_SelectedIndexChanged(object sender, EventArgs e)
+        private async void cboEstado_SelectedIndexChanged(object sender, EventArgs e)
         {
-            List<DmoCidade> cidades = new BoCidade().ConsultarDoEstado(((DmoEstado)cboEstado.SelectedItem).IdEstado);
+            List<DmoCidade> cidades = await new BoCidade().ConsultarDoEstadoAsync(((DmoEstado)cboEstado.SelectedItem).IdEstado);
             cboCidade.DataSource = cidades;
             cboCidade.DisplayMember = "Nome";
             cboCidade.ValueMember = "IdCidade";

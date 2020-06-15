@@ -2,8 +2,11 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="KadoshModas.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="CorPrincipal" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">Black</Value>
+    <Setting Name="StringDeConexaoKadosh" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="StringDeConexaoMaster" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

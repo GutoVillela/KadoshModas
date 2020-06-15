@@ -61,22 +61,23 @@ namespace KadoshModas.UI
         #endregion
 
         #region Eventos
-        private void ConCliente_Load(object sender, EventArgs e)
+        private async void ConCliente_Load(object sender, EventArgs e)
         {
-            CarregarGrid(new BoCliente().Consultar(false));
+            this.Icon = Properties.Resources.ICONE_KADOSH_128X128;
+            CarregarGrid(await new BoCliente().ConsultarAsync(null, null, null, null, null, false));
         }
 
-        private void txtConsulta_TextChanged(object sender, EventArgs e)
+        private async void txtConsulta_TextChanged(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtConsulta.Text.Trim()))
             {
-                CarregarGrid(new BLL.BoCliente().Consultar(false));
+                CarregarGrid(await new BLL.BoCliente().ConsultarAsync(null, null, null, null, null, false));
             }
             else
             {
                 if (rbtNome.Checked)
                 {
-                    CarregarGrid(new BLL.BoCliente().Consultar(txtConsulta.Text.Trim()));
+                    CarregarGrid(await new BLL.BoCliente().ConsultarAsync(txtConsulta.Text.Trim()));
                 }
             }
         }

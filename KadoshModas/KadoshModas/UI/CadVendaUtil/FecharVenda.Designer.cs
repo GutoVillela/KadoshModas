@@ -55,6 +55,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.txtEntrada = new System.Windows.Forms.TextBox();
+            this.rbtFiado = new System.Windows.Forms.RadioButton();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trbDesconto)).BeginInit();
             this.panel2.SuspendLayout();
@@ -89,7 +90,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(545, 63);
+            this.panel1.Size = new System.Drawing.Size(667, 63);
             this.panel1.TabIndex = 2;
             // 
             // label2
@@ -107,7 +108,7 @@
             this.cboFormaDePagamento.FormattingEnabled = true;
             this.cboFormaDePagamento.Location = new System.Drawing.Point(201, 97);
             this.cboFormaDePagamento.Name = "cboFormaDePagamento";
-            this.cboFormaDePagamento.Size = new System.Drawing.Size(327, 29);
+            this.cboFormaDePagamento.Size = new System.Drawing.Size(443, 29);
             this.cboFormaDePagamento.TabIndex = 4;
             this.cboFormaDePagamento.SelectedIndexChanged += new System.EventHandler(this.cboFormaDePagamento_SelectedIndexChanged);
             // 
@@ -136,11 +137,11 @@
             // rbtAPrazo
             // 
             this.rbtAPrazo.AutoSize = true;
-            this.rbtAPrazo.Location = new System.Drawing.Point(283, 148);
+            this.rbtAPrazo.Location = new System.Drawing.Point(384, 148);
             this.rbtAPrazo.Name = "rbtAPrazo";
-            this.rbtAPrazo.Size = new System.Drawing.Size(81, 25);
+            this.rbtAPrazo.Size = new System.Drawing.Size(96, 25);
             this.rbtAPrazo.TabIndex = 7;
-            this.rbtAPrazo.Text = "A Prazo";
+            this.rbtAPrazo.Text = "Parcelado";
             this.rbtAPrazo.UseVisualStyleBackColor = true;
             this.rbtAPrazo.CheckedChanged += new System.EventHandler(this.rbtAPrazo_CheckedChanged);
             // 
@@ -148,7 +149,7 @@
             // 
             this.lblPrazoEm.AutoSize = true;
             this.lblPrazoEm.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPrazoEm.Location = new System.Drawing.Point(370, 150);
+            this.lblPrazoEm.Location = new System.Drawing.Point(486, 150);
             this.lblPrazoEm.Name = "lblPrazoEm";
             this.lblPrazoEm.Size = new System.Drawing.Size(34, 21);
             this.lblPrazoEm.TabIndex = 8;
@@ -172,7 +173,7 @@
             "10",
             "11",
             "12"});
-            this.cboQtdParcelas.Location = new System.Drawing.Point(410, 147);
+            this.cboQtdParcelas.Location = new System.Drawing.Point(526, 147);
             this.cboQtdParcelas.Name = "cboQtdParcelas";
             this.cboQtdParcelas.Size = new System.Drawing.Size(60, 29);
             this.cboQtdParcelas.TabIndex = 9;
@@ -183,7 +184,7 @@
             // 
             this.lblPrazoVezes.AutoSize = true;
             this.lblPrazoVezes.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPrazoVezes.Location = new System.Drawing.Point(476, 150);
+            this.lblPrazoVezes.Location = new System.Drawing.Point(592, 150);
             this.lblPrazoVezes.Name = "lblPrazoVezes";
             this.lblPrazoVezes.Size = new System.Drawing.Size(52, 21);
             this.lblPrazoVezes.TabIndex = 10;
@@ -204,7 +205,7 @@
             this.trbDesconto.Location = new System.Drawing.Point(201, 200);
             this.trbDesconto.Maximum = 100;
             this.trbDesconto.Name = "trbDesconto";
-            this.trbDesconto.Size = new System.Drawing.Size(287, 45);
+            this.trbDesconto.Size = new System.Drawing.Size(404, 45);
             this.trbDesconto.TabIndex = 12;
             this.trbDesconto.ValueChanged += new System.EventHandler(this.trbDesconto_ValueChanged);
             // 
@@ -212,7 +213,7 @@
             // 
             this.lblDesconto.AutoSize = true;
             this.lblDesconto.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDesconto.Location = new System.Drawing.Point(494, 200);
+            this.lblDesconto.Location = new System.Drawing.Point(611, 200);
             this.lblDesconto.Name = "lblDesconto";
             this.lblDesconto.Size = new System.Drawing.Size(33, 21);
             this.lblDesconto.TabIndex = 13;
@@ -233,7 +234,7 @@
             // 
             this.lblEntrada.AutoSize = true;
             this.lblEntrada.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEntrada.Location = new System.Drawing.Point(442, 250);
+            this.lblEntrada.Location = new System.Drawing.Point(393, 250);
             this.lblEntrada.Name = "lblEntrada";
             this.lblEntrada.Size = new System.Drawing.Size(64, 21);
             this.lblEntrada.TabIndex = 16;
@@ -275,7 +276,7 @@
             this.btnFecharVenda.IconChar = FontAwesome.Sharp.IconChar.Check;
             this.btnFecharVenda.IconColor = System.Drawing.Color.DarkGreen;
             this.btnFecharVenda.IconSize = 30;
-            this.btnFecharVenda.Location = new System.Drawing.Point(303, 10);
+            this.btnFecharVenda.Location = new System.Drawing.Point(425, 10);
             this.btnFecharVenda.Name = "btnFecharVenda";
             this.btnFecharVenda.Rotation = 0D;
             this.btnFecharVenda.Size = new System.Drawing.Size(232, 55);
@@ -356,10 +357,10 @@
             this.panel2.Controls.Add(this.btnFecharVenda);
             this.panel2.Controls.Add(this.btnCancelarFechamento);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 423);
+            this.panel2.Location = new System.Drawing.Point(0, 492);
             this.panel2.Name = "panel2";
             this.panel2.Padding = new System.Windows.Forms.Padding(10);
-            this.panel2.Size = new System.Drawing.Size(545, 75);
+            this.panel2.Size = new System.Drawing.Size(667, 75);
             this.panel2.TabIndex = 24;
             // 
             // panel3
@@ -370,26 +371,38 @@
             this.panel3.Controls.Add(this.lblTroco);
             this.panel3.Controls.Add(this.lblTrocoRotulo);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(0, 343);
+            this.panel3.Location = new System.Drawing.Point(0, 412);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(545, 80);
+            this.panel3.Size = new System.Drawing.Size(667, 80);
             this.panel3.TabIndex = 25;
             // 
             // txtEntrada
             // 
             this.txtEntrada.Location = new System.Drawing.Point(201, 247);
             this.txtEntrada.Name = "txtEntrada";
-            this.txtEntrada.Size = new System.Drawing.Size(214, 28);
+            this.txtEntrada.Size = new System.Drawing.Size(186, 28);
             this.txtEntrada.TabIndex = 26;
             this.txtEntrada.Visible = false;
             this.txtEntrada.TextChanged += new System.EventHandler(this.txtEntrada_TextChanged);
             this.txtEntrada.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtEntrada_KeyPress);
             // 
+            // rbtFiado
+            // 
+            this.rbtFiado.AutoSize = true;
+            this.rbtFiado.Location = new System.Drawing.Point(293, 148);
+            this.rbtFiado.Name = "rbtFiado";
+            this.rbtFiado.Size = new System.Drawing.Size(66, 25);
+            this.rbtFiado.TabIndex = 27;
+            this.rbtFiado.Text = "Fiado";
+            this.rbtFiado.UseVisualStyleBackColor = true;
+            this.rbtFiado.CheckedChanged += new System.EventHandler(this.rbtFiado_CheckedChanged);
+            // 
             // FecharVenda
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(545, 498);
+            this.ClientSize = new System.Drawing.Size(667, 567);
+            this.Controls.Add(this.rbtFiado);
             this.Controls.Add(this.txtEntrada);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
@@ -455,5 +468,6 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.TextBox txtEntrada;
+        private System.Windows.Forms.RadioButton rbtFiado;
     }
 }

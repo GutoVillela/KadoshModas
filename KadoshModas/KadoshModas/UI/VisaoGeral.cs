@@ -22,58 +22,65 @@ namespace KadoshModas.UI
 
         #region Métodos
         /// <summary>
-        /// Monta o Ambiente Inicial
+        /// Monta o Ambiente Inicial de forma assíncrona
         /// </summary>
-        private void MontarAmbienteInicial()
+        private async Task MontarAmbienteInicialAsync()
         {
-            List<DmoVenda> vendas = new BoVenda().Consultar();
-
-            #region Vendas da Semana
-            int diaDaSemana = (int) DateTime.Today.DayOfWeek;
-            int vendasDaSemana = vendas.FindAll(v => v.DataVenda > DateTime.Today.AddDays(-Convert.ToDouble(diaDaSemana))).Count();
-
-            btnVendasDaSemana.Text = vendasDaSemana.ToString().PadLeft(3, '0');
-            #endregion
-
-            #region Vendas Em Aberto
-            int vendasEmAberto = vendas.FindAll(v => v.Situacao == DmoVenda.SituacoesVenda.EmAberto).Count();
-
-            btnVendasEmAberto.Text = vendasEmAberto.ToString().PadLeft(3, '0');
-            #endregion
-
-            #region Clientes Inadimplentes
-            List<int?> idClientesInadimplentes = new List<int?>();
-            foreach (DmoVenda venda in vendas)
+            try
             {
-                if(venda.ParcelasDaVenda != null && venda.ParcelasDaVenda.Any(p => p.SituacaoParcela == DmoParcela.SituacoesParcela.EmAberto))
+                List<DmoVenda> vendas = await new BoVenda().ConsultarAsync();
+
+                #region Vendas da Semana
+                int diaDaSemana = (int)DateTime.Today.DayOfWeek;
+                int vendasDaSemana = vendas.FindAll(v => v.DataVenda > DateTime.Today.AddDays(-Convert.ToDouble(diaDaSemana))).Count();
+
+                btnVendasDaSemana.Text = vendasDaSemana.ToString().PadLeft(3, '0');
+                #endregion
+
+                #region Vendas Em Aberto
+                int vendasEmAberto = vendas.FindAll(v => v.Situacao == SituacaoVenda.EmAberto).Count();
+
+                btnVendasEmAberto.Text = vendasEmAberto.ToString().PadLeft(3, '0');
+                #endregion
+
+                #region Clientes Inadimplentes
+                List<int?> idClientesInadimplentes = new List<int?>();
+                foreach (DmoVenda venda in vendas)
                 {
-                    if(venda.ParcelasDaVenda.First().Vencimento < DateTime.Today)
+                    if (venda.ParcelasDaVenda != null && venda.ParcelasDaVenda.Any(p => p.SituacaoParcela == SituacaoParcela.EmAberto))
                     {
-                        if(!idClientesInadimplentes.Any(c => c == venda.Cliente.IdCliente))
-                            idClientesInadimplentes.Add(venda.Cliente.IdCliente);
+                        if (venda.ParcelasDaVenda.First().Vencimento < DateTime.Today)
+                        {
+                            if (!idClientesInadimplentes.Any(c => c == venda.Cliente.IdCliente))
+                                idClientesInadimplentes.Add(venda.Cliente.IdCliente);
+                        }
                     }
                 }
-            }
 
-            btnClientesInadimplentes.Text = idClientesInadimplentes.Count().ToString().PadLeft(3, '0');
+                btnClientesInadimplentes.Text = idClientesInadimplentes.Count().ToString().PadLeft(3, '0');
 
-            if (idClientesInadimplentes.Any())
-            {
-                pnlClientesInadimplentes.BackgroundImage = Resources.retangulo_vermelho_claro;
-                btnRotuloClientesInadimplentes.ForeColor = Color.FromArgb(192, 0, 0);
-                btnClientesInadimplentes.ForeColor = Color.FromArgb(192, 0, 0);
-                picClientesInadimplentes.IconChar = FontAwesome.Sharp.IconChar.Frown;
-                picClientesInadimplentes.IconColor = Color.FromArgb(192, 0, 0);
+                if (idClientesInadimplentes.Any())
+                {
+                    pnlClientesInadimplentes.BackgroundImage = Resources.retangulo_vermelho_claro;
+                    btnRotuloClientesInadimplentes.ForeColor = Color.FromArgb(192, 0, 0);
+                    btnClientesInadimplentes.ForeColor = Color.FromArgb(192, 0, 0);
+                    picClientesInadimplentes.IconChar = FontAwesome.Sharp.IconChar.Frown;
+                    picClientesInadimplentes.IconColor = Color.FromArgb(192, 0, 0);
+                }
+                else
+                {
+                    pnlClientesInadimplentes.BackgroundImage = Resources.retangulo_verde_claro;
+                    btnRotuloClientesInadimplentes.ForeColor = Color.DarkGreen;
+                    btnClientesInadimplentes.ForeColor = Color.DarkGreen;
+                    picClientesInadimplentes.IconChar = FontAwesome.Sharp.IconChar.Smile;
+                    picClientesInadimplentes.IconColor = Color.DarkGreen;
+                }
+                #endregion
             }
-            else
+            catch (Exception erro)
             {
-                pnlClientesInadimplentes.BackgroundImage = Resources.retangulo_verde_claro;
-                btnRotuloClientesInadimplentes.ForeColor = Color.DarkGreen;
-                btnClientesInadimplentes.ForeColor = Color.DarkGreen;
-                picClientesInadimplentes.IconChar = FontAwesome.Sharp.IconChar.Smile;
-                picClientesInadimplentes.IconColor = Color.DarkGreen;
+                MessageBox.Show("Atenção! Aconteceu um erro ao carregar as estatísticas da loja. Por favor contacte o adminsitrador do sistema. Mensagem original: " + erro.Message, "Erro ao carregar estatísticas da loja", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            #endregion
         }
 
         /// <summary>
@@ -94,9 +101,10 @@ namespace KadoshModas.UI
         #endregion
 
         #region Eventos
-        private void VisaoGeral_Load(object sender, EventArgs e)
+        private async void VisaoGeral_Load(object sender, EventArgs e)
         {
-            MontarAmbienteInicial();
+            this.Icon = Properties.Resources.ICONE_KADOSH_128X128;
+            await MontarAmbienteInicialAsync();
         }
 
         private void btnAtalhoCadVenda_Click(object sender, EventArgs e)

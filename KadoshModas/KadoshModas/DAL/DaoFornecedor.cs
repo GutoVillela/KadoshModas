@@ -38,13 +38,13 @@ namespace KadoshModas.DAL
 
         #region Métodos
         /// <summary>
-        /// Cadastra um Fornecedor na base de dados
+        /// Cadastra um Fornecedor na base de dados de forma assíncrona
         /// </summary>
         /// <param name="pFornecedor">Objeto DmoFornecedor preenchido com pelo menos o Nome do Fornecedor</param>
         /// <returns>Retorna o Id do Fornecedor cadastrado.</returns>
-        public int? Cadastrar(DmoFornecedor pFornecedor)
+        public async Task<int?> CadastrarAsync(DmoFornecedor pFornecedor)
         {
-            SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (NOME, CNPJ, ENDERECO) VALUES (@NOME, @CNPJ, @ENDERECO)", conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"INSERT INTO " + NOME_TABELA + " (NOME, CNPJ, ENDERECO) VALUES (@NOME, @CNPJ, @ENDERECO)", await conexao.ConectarAsync());
             cmd.Parameters.AddWithValue("@NOME", pFornecedor.Nome).SqlDbType = SqlDbType.VarChar;
 
             if (string.IsNullOrEmpty(pFornecedor.CNPJ))
@@ -57,21 +57,21 @@ namespace KadoshModas.DAL
             else
                 cmd.Parameters.AddWithValue("@ENDERECO", DBNull.Value).SqlDbType = SqlDbType.Int;
 
-            cmd.ExecuteNonQuery();
+            await cmd.ExecuteNonQueryAsync();
             conexao.Desconectar();
 
-            return ConsultarUltimoId();
+            return await ConsultarUltimoIdAsync();
         }
 
         /// <summary>
-        /// Consulta todos os Fornecedores cadastrados na base de dados
+        /// Consulta todos os Fornecedores cadastrados na base de dados de forma assíncrona
         /// </summary>
         /// <param name="pNomeFornecedor">Se fornecido, busca os fornecedores cujos nomes iniciam com a string fornecida</param>
         /// <param name="pBuscaInativos">Define se busca incluirá nos resultados registros de fornecedores inativos</param>
         /// <returns>Retorna uma lista de DmoFornecedor com todos os Fornecedores encontrados</returns>
-        public List<DmoFornecedor> Consultar(string pNomeFornecedor = null, bool pBuscaInativos = false)
+        public async Task<List<DmoFornecedor>> ConsultarAsync(string pNomeFornecedor = null, bool pBuscaInativos = false)
         {
-            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA, conexao.Conectar());
+            SqlCommand cmd = new SqlCommand(@"SELECT * FROM " + NOME_TABELA, await conexao.ConectarAsync());
 
             if (!string.IsNullOrEmpty(pNomeFornecedor))
             {
@@ -92,17 +92,17 @@ namespace KadoshModas.DAL
                 cmd.CommandText += " ATIVO = 1";
             }
 
-            SqlDataReader dataReader = cmd.ExecuteReader();
+            SqlDataReader dataReader = await cmd.ExecuteReaderAsync();
 
             List<DmoFornecedor> listaDeFornecedores = new List<DmoFornecedor>();
 
-            while (dataReader.Read())
+            while (await dataReader.ReadAsync())
             {
                 DmoFornecedor fornecedor = new DmoFornecedor();
                 fornecedor.IdFornecedor = int.Parse(dataReader["ID_FORNECEDOR"].ToString());
                 fornecedor.Nome = dataReader["NOME"].ToString();
                 fornecedor.CNPJ = dataReader["CNPJ"].ToString();
-                fornecedor.Endereco = string.IsNullOrEmpty(dataReader["ENDERECO"].ToString()) ? null : new DaoEndereco().ConsultarEnderecoPorId(int.Parse(dataReader["ENDERECO"].ToString()));
+                fornecedor.Endereco = string.IsNullOrEmpty(dataReader["ENDERECO"].ToString()) ? null : await new DaoEndereco().ConsultarEnderecoPorIdAsync(int.Parse(dataReader["ENDERECO"].ToString()));
                 fornecedor.Ativo = bool.Parse(dataReader["ATIVO"].ToString());
                 fornecedor.DataDeCriacao = DateTime.Parse(dataReader["DT_CRIACAO"].ToString());
                 fornecedor.DataDeAtualizacao = DateTime.Parse(dataReader["DT_ATUALIZACAO"].ToString());
@@ -116,18 +116,18 @@ namespace KadoshModas.DAL
         }
 
         /// <summary>
-        /// Consulta o último Id de Fornecedor cadastrado na base
+        /// Consulta o último Id de Fornecedor cadastrado na base de forma assíncrona
         /// </summary>
         /// <returns>Retorno último Id de Fornecedor cadastrado na base. Em caso de erro retorna null</returns>
-        private int? ConsultarUltimoId()
+        private async Task<int?> ConsultarUltimoIdAsync()
         {
             try
             {
-                SqlCommand cmd = new SqlCommand("SELECT MAX(ID_FORNECEDOR) AS ID FROM " + NOME_TABELA, conexao.Conectar());
+                SqlCommand cmd = new SqlCommand("SELECT MAX(ID_FORNECEDOR) AS ID FROM " + NOME_TABELA, await conexao.ConectarAsync());
 
-                SqlDataReader dr = cmd.ExecuteReader();
+                SqlDataReader dr = await cmd.ExecuteReaderAsync();
 
-                dr.Read();
+                await dr.ReadAsync();
 
                 return int.Parse(dr[0].ToString());
 
