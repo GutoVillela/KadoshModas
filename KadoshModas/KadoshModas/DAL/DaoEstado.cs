@@ -60,6 +60,7 @@ namespace KadoshModas.DAL
                 listaDeEstados.Add(estado);
             }
 
+            dataReader.Close();
             conexao.Desconectar();
 
             return listaDeEstados;

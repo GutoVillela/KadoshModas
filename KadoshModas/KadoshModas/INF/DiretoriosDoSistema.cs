@@ -36,5 +36,13 @@ namespace KadoshModas.INF
         {
             get { return Directory.CreateDirectory(Path.GetDirectoryName(Application.ExecutablePath) + "\\FotosProdutos").FullName; }
         }
+
+        /// <summary>
+        /// Diretório aonde estão salvos os relatórios (arquivos RDLC).
+        /// </summary>
+        public static string DIR_RELATORIOS
+        {
+            get { return Path.GetDirectoryName(Application.ExecutablePath) + @"\..\..\Relatorios"; }
+        }
     }
 }

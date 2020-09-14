@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace KadoshModas.BLL
 {
     /// <summary>
-    /// Classe BLL base para outras classes BLL. Esta classe contém atributos em comum entre todas as classes BLL
+    /// Classe BLL base para outras classes BO. Esta classe contém atributos em comum entre todas as classes BO.
     /// </summary>
-    class BoBase
+    public abstract class BoBase
     {
     }
 }

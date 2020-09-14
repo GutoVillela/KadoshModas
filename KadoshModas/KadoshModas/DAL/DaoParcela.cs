@@ -88,6 +88,7 @@ namespace KadoshModas.DAL
                 listaDeParcelas.Add(parcela);
             }
 
+            dataReader.Close();
             conexao.Desconectar();
 
             return listaDeParcelas;

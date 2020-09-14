@@ -107,6 +107,53 @@ namespace KadoshModas.DML
         /// </summary>
         public List<DmoParcela> ParcelasDaVenda { get; set; }
         #endregion
+
+        #region Métodos
+        /// <summary>
+        /// Calcula o Total desta Venda com base nos Itens da Venda associados à ela
+        /// </summary>
+        /// <returns>Retorna o Total da Venda</returns>
+        public float TotalDaVenda()
+        {
+            float totalVenda = 0f;
+
+            foreach (DmoItemDaVenda item in this.ItensDaVenda)
+            {
+                if (item.Situacao != SituacaoItemDaVenda.Cancelado && item.Situacao != SituacaoItemDaVenda.Trocado)
+                    totalVenda += (item.Valor - item.Valor * (item.Desconto / 100)) * item.Quantidade;
+            }
+
+            totalVenda -= totalVenda * (Desconto / 100);
+
+            return totalVenda;
+        }
+
+        /// <summary>
+        /// Recupera o valor que falta pagar para quitar a Venda.
+        /// </summary>
+        /// <returns>Retorna valor que falta pagar para esta Venda.</returns>
+        public double FaltaPagar()
+        {
+            return this.Total - this.Pago;
+        }
+
+        /// <summary>
+        /// Recupera o Total das Parcelas em Aberto desta Venda.
+        /// </summary>
+        /// <returns>Retorna o Total das Parcelas com Situação como Em Aberto</returns>
+        public double TotalParcelasEmAberto()
+        {
+            double totalParcelas = 0;
+
+            foreach (DmoParcela parcela in this.ParcelasDaVenda)
+            {
+                if (parcela.SituacaoParcela == SituacaoParcela.EmAberto)
+                    totalParcelas += parcela.ValorParcela;
+            }
+
+            return totalParcelas;
+        }
+        #endregion
     }
 
     #region Enum

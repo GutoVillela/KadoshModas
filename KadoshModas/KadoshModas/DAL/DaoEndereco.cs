@@ -107,6 +107,9 @@ namespace KadoshModas.DAL
                 DataDeAtualizacao = DateTime.Parse(dataReader["DT_ATUALIZACAO"].ToString())
             };
 
+            dataReader.Close();
+            conexao.Desconectar();
+
             return endereco;
         }
 
@@ -169,8 +172,12 @@ namespace KadoshModas.DAL
                 SqlDataReader dr = await cmd.ExecuteReaderAsync();
 
                 await dr.ReadAsync();
+                int id = int.Parse(dr[0].ToString());
 
-                return int.Parse(dr[0].ToString());
+                dr.Close();
+                conexao.Desconectar();
+
+                return id;
 
             }
             catch

@@ -65,14 +65,32 @@ namespace KadoshModas.BLL
         /// <param name="pPrecoMax">Se fornecido, busca os Produtos com preço ATÉ o valor fornecido</param>
         /// <param name="pCodBarras">Se fornecido, busca os Produtos com o Código de Barras IGUAL ao valor fornecido</param>
         /// <param name="pCategorias">Se fornecido, busca os Produtos DENTRO das Categorias fornecidas</param>
+        /// <param name="pBuscaProdutosSemCategoria">Se fornecido, define se busca incluirá Produtos sem Categoria</param>
         /// <param name="pMarcas">Se fornecido, busca os Produtos DENTRO das Marcas fornecidas</param>
+        /// <param name="pBuscaProdutosSemMarca">Se fornecido, define se busca incluirá Produtos sem Marca</param>
         /// <param name="pBuscaInativos">Define se a busca retornará Produtos Inativos</param>
+        /// <param name="pAPartirDoRegistro">Se fornecido, inicia  a busca a partir do registro fornecido</param>
+        /// <param name="pAteORegistro">Se fornecido, busca até o registro fornecido</param>
         /// <returns>Retorna uma lista de objetos DmoProduto com todos os Produtos da base</returns>
-        public async Task<List<DmoProduto>> ConsultarAsync(string pNome = null, float? pPrecoMax = null, string pCodBarras = null, List<DmoCategoria> pCategorias = null, List<DmoMarca> pMarcas = null, bool pBuscaInativos = false)
+        public async Task<List<DmoProduto>> ConsultarAsync(string pNome = null, float? pPrecoMax = null, string pCodBarras = null, List<DmoCategoria> pCategorias = null, bool pBuscaProdutosSemCategoria = true, List<DmoMarca> pMarcas = null, bool pBuscaProdutosSemMarca = true, bool pBuscaInativos = false, uint? pAPartirDoRegistro = null, uint? pAteORegistro = null)
         {
-            return await new DaoProduto().ConsultarAsync(pNome, pPrecoMax, pCodBarras, pCategorias, pMarcas, pBuscaInativos);
+            return await new DaoProduto().ConsultarAsync(pNome, pPrecoMax, pCodBarras, pCategorias, pBuscaProdutosSemCategoria, pMarcas, pBuscaProdutosSemMarca, pBuscaInativos, pAPartirDoRegistro, pAteORegistro);
         }
 
+        /// <summary>
+        /// Conta a quantidade de Produtos que correspondem à busca no banco de dados de Forma assíncrona
+        /// </summary>
+        /// <param name="pNome">Se fornecido, busca os Produtos com Nomes que iniciam com a cadeia de caracteres fornecida</param>
+        /// <param name="pPrecoMax">Se fornecido, busca os Produtos com preço ATÉ o valor fornecido</param>
+        /// <param name="pCodBarras">Se fornecido, busca os Produtos com o Código de Barras IGUAL ao valor fornecido</param>
+        /// <param name="pCategorias">Se fornecido, busca os Produtos DENTRO das Categorias fornecidas</param>
+        /// <param name="pMarcas">Se fornecido, busca os Produtos DENTRO das Marcas fornecidas</param>
+        /// <param name="pBuscaInativos">Define se a busca retornará Produtos Inativos</param>
+        /// <returns>Retorno a quantidade de Produtos encontrados que atendem aos critérios de busca</returns>
+        public async Task<int> ContarProdutosAsync(string pNome = null, float? pPrecoMax = null, string pCodBarras = null, List<DmoCategoria> pCategorias = null, List<DmoMarca> pMarcas = null, bool pBuscaInativos = false)
+        {
+            return await new DaoProduto().ContarProdutosAsync(pNome, pPrecoMax, pCodBarras, pCategorias, pMarcas, pBuscaInativos);
+        }
 
         /// <summary>
         /// Atualiza o Produto de forma assíncrona
@@ -198,6 +216,54 @@ namespace KadoshModas.BLL
         public async Task<bool> AtualizarFotoAsync(string pNovaUrlFoto, int? pIdProduto)
         {
             return await new DaoProduto().AtualizarFotoAsync(pNovaUrlFoto, pIdProduto);
+        }
+
+        /// <summary>
+        /// Verifica se código de barras já existe e está associado a um Produto
+        /// </summary>
+        /// <param name="pCodDeBarras">Código de Barras a consultar</param>
+        /// <returns>Retorna true se código de barras já existe e false caso não exista</returns>
+        public async Task<bool> VerificarSeCodDeBarrasExisteAsync(string pCodDeBarras)
+        {
+            if (string.IsNullOrEmpty(pCodDeBarras))
+                throw new ArgumentException("O parâmetro pCodDeBarras não pode ser vazio ou nulo", "pCodDeBarras");
+
+            if (pCodDeBarras.Length < 12)
+                throw new ArgumentException("O parâmetro pCodDeBarras deve possuir pelo menos 12 caracteres para ser um código de barras válido", "pCodDeBarras");
+
+            return await new DaoProduto().VerificarSeCodDeBarrasExisteAsync(pCodDeBarras);
+        }
+
+        /// <summary>
+        /// Calcula o dígito verificador do código de barras no formato EAN-13 fornecido.
+        /// </summary>
+        /// <param name="pCodDeBarras">Código de barras sem o dígito verificador.</param>
+        /// <returns>Retorna dígito verificador encontrado.</returns>
+        public int CalcularDigitoVerificadorCodDeBarras(string pCodDeBarras)
+        {
+            if (string.IsNullOrEmpty(pCodDeBarras) || pCodDeBarras.Length != 12)
+                throw new ArgumentException("O tamanho do código de barras deve ser de 12 dígitos, excluindo o dígito verificador.");
+
+            int sum = 0;
+            for (int i = 0; i < 12; i++)
+            {
+                int v;
+                if (!int.TryParse(pCodDeBarras[i].ToString(), out v))
+                    throw new ArgumentException("Caractere inválido encontrado no código de barras. Todos os dígitos devem ser numéricos.");
+                sum += (i % 2 == 0 ? v : v * 3);
+            }
+            int check = 10 - (sum % 10);
+            return check % 10;
+        }
+
+        /// <summary>
+        /// Consulta e retorna o valor do produto mais caro cadastrado na base de forma assíncrona
+        /// </summary>
+        /// <param name="pIncluirProdutosInativos">Define se busca incluirá valores de produtos inativos</param>
+        /// <returns>Retorna maior valor de Produto encontrado.</returns>
+        public async Task<double> ObterMaiorPrecoDeProdutoAsync(bool pIncluirProdutosInativos = false)
+        {
+            return await new DaoProduto().ObterMaiorPrecoDeProdutoAsync(pIncluirProdutosInativos);
         }
         #endregion
     }

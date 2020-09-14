@@ -75,7 +75,12 @@ namespace KadoshModas.DAL
 
                 await dr.ReadAsync();
 
-                return int.Parse(dr[0].ToString());
+                int id = int.Parse(dr[0].ToString());
+
+                dr.Close();
+                conexao.Desconectar();
+
+                return id;
             }
             catch
             {
@@ -125,7 +130,11 @@ namespace KadoshModas.DAL
 
             await dr.ReadAsync();
 
-            return int.Parse(dr[0].ToString());
+            int id = int.Parse(dr[0].ToString());
+
+            dr.Close();
+            conexao.Desconectar();
+            return id;
 
         }
         catch

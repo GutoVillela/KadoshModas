@@ -37,11 +37,8 @@ namespace KadoshModas.BLL
         /// </summary>
         /// <param name="pIdVenda">Id da Venda</param>
         /// <returns>Lista de Itens da Venda</returns>
-        public async Task<List<DmoItemDaVenda>> ConsultarItensDaVendaAsync(int? pIdVenda)
+        public async Task<List<DmoItemDaVenda>> ConsultarItensDaVendaAsync(int pIdVenda)
         {
-            if (pIdVenda == null)
-                throw new ArgumentNullException("O parâmetro pIdVenda é obrigatório e não pode ser nulo.");
-
             List <DmoItemDaVenda> itensDaVenda = await new DaoItemDaVenda().ConsultarItensDaVendaAsync(pIdVenda);
             
             foreach(DmoItemDaVenda item in itensDaVenda)
@@ -50,6 +47,24 @@ namespace KadoshModas.BLL
             }
 
             return itensDaVenda;
+        }
+
+        /// <summary>
+        /// Atualiza o Item Da Venda de forma assíncrona
+        /// </summary>
+        /// <param name="pItemDaVenda">Objeto DmoItemDaVenda preenchido</param>
+        public async Task AtualizarAsync(DmoItemDaVenda pItemDaVenda)
+        {
+            await new DaoItemDaVenda().AtualizarAsync(pItemDaVenda);
+        }
+
+        /// <summary>
+        /// Apaga o Item Da Venda de forma assíncrona
+        /// </summary>
+        /// <param name="pItemDaVenda">Objeto DmoItemDaVenda preenchido</param>
+        public async Task ApagarAsync(DmoItemDaVenda pItemDaVenda)
+        {
+            await new DaoItemDaVenda().ApagarAsync(pItemDaVenda);
         }
         #endregion
     }

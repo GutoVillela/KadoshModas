@@ -206,6 +206,7 @@ namespace KadoshModas.DAL
                 listaDeClientes.Add(cliente);
             }
 
+            dataReader.Close();
             conexao.Desconectar();
 
             return listaDeClientes;
@@ -239,6 +240,9 @@ namespace KadoshModas.DAL
                     DataDeCriacao = DateTime.Parse(""),
                     DataDeAtualizacao = DateTime.Parse("")
                 };
+
+                dataReader.Close();
+                conexao.Desconectar();
 
                 return endereco;
             }
@@ -347,6 +351,7 @@ namespace KadoshModas.DAL
 
                 int ultimoId = int.Parse(dr[0].ToString());
 
+                dr.Close();
                 conexao.Desconectar();
 
                 return ultimoId;
@@ -442,6 +447,7 @@ namespace KadoshModas.DAL
 
             int quantidadeCliente = int.Parse(dr[0].ToString());
 
+            dr.Close();
             conexao.Desconectar();
 
             return quantidadeCliente;
@@ -498,8 +504,55 @@ namespace KadoshModas.DAL
             cmd.Parameters.AddWithValue("@CPF", pCPF).SqlDbType = SqlDbType.Char;
 
             SqlDataReader dr = await cmd.ExecuteReaderAsync();
+            bool cpfExiste = dr.HasRows;
 
-            return dr.HasRows;
+            dr.Close();
+            conexao.Desconectar();
+
+            return cpfExiste;
+        }
+
+        /// <summary>
+        /// Conta os Clientes em situação de inadimplência.
+        /// </summary>
+        /// <param name="pDiasParaInadimplencia">Quantidade de dias sem lançamentos em Vendas em aberto para que Cliente seja considerado como inadimplente.</param>
+        /// <param name="pBuscarClienteIndefinido">Define se busca retornará o Cliente Indefinido</param>
+        /// <param name="pBuscaClientesDesativados">Define se busca retornará Clientes desativados</param>
+        /// <returns></returns>
+        public async Task<int> ContarClientesInadimplentesAsync(int pDiasParaInadimplencia, bool pBuscarClienteIndefinido = true, bool pBuscaClientesDesativados = false)
+        {
+            SqlCommand cmd = new SqlCommand("SELECT COUNT(ID_CLIENTE) FROM " + NOME_TABELA, await conexao.ConectarAsync());
+
+            #region Filtros
+            if (!pBuscaClientesDesativados)
+            {
+                cmd.CommandText += " WHERE";
+
+                cmd.CommandText += " ATIVO = 1";
+            }
+
+            if (!pBuscarClienteIndefinido)
+            {
+                if (cmd.CommandText.Contains("WHERE"))
+                    cmd.CommandText += " AND";
+                else
+                    cmd.CommandText += " WHERE";
+
+                cmd.CommandText += " ID_CLIENTE != @ID_CLIENTE_INDEFINIDO";
+                cmd.Parameters.AddWithValue("@ID_CLIENTE_INDEFINIDO", DmoCliente.IdClienteIndefinido).SqlDbType = SqlDbType.Int;
+            }
+            #endregion
+
+            SqlDataReader dr = await cmd.ExecuteReaderAsync();
+
+            await dr.ReadAsync();
+
+            int quantidadeCliente = int.Parse(dr[0].ToString());
+
+            dr.Close();
+            conexao.Desconectar();
+
+            return quantidadeCliente;
         }
         #endregion
     }

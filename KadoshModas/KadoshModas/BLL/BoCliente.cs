@@ -89,18 +89,24 @@ namespace KadoshModas.BLL
         /// <param name="pAPartirDoRegistro">Se fornecido, inicia  a busca a partir do registro fornecido</param>
         /// <param name="pAteORegistro">Se fornecido, busca até o registro fornecido</param>
         /// <returns>Retorna uma lista de DmoCliente com todos os clientes da base</returns>
-        public async Task<List<DmoCliente>> ConsultarAsync(int? pIdCliente = null, string pNome = null, string pEmail = null, string pCpf = null, Sexo? pSexo = null, bool pBuscarClienteIndefinido = true, bool pBuscaClientesDesativados = false, uint? pAPartirDoRegistro = null, uint? pAteORegistro = null)
+        public async Task<List<DmoCliente>> ConsultarAsync(int? pIdCliente = null, string pNome = null, string pEmail = null, string pCpf = null, Sexo? pSexo = null, bool pBuscarClienteIndefinido = true, bool pBuscaClientesDesativados = false, uint? pAPartirDoRegistro = null, uint? pAteORegistro = null, bool pBuscarEnderecoDoCliente = true, bool pBuscarTelefonesDoCliente = true)
         {
             List<DmoCliente> listaDeClientes = await new DaoCliente().ConsultarAsync(pIdCliente, pNome, pEmail, pCpf, pSexo, pBuscarClienteIndefinido, pBuscaClientesDesativados, pAPartirDoRegistro, pAteORegistro);
 
             for(int i = 0; i < listaDeClientes.Count; i++)
             {
-                //Buscar Endereço do Cliente
-                if (listaDeClientes[i].Endereco != null)
-                    listaDeClientes[i].Endereco = await new BoEndereco().ConsultarEnderecoPorIdAsync(int.Parse(listaDeClientes[i].Endereco.IdEndereco.ToString()));
+                if (pBuscarEnderecoDoCliente)
+                {
+                    //Buscar Endereço do Cliente
+                    if (listaDeClientes[i].Endereco != null)
+                        listaDeClientes[i].Endereco = await new BoEndereco().ConsultarEnderecoPorIdAsync(int.Parse(listaDeClientes[i].Endereco.IdEndereco.ToString()));
+                }
 
-                //Buscar Lista de Telefones do Cliente
-                listaDeClientes[i].Telefones = await new DaoCliente().ConsultarTelefonesDoClienteAsync(int.Parse(listaDeClientes[i].IdCliente.ToString()));
+                if (pBuscarTelefonesDoCliente)
+                {
+                    //Buscar Lista de Telefones do Cliente
+                    listaDeClientes[i].Telefones = await new DaoCliente().ConsultarTelefonesDoClienteAsync(int.Parse(listaDeClientes[i].IdCliente.ToString()));
+                }
             }
 
             return listaDeClientes;
@@ -112,7 +118,7 @@ namespace KadoshModas.BLL
         /// <param name="pIdCliente">ID do Cliente</param>
         /// <param name="pBuscaClientesDesativados">Define se busca retornará Clientes Desativados</param>
         /// <returns>Retorna um Cliente específico</returns>
-        public async Task<DmoCliente> ConsultarClientePorIdAsync(int pIdCliente, bool pBuscaClientesDesativados = false)
+        public async Task<DmoCliente> ConsultarClientePorIdAsync(int pIdCliente, bool pBuscaClientesDesativados = false, bool pBuscarEnderecoDoCliente = true, bool pBuscarTelefonesDoCliente = true)
         {
             List<DmoCliente> clientes = await new DaoCliente().ConsultarAsync(pIdCliente, null, null, null, null, true, pBuscaClientesDesativados);
             DmoCliente cliente = clientes.FirstOrDefault();
@@ -120,12 +126,18 @@ namespace KadoshModas.BLL
             if (cliente == null)
                 return null;
 
-            //Buscar Endereço do Cliente
-            if (cliente.Endereco != null)
-                cliente.Endereco = await new BoEndereco().ConsultarEnderecoPorIdAsync(int.Parse(cliente.Endereco.IdEndereco.ToString()));
+            if (pBuscarEnderecoDoCliente)
+            {
+                //Buscar Endereço do Cliente
+                if (cliente.Endereco != null)
+                    cliente.Endereco = await new BoEndereco().ConsultarEnderecoPorIdAsync(int.Parse(cliente.Endereco.IdEndereco.ToString()));
+            }
 
-            //Buscar Lista de Telefones do Cliente
-            cliente.Telefones = await new DaoCliente().ConsultarTelefonesDoClienteAsync(int.Parse(cliente.IdCliente.ToString()));
+            if (pBuscarTelefonesDoCliente)
+            {
+                //Buscar Lista de Telefones do Cliente
+                cliente.Telefones = await new DaoCliente().ConsultarTelefonesDoClienteAsync(int.Parse(cliente.IdCliente.ToString()));
+            }
 
             return cliente;
         }

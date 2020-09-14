@@ -12,7 +12,7 @@ namespace KadoshModas.DAL
     /// <summary>
     /// Classe responsável por realizar a conexão com o banco de dados
     /// </summary>
-    class Conexao
+    public class Conexao
     {
         /// <summary>
         /// Inicializa uma conexão com o banco de dados

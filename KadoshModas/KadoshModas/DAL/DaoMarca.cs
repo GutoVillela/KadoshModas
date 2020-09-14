@@ -86,6 +86,7 @@ namespace KadoshModas.DAL
                 listaDeMarcas.Add(marca);
             }
 
+            dataReader.Close();
             conexao.Desconectar();
 
             return listaDeMarcas;

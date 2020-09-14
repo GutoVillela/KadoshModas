@@ -39,11 +39,10 @@
             // 
             // lblMensagemAlerta
             // 
-            this.lblMensagemAlerta.AutoSize = true;
             this.lblMensagemAlerta.ForeColor = System.Drawing.Color.White;
-            this.lblMensagemAlerta.Location = new System.Drawing.Point(63, 28);
+            this.lblMensagemAlerta.Location = new System.Drawing.Point(63, 23);
             this.lblMensagemAlerta.Name = "lblMensagemAlerta";
-            this.lblMensagemAlerta.Size = new System.Drawing.Size(174, 21);
+            this.lblMensagemAlerta.Size = new System.Drawing.Size(292, 42);
             this.lblMensagemAlerta.TabIndex = 0;
             this.lblMensagemAlerta.Text = "Mensagem do alerta";
             // 
@@ -53,7 +52,7 @@
             this.picIcone.IconChar = FontAwesome.Sharp.IconChar.CheckCircle;
             this.picIcone.IconColor = System.Drawing.Color.White;
             this.picIcone.IconSize = 45;
-            this.picIcone.Location = new System.Drawing.Point(12, 14);
+            this.picIcone.Location = new System.Drawing.Point(12, 20);
             this.picIcone.Name = "picIcone";
             this.picIcone.Size = new System.Drawing.Size(45, 45);
             this.picIcone.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -70,7 +69,7 @@
             this.btnFechar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnFechar.IconChar = FontAwesome.Sharp.IconChar.TimesCircle;
             this.btnFechar.IconColor = System.Drawing.Color.White;
-            this.btnFechar.Location = new System.Drawing.Point(326, 22);
+            this.btnFechar.Location = new System.Drawing.Point(361, 25);
             this.btnFechar.Name = "btnFechar";
             this.btnFechar.Size = new System.Drawing.Size(32, 32);
             this.btnFechar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -82,7 +81,7 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.Highlight;
-            this.ClientSize = new System.Drawing.Size(367, 70);
+            this.ClientSize = new System.Drawing.Size(400, 80);
             this.Controls.Add(this.btnFechar);
             this.Controls.Add(this.picIcone);
             this.Controls.Add(this.lblMensagemAlerta);
@@ -94,7 +93,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.picIcone)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnFechar)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

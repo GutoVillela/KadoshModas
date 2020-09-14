@@ -1,4 +1,5 @@
 ﻿using KadoshModas.INF;
+using KadoshModas.UI.OpcoesAvancadas;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -38,6 +39,7 @@ namespace KadoshModas.UI
             pnlSubmenuProdutos.Visible = false;
             pnlSubmenuEstoque.Visible = false;
             pnlSubmenuFornecedores.Visible = false;
+            pnlSubmenuFinanceiro.Visible = false;
             pnlSubmenuOpcoesAvancadas.Visible = false;
         }
 
@@ -104,6 +106,11 @@ namespace KadoshModas.UI
         private void btnFornecedores_Click(object sender, EventArgs e)
         {
             ExibirSubmenu(pnlSubmenuFornecedores);
+        }
+
+        private void btnFinanceiro_Click(object sender, EventArgs e)
+        {
+            ExibirSubmenu(pnlSubmenuFinanceiro);
         }
 
         private void btnOpcoesAvancadas_Click(object sender, EventArgs e)
@@ -176,6 +183,26 @@ namespace KadoshModas.UI
             EsconderSubmenus();
             AbrirFormulario(new ConFornecedor());
         }
+
+        private void btnFechamentoCaixa_Click(object sender, EventArgs e)
+        {
+            EsconderSubmenus();
+            AbrirFormulario(new FechamentoDeCaixa());
+        }
+
+        private void btnOpcoesVenda_Click(object sender, EventArgs e)
+        {
+            EsconderSubmenus();
+            new OpcoesAvancadasDaVenda().ShowDialog();
+        }
+
+        private void btnOpcoesCliente_Click(object sender, EventArgs e)
+        {
+            EsconderSubmenus();
+            new OpcoesAvancadasDoCliente().ShowDialog();
+        }
         #endregion
+
+
     }
 }

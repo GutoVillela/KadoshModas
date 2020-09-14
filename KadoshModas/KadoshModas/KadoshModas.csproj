@@ -56,14 +56,38 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FontAwesome.Sharp, Version=5.12.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FontAwesome.Sharp.5.12.1\lib\net472\FontAwesome.Sharp.dll</HintPath>
+    <Reference Include="FontAwesome.Sharp, Version=5.14.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FontAwesome.Sharp.5.14.1\lib\net472\FontAwesome.Sharp.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.SqlServer.Management.SqlParser, Version=15.100.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.SqlServer.Management.SqlParser.150.37051.0\lib\net462\Microsoft.SqlServer.Management.SqlParser.dll</HintPath>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1404.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1404.0\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1404.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1404.0\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebDesign, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.11.0.3366.16\lib\Microsoft.ReportViewer.WebDesign.DLL</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.11.0.3366.16\lib\Microsoft.ReportViewer.WebForms.DLL</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1404.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Management.SqlParser, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Management.SqlParser.160.20216.14\lib\net462\Microsoft.SqlServer.Management.SqlParser.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.1016.290\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -77,6 +101,12 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="zxing, Version=0.16.5.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.5\lib\net47\zxing.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.presentation, Version=0.16.5.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.5\lib\net47\zxing.presentation.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL\BoAtributo.cs" />
@@ -91,6 +121,7 @@
     <Compile Include="BLL\BoFornecedor.cs" />
     <Compile Include="BLL\BoFornecedorDoProduto.cs" />
     <Compile Include="BLL\BoItemDaVenda.cs" />
+    <Compile Include="BLL\BoLancamentoDoCliente.cs" />
     <Compile Include="BLL\BoLogin.cs" />
     <Compile Include="BLL\BoMarca.cs" />
     <Compile Include="BLL\BoParcela.cs" />
@@ -101,6 +132,7 @@
     <Compile Include="BLL\BoVenda.cs" />
     <Compile Include="DAL\Conexao.cs" />
     <Compile Include="DAL\DaoAtributosDoProduto.cs" />
+    <Compile Include="DAL\DaoBase.cs" />
     <Compile Include="DAL\DaoCategoria.cs" />
     <Compile Include="DAL\DaoCidade.cs" />
     <Compile Include="DAL\DaoCliente.cs" />
@@ -110,6 +142,7 @@
     <Compile Include="DAL\DaoFornecedor.cs" />
     <Compile Include="DAL\DaoFornecedorDoProduto.cs" />
     <Compile Include="DAL\DaoItemDaVenda.cs" />
+    <Compile Include="DAL\DaoLancamentoDoCliente.cs" />
     <Compile Include="DAL\DaoLogin.cs" />
     <Compile Include="DAL\DaoMarca.cs" />
     <Compile Include="DAL\DaoParcela.cs" />
@@ -118,6 +151,7 @@
     <Compile Include="DAL\DaoTelefoneDoCliente.cs" />
     <Compile Include="DAL\DaoTelefoneDoFornecedor.cs" />
     <Compile Include="DAL\DaoVenda.cs" />
+    <Compile Include="DML\Atributos\CampoBDAttribute.cs" />
     <Compile Include="DML\DmoAtributo.cs" />
     <Compile Include="DML\DmoBase.cs" />
     <Compile Include="DML\DmoCategoria.cs" />
@@ -126,127 +160,150 @@
     <Compile Include="DML\DmoEstoque.cs" />
     <Compile Include="DML\DmoFornecedor.cs" />
     <Compile Include="DML\DmoItemDaVenda.cs" />
+    <Compile Include="DML\DmoLancamentoDoCliente.cs" />
     <Compile Include="DML\DmoLogin.cs" />
     <Compile Include="DML\DmoMarca.cs" />
     <Compile Include="DML\DmoParcela.cs" />
     <Compile Include="DML\DmoProduto.cs" />
+    <Compile Include="DML\DmoRomaneioVenda.cs" />
     <Compile Include="DML\DmoTelefone.cs" />
     <Compile Include="DML\DmoTelefoneDoCliente.cs" />
     <Compile Include="DML\DmoTelefoneDoFornecedor.cs" />
     <Compile Include="DML\DmoVenda.cs" />
+    <Compile Include="DML\Atributos\NomeDaTabelaBDAttribute.cs" />
     <Compile Include="INF\DiretoriosDoSistema.cs" />
     <Compile Include="INF\ParametrosDoSistema.cs" />
+    <Compile Include="INF\ProgressoDaTarefa.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="UI\AltCliente.cs">
+    <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="UI\Clientes\AltCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\AltCliente.Designer.cs">
+    <Compile Include="UI\Clientes\AltCliente.Designer.cs">
       <DependentUpon>AltCliente.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\CadCategoria.cs">
+    <Compile Include="UI\OpcoesAvancadas\OpcoesAvancadasDoCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\CadCategoria.Designer.cs">
+    <Compile Include="UI\OpcoesAvancadas\OpcoesAvancadasDoCliente.Designer.cs">
+      <DependentUpon>OpcoesAvancadasDoCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Produtos\CadCategoria.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Produtos\CadCategoria.Designer.cs">
       <DependentUpon>CadCategoria.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\CadCliente.cs">
+    <Compile Include="UI\Clientes\CadCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\CadCliente.Designer.cs">
+    <Compile Include="UI\Clientes\CadCliente.Designer.cs">
       <DependentUpon>CadCliente.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\CadFornecedor.cs">
+    <Compile Include="UI\Fornecedores\CadFornecedor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\CadFornecedor.Designer.cs">
+    <Compile Include="UI\Fornecedores\CadFornecedor.Designer.cs">
       <DependentUpon>CadFornecedor.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\CadMarca.cs">
+    <Compile Include="UI\Produtos\CadMarca.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\CadMarca.Designer.cs">
+    <Compile Include="UI\Produtos\CadMarca.Designer.cs">
       <DependentUpon>CadMarca.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\CadProduto.cs">
+    <Compile Include="UI\Produtos\CadProduto.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\CadProduto.Designer.cs">
+    <Compile Include="UI\Produtos\CadProduto.Designer.cs">
       <DependentUpon>CadProduto.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\CadProdutoUtil\DefinirFornecedores.cs">
+    <Compile Include="UI\Produtos\CadProdutoUtil\DefinirFornecedores.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\CadProdutoUtil\DefinirFornecedores.Designer.cs">
+    <Compile Include="UI\Produtos\CadProdutoUtil\DefinirFornecedores.Designer.cs">
       <DependentUpon>DefinirFornecedores.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\CadVenda.cs">
+    <Compile Include="UI\Vendas\CadVenda.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\CadVenda.Designer.cs">
+    <Compile Include="UI\Vendas\CadVenda.Designer.cs">
       <DependentUpon>CadVenda.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\CadVendaUtil\ConClienteVenda.cs">
+    <Compile Include="UI\Vendas\CadVendaUtil\ConClienteVenda.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\CadVendaUtil\ConClienteVenda.Designer.cs">
+    <Compile Include="UI\Vendas\CadVendaUtil\ConClienteVenda.Designer.cs">
       <DependentUpon>ConClienteVenda.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\CadVendaUtil\ConProdutosVenda.cs">
+    <Compile Include="UI\Vendas\CadVendaUtil\ConProdutosVenda.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\CadVendaUtil\ConProdutosVenda.Designer.cs">
+    <Compile Include="UI\Vendas\CadVendaUtil\ConProdutosVenda.Designer.cs">
       <DependentUpon>ConProdutosVenda.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\CadVendaUtil\FecharVenda.cs">
+    <Compile Include="UI\Vendas\CadVendaUtil\FecharVenda.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\CadVendaUtil\FecharVenda.Designer.cs">
+    <Compile Include="UI\Vendas\CadVendaUtil\FecharVenda.Designer.cs">
       <DependentUpon>FecharVenda.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\ConCliente.cs">
+    <Compile Include="UI\Clientes\ConCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\ConCliente.Designer.cs">
+    <Compile Include="UI\Clientes\ConCliente.Designer.cs">
       <DependentUpon>ConCliente.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\ConFornecedor.cs">
+    <Compile Include="UI\Fornecedores\ConFornecedor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\ConFornecedor.Designer.cs">
+    <Compile Include="UI\Fornecedores\ConFornecedor.Designer.cs">
       <DependentUpon>ConFornecedor.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\ConProduto.cs">
+    <Compile Include="UI\Produtos\ConProduto.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\ConProduto.Designer.cs">
+    <Compile Include="UI\Produtos\ConProduto.Designer.cs">
       <DependentUpon>ConProduto.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\ConVenda.cs">
+    <Compile Include="UI\Vendas\CadVendaUtil\ImpressaoDeRecibo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\ConVenda.Designer.cs">
+    <Compile Include="UI\Vendas\CadVendaUtil\ImpressaoDeRecibo.Designer.cs">
+      <DependentUpon>ImpressaoDeRecibo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Vendas\ConVenda.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Vendas\ConVenda.Designer.cs">
       <DependentUpon>ConVenda.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\ConVendaUtil\ConClienteUtil.cs">
+    <Compile Include="UI\Vendas\ConVendaUtil\ConClienteUtil.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\ConVendaUtil\ConClienteUtil.Designer.cs">
+    <Compile Include="UI\Vendas\ConVendaUtil\ConClienteUtil.Designer.cs">
       <DependentUpon>ConClienteUtil.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\DetalhesVenda.cs">
+    <Compile Include="UI\Vendas\DetalhesVenda.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\DetalhesVenda.Designer.cs">
+    <Compile Include="UI\Vendas\DetalhesVenda.Designer.cs">
       <DependentUpon>DetalhesVenda.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\DetalhesVendaUtil\InformarPagamento.cs">
+    <Compile Include="UI\Vendas\DetalhesVendaUtil\CancelarItemDaVenda.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\DetalhesVendaUtil\InformarPagamento.Designer.cs">
+    <Compile Include="UI\Vendas\DetalhesVendaUtil\CancelarItemDaVenda.Designer.cs">
+      <DependentUpon>CancelarItemDaVenda.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Vendas\DetalhesVendaUtil\InformarPagamento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Vendas\DetalhesVendaUtil\InformarPagamento.Designer.cs">
       <DependentUpon>InformarPagamento.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Dialogos\AlertaPersonalizado.cs">
@@ -255,11 +312,29 @@
     <Compile Include="UI\Dialogos\AlertaPersonalizado.Designer.cs">
       <DependentUpon>AlertaPersonalizado.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\FichaCliente.cs">
+    <Compile Include="UI\Financeiro\FechamentoDeCaixa.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\FichaCliente.Designer.cs">
+    <Compile Include="UI\Financeiro\FechamentoDeCaixa.Designer.cs">
+      <DependentUpon>FechamentoDeCaixa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Clientes\FichaCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Clientes\FichaCliente.Designer.cs">
       <DependentUpon>FichaCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Clientes\FichaClienteUtil\AcrescentarDivida.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Clientes\FichaClienteUtil\AcrescentarDivida.Designer.cs">
+      <DependentUpon>AcrescentarDivida.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Clientes\FichaClienteUtil\InformeDePagamento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Clientes\FichaClienteUtil\InformeDePagamento.Designer.cs">
+      <DependentUpon>InformeDePagamento.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\frmLogin.cs">
       <SubType>Form</SubType>
@@ -269,6 +344,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\OpcoesAvancadas\OpcoesAvancadasDaVenda.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\OpcoesAvancadas\OpcoesAvancadasDaVenda.Designer.cs">
+      <DependentUpon>OpcoesAvancadasDaVenda.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\TelaPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -311,71 +392,90 @@
     <Compile Include="UI\Util\ConfigStringDeConexao.Designer.cs">
       <DependentUpon>ConfigStringDeConexao.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\VisaoGeral.cs">
+    <Compile Include="UI\VisaoGeral\VisaoGeral.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\VisaoGeral.Designer.cs">
+    <Compile Include="UI\VisaoGeral\VisaoGeral.Designer.cs">
       <DependentUpon>VisaoGeral.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="UI\AltCliente.resx">
+    <EmbeddedResource Include="Relatorios\RomaneioVenda.rdlc" />
+    <EmbeddedResource Include="UI\Clientes\AltCliente.resx">
       <DependentUpon>AltCliente.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\CadCategoria.resx">
+    <EmbeddedResource Include="UI\OpcoesAvancadas\OpcoesAvancadasDoCliente.resx">
+      <DependentUpon>OpcoesAvancadasDoCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Produtos\CadCategoria.resx">
       <DependentUpon>CadCategoria.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\CadCliente.resx">
+    <EmbeddedResource Include="UI\Clientes\CadCliente.resx">
       <DependentUpon>CadCliente.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\CadFornecedor.resx">
+    <EmbeddedResource Include="UI\Fornecedores\CadFornecedor.resx">
       <DependentUpon>CadFornecedor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\CadMarca.resx">
+    <EmbeddedResource Include="UI\Produtos\CadMarca.resx">
       <DependentUpon>CadMarca.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\CadProduto.resx">
+    <EmbeddedResource Include="UI\Produtos\CadProduto.resx">
       <DependentUpon>CadProduto.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\CadProdutoUtil\DefinirFornecedores.resx">
+    <EmbeddedResource Include="UI\Produtos\CadProdutoUtil\DefinirFornecedores.resx">
       <DependentUpon>DefinirFornecedores.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\CadVenda.resx">
+    <EmbeddedResource Include="UI\Vendas\CadVenda.resx">
       <DependentUpon>CadVenda.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\CadVendaUtil\ConClienteVenda.resx">
+    <EmbeddedResource Include="UI\Vendas\CadVendaUtil\ConClienteVenda.resx">
       <DependentUpon>ConClienteVenda.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\CadVendaUtil\ConProdutosVenda.resx">
+    <EmbeddedResource Include="UI\Vendas\CadVendaUtil\ConProdutosVenda.resx">
       <DependentUpon>ConProdutosVenda.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\CadVendaUtil\FecharVenda.resx">
+    <EmbeddedResource Include="UI\Vendas\CadVendaUtil\FecharVenda.resx">
       <DependentUpon>FecharVenda.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\ConCliente.resx">
+    <EmbeddedResource Include="UI\Clientes\ConCliente.resx">
       <DependentUpon>ConCliente.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\ConFornecedor.resx">
+    <EmbeddedResource Include="UI\Fornecedores\ConFornecedor.resx">
       <DependentUpon>ConFornecedor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\ConProduto.resx">
+    <EmbeddedResource Include="UI\Produtos\ConProduto.resx">
       <DependentUpon>ConProduto.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\ConVenda.resx">
+    <EmbeddedResource Include="UI\Vendas\CadVendaUtil\ImpressaoDeRecibo.resx">
+      <DependentUpon>ImpressaoDeRecibo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Vendas\ConVenda.resx">
       <DependentUpon>ConVenda.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\ConVendaUtil\ConClienteUtil.resx">
+    <EmbeddedResource Include="UI\Vendas\ConVendaUtil\ConClienteUtil.resx">
       <DependentUpon>ConClienteUtil.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\DetalhesVenda.resx">
+    <EmbeddedResource Include="UI\Vendas\DetalhesVenda.resx">
       <DependentUpon>DetalhesVenda.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\DetalhesVendaUtil\InformarPagamento.resx">
+    <EmbeddedResource Include="UI\Vendas\DetalhesVendaUtil\CancelarItemDaVenda.resx">
+      <DependentUpon>CancelarItemDaVenda.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Vendas\DetalhesVendaUtil\InformarPagamento.resx">
       <DependentUpon>InformarPagamento.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Dialogos\AlertaPersonalizado.resx">
       <DependentUpon>AlertaPersonalizado.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\FichaCliente.resx">
+    <EmbeddedResource Include="UI\Financeiro\FechamentoDeCaixa.resx">
+      <DependentUpon>FechamentoDeCaixa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Clientes\FichaCliente.resx">
       <DependentUpon>FichaCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Clientes\FichaClienteUtil\AcrescentarDivida.resx">
+      <DependentUpon>AcrescentarDivida.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Clientes\FichaClienteUtil\InformeDePagamento.resx">
+      <DependentUpon>InformeDePagamento.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
@@ -384,6 +484,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\OpcoesAvancadas\OpcoesAvancadasDaVenda.resx">
+      <DependentUpon>OpcoesAvancadasDaVenda.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\TelaPrincipal.resx">
       <DependentUpon>TelaPrincipal.cs</DependentUpon>
@@ -406,7 +509,7 @@
     <EmbeddedResource Include="UI\Util\ConfigStringDeConexao.resx">
       <DependentUpon>ConfigStringDeConexao.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\VisaoGeral.resx">
+    <EmbeddedResource Include="UI\VisaoGeral\VisaoGeral.resx">
       <DependentUpon>VisaoGeral.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.manifest" />
@@ -414,8 +517,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
-    <None Include="Properties\DataSources\KadoshModas.DML.DmoCliente.datasource" />
-    <None Include="Properties\DataSources\KadoshModas.DML.DmoItemDaVenda.datasource" />
+    <None Include="Properties\DataSources\KadoshModas.DML.DmoRomaneioVenda.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -431,6 +533,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icone_kadosh.ico" />
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="SqlServerTypes\x64\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\ICONE_KADOSH_128X128.ico" />
     <None Include="Resources\ICONE_KADOSH_GRANDE.ico" />
     <None Include="Resources\ICONE_KADOSH.png" />
@@ -445,7 +560,8 @@
     <None Include="Resources\transparent-loading-gif.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="UI\CadClienteUtil\" />
+    <Folder Include="UI\Clientes\CadClienteUtil\" />
+    <Folder Include="UI\Estoque\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">

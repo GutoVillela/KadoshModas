@@ -23,10 +23,25 @@ namespace KadoshModas.INF
         /// Propriedade que define quantos Cliente serão buscadas por vez em uma busca paginada
         /// </summary>
         public static uint QuantidadeDeItensPorBuscaDeCliente = 20;
+
+        /// <summary>
+        /// Propriedade que define quantos Produtos serão buscadas por vez em uma busca paginada
+        /// </summary>
+        public static uint QuantidadeDeItensPorBuscaDeProduto = 20;
+
+        /// <summary>
+        /// Propriedade que define quantas Vendas serão buscadas por vez em uma busca paginada
+        /// </summary>
+        public static uint QuantidadeDeItensPorBuscaDeVenda = 20;
+
+        /// <summary>
+        /// Propriedade que define o valor padrão para a configuração "Dias para Inadimplência" do Cliente
+        /// </summary>
+        public static int ConfClienteValorPadraoDiasParaInadimplencia = 30;
         #endregion
         #region Métodos
         /// <summary>
-        /// Configura a string de Conexão padrão para o banco de dados Kadosh e Master, e persiste a configuração nas Propriedades
+        /// Configura a string de Conexão padrão para o banco de dados Kadosh e Master, e persiste a configuração nas Propriedades.
         /// </summary>
         /// <param name="pServidor">Nome do Servidor</param>
         /// <param name="pBd">Nome do Banco de dados</param>

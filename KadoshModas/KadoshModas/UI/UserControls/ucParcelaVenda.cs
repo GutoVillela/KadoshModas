@@ -37,7 +37,7 @@ namespace KadoshModas.UI.UserControls
                 lblNumeroParcela.Text = Parcela.Parcela.ToString();
                 lblValorParcela.Text = Parcela.ValorParcela.ToString("C");
                 lblVencimentoParcela.Text = Parcela.Vencimento.ToString("dd/MM/yyyy");
-                lblSituacaoParcela.Text = DmoBase.DescricaoEnum<SituacaoParcela>(Parcela.SituacaoParcela);
+                lblSituacaoParcela.Text = Parcela.SituacaoParcela.DescricaoEnum();
 
                 switch (Parcela.SituacaoParcela)
                 {
